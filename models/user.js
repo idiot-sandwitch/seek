@@ -25,13 +25,17 @@ const userSchema = new mongoose.Schema({
     },
     avatar: {
         type: String,
-        default: (process.env.BASE_URL + 'images/default_avatar.jpg'),
+        default: `${process.env.BASE_URL}images/default_avatar.jpg`,
         required: true
     }
 });
 
 userSchema.methods.generateAuthToken = function() {
-    return jwt.sign({ _id : this._id}, process.env.JWT_PRIVATE_KEY);
+    return jwt.sign({
+         _id : this._id,
+         name: this.name,
+         avatar: this.avatar
+        }, process.env.JWT_PRIVATE_KEY);
 }
 
 const User = mongoose.model('User', userSchema);
@@ -40,11 +44,22 @@ function validateUser(user) {
     const schema = Joi.object({
         name: Joi.string().min(5).max(50).required(),
         email: Joi.string().min(5).max(255).required().email(),
-        password: Joi.string().min(5).max(1024).required()
+        password: Joi.string().min(5).max(1024).required(),
+        avatar: Joi.string()
     });
 
     return schema.validate(user);
 }
 
+function validateData(userData) {
+    const schema = Joi.object({
+        name: Joi.string().min(5).max(50).required(),
+        avatar: Joi.string().required()
+    });
+
+    return schema.validate(userData);
+}
+
 exports.User = User;
-exports.validate = validateUser;
+exports.validateUser = validateUser;
+exports.validateData = validateData;
