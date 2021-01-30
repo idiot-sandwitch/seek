@@ -1,0 +1,5 @@
+#setup logout feature by deleting the JWT from client's system
+
+#in case of profile update, if user changes something that is present in JWT, delete the old JWT and provide a new one, also if JWT older than a month, just delete it and ask for sign in again.
+
+for uploading avatars

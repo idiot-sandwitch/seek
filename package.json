@@ -1,0 +1,23 @@
+{
+  "name": "dsc",
+  "version": "1.0.0",
+  "description": "backend code for dsc project",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "k4droid3",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "joi": "^17.3.0",
+    "joi-objectid": "^3.0.1",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.20",
+    "mongoose": "^5.11.14",
+    "multer": "^1.4.2",
+    "nodemon": "^2.0.7"
+  }
+}
