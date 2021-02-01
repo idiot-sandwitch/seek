@@ -24,4 +24,9 @@ module.exports = function(){
         console.error('FATAL ERROR: MAX_AVATAR_SIZE_MB not defined');
         process.exit(1);
     }
+
+    if(!process.env.JWT_HEADER){
+        console.error('FATAL ERROR: JWT_HEADER not defined');
+        process.exit(1);
+    }
 }

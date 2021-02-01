@@ -2,7 +2,7 @@ const auth = require('../middleware/auth');  //here auth is authorization not au
 const uploadAvatar = require('../middleware/uploadAvatar');
 const bcrypt = require('bcryptjs');
 const _ = require('lodash');
-const {User, validateUser, validateData} = require('../models/user');
+const {User, validateUser, validateEditUser, pickUserData} = require('../models/user');
 const express = require('express');
 const router = express.Router();
 
@@ -10,6 +10,8 @@ router.get('/me', auth, async (req, res) => {
     const user = await User.findById(req.user._id).select(['_id', 'name', 'email', 'avatar']);
     res.send(user);
 });
+
+//TODO: implement public profile link stuff
 
 router.post('/add', async (req, res) => {
     //TODO: allow only @vitbhopal.ac.in by adding this domain at end of string before validation
@@ -20,12 +22,16 @@ router.post('/add', async (req, res) => {
     let user = await User.findOne({ email: req.body.email });
     if (user) return res.status(400).send('User already registered.');
 
-    user = new User(_.pick(req.body, ['name', 'email', 'password']));
+    try {
+        user = new User(pickUserData(req.body));
     const salt = await bcrypt.genSalt(10);
     user.password = await bcrypt.hash(user.password, salt);
     await user.save();
+    } catch (error) {
+        console.error(error);
+    }
     
-    res.send(_.pick(user, ['_id', 'name', 'email']));
+    res.status(200).send(_.pick(user, ['_id', 'name', 'email']));
 });
 
 router.put('/edit', [auth, uploadAvatar.single('avatar')], async (req, res) => {
@@ -34,7 +40,7 @@ router.put('/edit', [auth, uploadAvatar.single('avatar')], async (req, res) => {
     if (req.file) req.body.avatar = `${process.env.BASE_URL}images/${req.file.filename}`;
     else req.body.avatar = req.user.avatar
 
-    const { error } = validateData(req.body);
+    const { error } = validateEditUser(req.body);
     if(error) return res.status(400).send(error.details[0].message);
 
     const result = await User.updateOne({_id: req.user._id}, {

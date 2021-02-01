@@ -10,3 +10,4 @@ for uploading avatars, use this
 
 NOTE: don't forget to update JWT after profile edit, it contains name and avatar as well
 
+store complete user data on client side, most importantly upvoted post array

@@ -20,6 +20,6 @@ const filefilter = (req, file, cb) => {
 
 module.exports = multer({
     storage,
-    limits: { fileSize: parseInt(process.env.MAX_AVATAR_SIZE_MB)*1000000}, 
+    limits: { fileSize: parseInt(process.env.MAX_AVATAR_SIZE_MB)*1024*1024}, 
     filefilter
 });
