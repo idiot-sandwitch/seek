@@ -1,5 +1,5 @@
-const auth = require('../middleware/auth');  //here auth is authorization not authentication
-const uploadAvatar = require('../middleware/uploadAvatar');
+const auth = require('../middlewares/auth');  //here auth is authorization not authentication
+const uploadAvatar = require('../middlewares/uploadAvatar');
 const bcrypt = require('bcryptjs');
 const _ = require('lodash');
 const {User, validateUser, validateEditUser, pickUserData} = require('../models/user');
@@ -37,6 +37,7 @@ router.post('/add', async (req, res) => {
 router.put('/edit', [auth, uploadAvatar.single('avatar')], async (req, res) => {
     //TODO:delete previous avatar image from the system unless it is default
     //TODO:delete avatar and set it to default
+    //TODO:for now user can add an outside link to req.body.avatar and our validator can't catch it, change that
     if (req.file) req.body.avatar = `${process.env.BASE_URL}images/${req.file.filename}`;
     else req.body.avatar = req.user.avatar
 
@@ -49,7 +50,7 @@ router.put('/edit', [auth, uploadAvatar.single('avatar')], async (req, res) => {
             avatar: req.body.avatar
         }
     });
-    if(result.ok === 1) res.status(200).send('Your profile has been successfully updated. ');
+    if(result.n) res.status(200).send('Your profile has been successfully updated. ');
     else res.status(500).send("Error! please, try again later...");
 })
 

@@ -1,4 +1,5 @@
 const Joi = require('joi');
+Joi.objectId = require('joi-objectid')(Joi);
 const _ = require('lodash');
 const mongoose = require('mongoose');
 //TODO: add schema and validation for branch, sem, subject as enum
@@ -16,7 +17,7 @@ const resourePostSchema = new mongoose.Schema({
         required: true,
         minlength: 1
     },
-    authorId:{
+    authorId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true
@@ -26,27 +27,18 @@ const resourePostSchema = new mongoose.Schema({
         default: 0,
         min: 0
     },
-    comments: [{
-        id: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'User',
-            required: true
-        },
-        comment: {
-            type: String,
-            required: true,
-            trim: true,
-            minlength: 1
-        },
+    replies: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Reply'
     }],
-});
+},{ timestamps: true });
 
 const ResourcePost = mongoose.model('ResourcePost', resourePostSchema);
 function validatePost(post){
     const schema = Joi.object({
         title: Joi.string().min(3).max(150).required(),
         content: Joi.string().min(1).required(),
-        authorId: Joi.string().required(),
+        authorId: Joi.objectId().required()
     });
 
     return schema.validate(post);

@@ -5,11 +5,28 @@ if(process.env.NODE_ENV){
 } else {
     require('dotenv').config()
 }
+const { User } = require('./models/user');
 
 if(process.env.NODE_ENV)
     console.log(`ENV: ${NODE_ENV}`);
 
-module.exports = function(){
+const anon = new User ({
+    name: "Anonymous",
+    email: "Null",
+    password: "Null",
+    avatar: `${process.env.BASE_URL}avatars/anonymous.jpg`,
+});
+
+module.exports.createAnonymousUser = function(){
+    anon.save()
+    .catch(err => {
+        console.log(err);
+        process.exit(1);
+    });
+};
+module.exports.anonymousId = anon.id;
+
+module.exports.checkEnvVars = function(){
     if(!process.env.JWT_PRIVATE_KEY){
         console.error('FATAL ERROR: JWT_PRIVATE_KEY not defined');
         process.exit(1);
