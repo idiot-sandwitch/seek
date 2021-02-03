@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const _ = require('lodash');
 
 //NOTE: remember to update anonymous user in config.js after updating schema
+//TODO: implement branch, sem
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -66,6 +67,15 @@ function validateEditUser(userData) {
     return schema.validate(userData);
 }
 
+function validateLogin(req) {
+    const schema = Joi.object({
+        email: Joi.string().min(5).max(255).required().email(),
+        password: Joi.string().min(5).max(1024).required()
+    });
+
+    return schema.validate(req);
+}
+
 function pickData(userData){
     return _.pick(userData, ['name', 'email', 'password']);
 }
@@ -74,3 +84,4 @@ exports.User = User;
 exports.validateUser = validateUser;
 exports.validateEditUser = validateEditUser;
 exports.pickUserData = pickData;
+exports.validateLogin = validateLogin;

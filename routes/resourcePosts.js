@@ -4,8 +4,8 @@ const router = require('express').Router();
 const { ResourcePost, validateResourcePost, pickResourcePostData } = require('../models/resourcePost');
 const { User } = require('../models/user');
 
-router.get('/post', async (req, res) => {
-    const id = req.body.id;
+router.get('/post/:id', async (req, res) => {
+    const id = req.params.id;
     const post = await ResourcePost.findById(id);
     if(!post) res.status(404).send('Post not found!');
     else res.status(200).send(post);
