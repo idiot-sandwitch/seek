@@ -17,14 +17,26 @@ const anon = new User ({
     avatar: `${process.env.BASE_URL}avatars/anonymous.jpg`,
 });
 
-module.exports.createAnonymousUser = function(){
-    anon.save()
-    .catch(err => {
-        console.log(err);
-        process.exit(1);
-    });
+module.exports.createAnonymousUser = async function(){
+    const user = await User.findOne({email: "Null"});
+    if(user) console.log("Anonymous user already exists.");
+    else{
+        anon.save()
+        .catch(err => {
+            console.log(err);
+            process.exit(1);
+        });
+        console.log("Anonymous user created.");
+    }
 };
-module.exports.anonymousId = anon.id;
+module.exports.anonymousId = async function(){
+    const user = await User.findOne({ email: "Null" });
+    if(!user){
+        console.error("Could not find anonymous user");
+        process.exit(1);
+    }
+    return user.id;
+};
 
 module.exports.checkEnvVars = function(){
     if(!process.env.JWT_PRIVATE_KEY){

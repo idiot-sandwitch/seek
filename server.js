@@ -18,7 +18,6 @@ mongoose.connect('mongodb://localhost/DSC')
     });
 
 config.createAnonymousUser();
-// remember to uncomment above statement for anonymous usage
 
 app.use(express.json());
 app.use(express.static('public'));

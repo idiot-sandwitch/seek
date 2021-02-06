@@ -25,7 +25,7 @@ router.post('/', [auth, anonymous], async (req, res) => {
     try {
         await reply.save();
     } catch (error) {
-        return res.status(500).send("1Failed to reply, try again later...");
+        return res.status(500).send("Failed to reply, try again later...");
     }
     let result;
     if(req.body.of.contentType === ResourcePost.modelName)
@@ -35,7 +35,7 @@ router.post('/', [auth, anonymous], async (req, res) => {
         result = await Reply.updateOne({_id: req.body.of.id }, { $push: {replies: reply._id}});
 
     if(result.n) return res.status(200).send({ id: reply.id });
-    else return res.status(500).send("2Failed to reply, try again later...");
+    else return res.status(500).send("Failed to reply, try again later...");
 });
 
 module.exports = router;
