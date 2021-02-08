@@ -10,17 +10,17 @@ const storage = multer.diskStorage({
 });
 
 //TODO: file filter not working...
-const filefilter = (req, file, cb) => {
+const fileFilter = (req, file, cb) => {
     const allowedFileTypes = ['image/jpg', 'image/jpeg', 'image/png'];
     if(allowedFileTypes.includes(file.mimetype)){
         cb(null, true);
     } else {
-        cb(new error('only files of type jpeg, jpg and png are allowed.'), false);
+        cb(new Error('only files of type jpeg, jpg and png are allowed.'), false);
     }
 };
 
 module.exports = multer({
     storage,
     limits: { fileSize: parseInt(process.env.MAX_AVATAR_SIZE_MB)*1024*1024}, 
-    filefilter
+    fileFilter
 });
