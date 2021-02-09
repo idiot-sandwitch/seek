@@ -33,7 +33,7 @@ router.put('/edit', [auth, uploadAvatar.single('avatar')], async (req, res) => {
     //TODO:delete previous avatar image from the system unless it is default
     //TODO:delete avatar and set it to default
     //TODO:for now user can add an outside link to req.body.avatar and our validator can't catch it, change that
-    if (req.file) req.body.avatar = `${process.env.BASE_URL}avatars/${req.file.filename}`;
+    if (req.file.db_url) req.body.avatar = req.file.db_url;
     else req.body.avatar = req.user.avatar;
 
     const { error } = validateEditUser(req.body);

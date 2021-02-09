@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const Joi = require('joi');
+const passwordComplexity = require('joi-password-complexity').default;
 const mongoose = require('mongoose');
 const _ = require('lodash');
 
@@ -48,10 +49,21 @@ userSchema.methods.generateAuthToken = function() {
 const User = mongoose.model('User', userSchema);
 
 function validateUser(user) {
+    //complexity options work as flags.
+    //use requirementCount to set how many of these requirements must be fulfilled.
+    const complexityOptions = {
+        min: 4,
+        max: 1024,
+        lowerCase: 1,
+        upperCase: 1,
+        numeric: 1,
+        symbol: 1,
+        requirementCount: 3,
+    };
     const schema = Joi.object({
         name: Joi.string().min(4).max(50).required(),
         email: Joi.string().min(4).max(255).required().email(),
-        password: Joi.string().min(4).max(1024).required(),
+        password: passwordComplexity(complexityOptions).required(),
         avatar: Joi.string()
     });
 
