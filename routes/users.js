@@ -38,7 +38,7 @@ router.post("/add", async (req, res) => {
   const salt = await bcrypt.genSalt(10);
   user.password = await bcrypt.hash(user.password, salt);
 
-  //Make a verification token containing reference to the created user.
+  //TODO: Hash this randomString before storing it in database.
   const userReference = {token: randomString.generate({length: 128}), user: user._id};
   const verificationToken = new VerificationToken(userReference);
   await verificationToken.save();

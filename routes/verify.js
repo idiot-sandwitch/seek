@@ -2,12 +2,12 @@ const express = require('express');
 const router = express();
 const { User } = require('../models/user');
 const { VerificationToken, validateVerification} = require('../models/verification');
-const mongoose = require('mongoose');
 
 router.post('/', async (req, res)=>{
     const { error } = validateVerification(req.body);
     if (error) return res.status(400).send(`Invalid request: ${error.details[0].message}`);
 
+    //TODO: Once token hashing is implemented, we'll need to verify it's legitimacy here.
     const verificationToken = await VerificationToken.findOne({token: req.body.token});
     if(!verificationToken) return res.status(401).send('Invalid/expired token.');
 

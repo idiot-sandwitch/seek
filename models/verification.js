@@ -3,6 +3,7 @@ Joi.objectId = require("joi-objectid")(Joi);
 const _ = require("lodash");
 const mongoose = require("mongoose");
 
+//TODO: If the token is hashed, its length might need to be extended as per the salt.
 const verificationSchema = new mongoose.Schema({
     token:{
         type: String,
