@@ -1,41 +1,38 @@
-const Joi = require('joi');
-const auth = require('../middlewares/auth');
-const anonymous = require('../middlewares/anonymous');
-const router = require('express').Router();
-const { Reply, validateReply, pickReplyData} = require('../models/reply');
-const { ResourcePost } = require('../models/resourcePost');
+const mongoose = require("mongoose");
+const auth = require("../middlewares/auth");
+const anonymous = require("../middlewares/anonymous");
+const router = require("express").Router();
+const { Reply, validateReply, pickReplyData } = require("../models/reply");
 
-router.post('/', [auth, anonymous], async (req, res) => {
-    const { error } = validateReply(req.body);
-    if(error) return res.status(400).send(error.details[0].message);
+router.post("/", [auth, anonymous], async (req, res) => {
+  const { error } = validateReply(req.body);
+  if (error) return res.status(400).send(error.details[0].message);
 
-    if(req.body.of.contentType === ResourcePost.modelName){
-        const post = await ResourcePost.findById(req.body.of.id);
-        if(!post) return res.status(404).send('Error! Post not found!');
-    }
+  const content = await mongoose.connection.db
+    .collection(req.body.of.contentType)
+    .findOne({ _id: new mongoose.Types.ObjectId(req.body.of.id) });
 
-    else if(req.body.of.contentType === Reply.modelName){
-        const reply = await Reply.findById(req.body.of.id);
-        if(!reply) return res.status(404).send('Error! Reply not found!');
-    }
+  if (!content) return res.status(404).send("Error! content not found.");
 
-    let reply = new Reply(pickReplyData(req.body));
+  let reply = new Reply(pickReplyData(req.body));
 
-    //can there be data inconsistency here? if Yes, then how to refactor this? 
-    try {
-        await reply.save();
-    } catch (error) {
-        return res.status(500).send("Failed to reply, try again later...");
-    }
-    let result;
-    if(req.body.of.contentType === ResourcePost.modelName)
-        result = await ResourcePost.updateOne({_id: req.body.of.id}, { $push: {replies: reply._id} });
+  //can there be data inconsistency here? if Yes, then how to refactor this?
+  try {
+    await reply.save();
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send("Failed to reply, try again later...");
+  }
 
-    else if(req.body.of.contentType === Reply.modelName)
-        result = await Reply.updateOne({_id: req.body.of.id }, { $push: {replies: reply._id}});
+  const result = await mongoose.connection.db
+    .collection(req.body.of.contentType)
+    .updateOne(
+      { _id: new mongoose.Types.ObjectId(req.body.of.id) },
+      { $push: { replies: reply._id } }
+    );
 
-    if(result.n) return res.status(200).send({ id: reply.id });
-    else return res.status(500).send("Failed to reply, try again later...");
+  if (result.result.n) return res.status(200).send({ id: reply.id });
+  else return res.status(500).send("Failed to reply, try again later...");
 });
 
 module.exports = router;
