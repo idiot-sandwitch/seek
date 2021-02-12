@@ -48,6 +48,12 @@ const userSchema = new mongoose.Schema({
       },
     },
   ],
+  //TODO: Set anonymous users' isVerified to true when creating them so as to make them be able to login.
+  isVerified: {
+    type: Boolean,
+    default: false,
+    required: false,
+  },
   //TODO: implement public profile link stuff
 });
 
