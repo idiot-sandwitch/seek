@@ -27,4 +27,4 @@ function pickData(course) {
 
 exports.Course = Course;
 exports.validateCourse = validate;
-exports.picCourseData = pickData;
+exports.pickCourseData = pickData;

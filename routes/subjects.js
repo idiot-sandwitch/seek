@@ -1,6 +1,5 @@
 const express = require("express");
 const route = express.Router();
-const mongoose = require("mongoose");
 const {
   Subject,
   validateSubject,
@@ -10,14 +9,14 @@ const {
 route.get("/all", async (req, res) => {
   try {
     const subjects = await Subject.find().sort({ name: 1 });
-    res.send(subjects);
+    res.status(200).send(subjects);
   } catch (e) {
     console.log(e.message);
     res.status(404).send("No subjects found!");
   }
 });
 
-route.get("/:id", async (req, res) => {
+route.get("/find/:id", async (req, res) => {
   try {
     const subject = await Subject.findById(req.params.id);
     res.send(subject);
@@ -27,7 +26,7 @@ route.get("/:id", async (req, res) => {
   }
 });
 
-route.put("/:id/edit", async (req, res) => {
+route.put("/edit/:id", async (req, res) => {
   const { error } = validateSubject(req.body);
   if (error) {
     res.status(400).send(error.details[0].message);
