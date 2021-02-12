@@ -9,7 +9,6 @@ config.checkEnvVars();
 require("./startup/db")();
 config.createAnonymousUser();
 
-
 //Include the startup routes.
 require("./startup/logging")(winston);
 require("./startup/routes")(app);

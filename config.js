@@ -14,6 +14,7 @@ const anon = new User({
   email: "Null",
   password: "Null",
   avatar: `${process.env.BASE_URL}avatars/anonymous.jpg`,
+  isVerified: true,
 });
 
 const enVars = [

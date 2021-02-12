@@ -52,8 +52,8 @@ const userSchema = new mongoose.Schema({
   isVerified: {
     type: Boolean,
     default: false,
-    required: false
-  }
+    required: false,
+  },
   //TODO: implement public profile link stuff
 });
 
