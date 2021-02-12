@@ -1,51 +1,88 @@
-const Joi = require('joi');
-Joi.objectId = require('joi-objectid')(Joi);
-const _ = require('lodash');
-const mongoose = require('mongoose');
+const Joi = require("joi");
+Joi.objectId = require("joi-objectid")(Joi);
+const _ = require("lodash");
+const mongoose = require("mongoose");
+require("mongoose-type-url");
+
 //TODO: add schema and validation for branch, sem, subject as enum
 //TODO: implement uploading content files
-const resourePostSchema = new mongoose.Schema({
+const resourePostSchema = new mongoose.Schema(
+  {
     title: {
-        type: String,
-        required: true,
-        trim: true,
-        minlength: 3,
-        maxlength: 150
+      type: String,
+      required: true,
+      trim: true,
+      minlength: 3,
+      maxlength: 150,
     },
     content: {
-        type: String,
-        required: true,
-        minlength: 1
+      type: String,
+      required: true,
+      minlength: 1,
     },
     authorId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
-    }, 
-    votes: {
-        type: Number,
-        default: 0,
-        min: 0
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
     },
-    replies: [{
+    votes: {
+      type: Number,
+      default: 0,
+      min: 0, //why not allow negative votes?
+    },
+    replies: [
+      {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Reply'
-    }],
-},{ timestamps: true });
+        ref: "Reply",
+      },
+    ],
+    subject: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Subject",
+      required: true,
+    },
+    course: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Course",
+    },
+    editorChoice: {
+      type: Boolean,
+      default: false,
+    },
+    contentUrl: {
+      type: mongoose.SchemaTypes.Url,
+    },
+  },
+  { timestamps: true }
+);
 
-const ResourcePost = mongoose.model('ResourcePost', resourePostSchema);
-function validatePost(post){
-    const schema = Joi.object({
-        title: Joi.string().min(3).max(150).required(),
-        content: Joi.string().min(1).required(),
-        authorId: Joi.objectId().required()
-    });
+const ResourcePost = mongoose.model("ResourcePost", resourePostSchema);
+function validatePost(post) {
+  const schema = Joi.object({
+    title: Joi.string().min(3).max(150).required(),
+    content: Joi.string().min(1).required(),
+    authorId: Joi.objectId().required(),
+    replies: Joi.objectId(),
+    subject: Joi.objectId().required(),
+    course: Joi.objectId(),
+    editorChoice: Joi.Boolean(),
+    contentUrl: Joi.string().min(3).max(255),
+  });
 
-    return schema.validate(post);
+  return schema.validate(post);
 }
 
-function pickData(post){
-    return _.pick(post, ['title', 'content', 'authorId']);
+function pickData(post) {
+  return _.pick(post, [
+    "title",
+    "content",
+    "authorId",
+    //"replies", replies not implemented yet
+    "subject",
+    "course",
+    "editorChoice",
+    "contentUrl",
+  ]);
 }
 
 exports.ResourcePost = ResourcePost;
