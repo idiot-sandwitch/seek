@@ -7,7 +7,7 @@ const {
   pickSubjectData,
 } = require("../models/subject");
 
-route.get("/subjects", async (req, res) => {
+route.get("/all", async (req, res) => {
   try {
     const subjects = await Subject.find().sort({ name: 1 });
     res.send(subjects);
@@ -17,7 +17,7 @@ route.get("/subjects", async (req, res) => {
   }
 });
 
-route.get("/subject/:id", async (req, res) => {
+route.get("/:id", async (req, res) => {
   try {
     const subject = await Subject.findById(req.params.id);
     res.send(subject);
@@ -27,17 +27,19 @@ route.get("/subject/:id", async (req, res) => {
   }
 });
 
-route.put("/subject/:id/edit", async (req, res) => {
+route.put("/:id/edit", async (req, res) => {
   const { error } = validateSubject(req.body);
   if (error) {
     res.status(400).send(error.details[0].message);
   }
   try {
-    const subject = Subject.findByIdAndUpdate(
+    const subject = await Subject.findByIdAndUpdate(
       req.params.id,
       pickSubjectData(req.body)
     );
+    res.status(200).send(`${subject.name} changed to ${req.body.name}`);
   } catch (e) {
+    console.log(e);
     res.status(500).send("Edit operation failed");
   }
 });
@@ -57,3 +59,5 @@ route.post("/add", async (req, res) => {
     res.status(500).send();
   }
 });
+
+module.exports = route;

@@ -14,7 +14,7 @@ const courseSchema = mongoose.Schema({
 const Course = mongoose.model("Course", courseSchema);
 
 const valSchema = Joi.object({
-  code: Joi.string.length(7).required(),
+  code: Joi.string().length(7).required(),
 });
 
 function validate(course) {
