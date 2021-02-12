@@ -1,18 +1,18 @@
-const winston = require("winston");
-const config = require("./config.js");
-
 //Create and initialize app.
 const express = require("express");
 const app = express();
+
+//Setup logging and environment variables
+const winston = require("winston");
+const config = require("./config.js");
+config.checkEnvVars();
+require("./startup/db")();
+config.createAnonymousUser();
 
 //Include the startup routes.
 require("./startup/logging")(winston);
 require("./startup/routes")(app);
 require("./startup/validation")();
-
-config.checkEnvVars();
-require("./startup/db")();
-config.createAnonymousUser();
 
 //Get port variable from the env, default is 3000.
 const port = process.env.PORT || 3000;

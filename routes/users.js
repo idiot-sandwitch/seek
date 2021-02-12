@@ -1,3 +1,5 @@
+const { VerificationToken } = require("../models/verification");
+const randomString = require("randomstring");
 const auth = require("../middlewares/auth"); //here auth is authorization not authentication
 const uploadAvatar = require("../middlewares/uploadAvatar");
 const bcrypt = require("bcryptjs");
@@ -35,6 +37,15 @@ router.post("/add", async (req, res) => {
   user = new User(pickUserData(req.body));
   const salt = await bcrypt.genSalt(10);
   user.password = await bcrypt.hash(user.password, salt);
+
+  //TODO: Hash this randomString before storing it in database.
+  const userReference = {
+    token: randomString.generate({ length: 128 }),
+    user: user._id,
+  };
+  const verificationToken = new VerificationToken(userReference);
+  await verificationToken.save();
+
   await user.save();
   res.status(200).send(_.pick(user, ["_id", "name", "email"]));
 });
