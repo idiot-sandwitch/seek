@@ -3,13 +3,13 @@ const winston = require("winston");
 
 if (process.env.NODE_ENV) {
   require("dotenv").config({
-    path: `${__dirname}/.env.${process.env.NODE_ENV}`,
+    path: `${__dirname}/../.env.${process.env.NODE_ENV}`,
   });
 } else {
   require("dotenv").config();
 }
 
-if (process.env.NODE_ENV) winston.info(`NODE_ENV: ${NODE_ENV}`);
+if (process.env.NODE_ENV) winston.info(`NODE_ENV: ${process.env.NODE_ENV}`);
 
 const anon = new User({
   name: "Anonymous",

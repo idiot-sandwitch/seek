@@ -27,13 +27,11 @@ module.exports = function (winston) {
     })
   );
   winston.add(
-    new winston.transports.MongoDB(
-      {
-        db: "mongodb://localhost/DSC-errors",
-        options: { useUnifiedTopology: true },
-      },
-      (level = "error")
-    )
+    new winston.transports.MongoDB({
+      db: "mongodb://localhost/DSC-errors",
+      options: { useUnifiedTopology: true },
+      level: "error",
+    })
   );
   winston.add(
     new winston.transports.File({
