@@ -7,13 +7,16 @@ let server;
 const expect = require("chai").expect;
 
 describe("verify user route.", () => {
+  // is it faster using promise.all here instead of 2 sequential awaits?
   beforeEach(async () => {
     server = require("../../../server");
     await User.find().deleteMany();
+    await VerificationToken.find().deleteMany();
   });
   afterEach(async () => {
     server.close();
     await User.find().deleteMany();
+    await VerificationToken.find().deleteMany();
   });
 
   describe("POST /", () => {
