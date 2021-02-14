@@ -4,7 +4,7 @@ const app = express();
 
 //Setup logging and environment variables
 const winston = require("winston");
-const config = require("./config.js");
+const config = require("./startup/config");
 config.checkEnvVars();
 require("./startup/db")();
 config.createAnonymousUser();

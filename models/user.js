@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 const _ = require("lodash");
 const { ResourcePost } = require("./resourcePost");
 
-//NOTE: remember to update anonymous user in config.js after updating schema
+//NOTE: remember to update anonymous user in startup/config.js after updating schema
 //TODO: implement branch, sem
 const userSchema = new mongoose.Schema({
   name: {
