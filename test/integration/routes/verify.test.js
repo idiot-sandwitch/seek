@@ -13,7 +13,7 @@ describe("verify user route.", () => {
     await VerificationToken.find().deleteMany();
   });
   afterEach(async () => {
-    server.close();
+    await server.close();
     await User.find().deleteMany();
     await VerificationToken.find().deleteMany();
   });

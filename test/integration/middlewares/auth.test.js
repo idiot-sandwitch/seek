@@ -8,9 +8,9 @@ describe("auth middleware", () => {
     server = require("../../../server");
     User.find().deleteMany();
   });
-  afterEach(() => {
-    server.close();
-    User.find().deleteMany();
+  afterEach(async () => {
+    await server.close();
+    await User.find().deleteMany();
   });
   let token;
   const exec = () => {
