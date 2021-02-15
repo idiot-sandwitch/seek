@@ -4,8 +4,8 @@
   "description": "backend code for dsc project",
   "main": "server.js",
   "scripts": {
-    "test": "cross-env NODE_ENV=test mocha -r dotenv/config 'test/**/*.test.js'",
-    "coverage": "cross-env NODE_ENV=test nyc --reporter=text --reporter=html mocha -r dotenv/config 'test/**/*.test.js'"
+    "test": "cross-env NODE_ENV=test mocha --exit -r dotenv/config 'test/**/*.test.js'",
+    "coverage": "cross-env NODE_ENV=test nyc --reporter=text --reporter=html mocha --exit -r dotenv/config 'test/**/*.test.js'"
   },
   "author": "idiot-sandwitch",
   "license": "ISC",
