@@ -1,4 +1,3 @@
-require("dotenv").config();
 const { User } = require("../../../models/user");
 const { VerificationToken } = require("../../../models/verification");
 const randomString = require("randomstring");

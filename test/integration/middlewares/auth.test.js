@@ -2,7 +2,6 @@ const { User } = require("../../../models/user");
 const request = require("supertest");
 let server;
 const expect = require("chai").expect;
-require("dotenv").config();
 
 describe("auth middleware", () => {
   beforeEach(() => {
