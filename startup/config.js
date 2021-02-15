@@ -24,6 +24,7 @@ const enVars = [
   "BASE_URL",
   "MAX_AVATAR_SIZE_MB",
   "JWT_HEADER",
+  "SENDGRID_API_KEY"
 ];
 
 module.exports.createAnonymousUser = async function () {
