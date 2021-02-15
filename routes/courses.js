@@ -42,5 +42,22 @@ route.post("/add", async (req, res) => {
 });
 
 //update
-route.put("/edit/:id", async (req, res) => {});
+route.put("/edit/:id", async (req, res) => {
+  const { error } = validateCourse(req.body);
+  if (error) {
+    res.status(400).send(error.details[0].message);
+  }
+
+  try {
+    const course = await Course.findByIdAndUpdate(
+      req.params.id,
+      pickCourseData(req.body)
+    );
+    res.status(200).send(`${course.code} updated to ${req.body.code}`);
+  } catch (e) {
+    console.log(e);
+    res.status(500).send("Failed to update course");
+  }
+});
+
 //delete
