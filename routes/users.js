@@ -1,3 +1,4 @@
+const { sendMail } = require('../utility/mailer');
 const { VerificationToken } = require("../models/verification");
 const randomString = require("randomstring");
 const auth = require("../middlewares/auth"); //here auth is authorization not authentication
@@ -46,7 +47,22 @@ router.post("/add", async (req, res) => {
   const verificationToken = new VerificationToken(userReference);
   await verificationToken.save();
 
+  let body = {
+    from: "Seek Inc. <avijeetpandey87@gmail.com>",
+    to: user.email,
+    suject: "Verify your seek email address.",
+    text: "",
+    html: `<p>Hi ${user.name},<br/>enter the following token on the link provided to verify your email address with us:</p>
+    <br/><br/>
+    <center><a href = "https://google.co.in"><button>Click here to verify your account</button></a></center>
+    <br/><br/>
+    <strong>Your verification token:</strong>
+    <br/>
+    <center>${userReference.token}</center>
+    `
+  };
   await user.save();
+  await sendMail(body);
   res.status(200).send(_.pick(user, ["_id", "name", "email"]));
 });
 
