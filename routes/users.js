@@ -1,4 +1,4 @@
-const { sendMail } = require('../utility/mailer');
+const { sendMail } = require("../utility/mailer");
 const { VerificationToken } = require("../models/verification");
 const randomString = require("randomstring");
 const auth = require("../middlewares/auth"); //here auth is authorization not authentication
@@ -21,7 +21,7 @@ router.get("/me", auth, async (req, res) => {
     "email",
     "avatar",
   ]);
-  res.send(user);
+  res.status(200).send(user);
 });
 
 //TODO: implement public profile link stuff
@@ -59,7 +59,7 @@ router.post("/add", async (req, res) => {
     <strong>Your verification token:</strong>
     <br/>
     <center>${userReference.token}</center>
-    `
+    `,
   };
   await user.save();
   await sendMail(body);
