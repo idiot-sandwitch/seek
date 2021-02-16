@@ -56,7 +56,14 @@ function validate(reply) {
     content: Joi.string().min(1).required(),
   });
 
-  return schema.validate(reply) && ofSchema.validate(reply.of);
+  const result = {
+    replySchema: schema.validate(reply),
+    ofSchema: ofSchema.validate(reply.of),
+  };
+  if (result.ofSchema.error) result.error = result.ofSchema.error;
+  if (result.replySchema.error) result.error = result.replySchema.error;
+
+  return result;
 }
 
 function pickData(reply) {

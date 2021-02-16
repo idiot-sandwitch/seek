@@ -18,7 +18,7 @@ const userSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
-    minlength: 4,
+    minlength: 7,
     maxlength: 255,
     unique: true,
     trim: true,
@@ -68,9 +68,7 @@ userSchema.methods.generateAuthToken = function () {
 
 const User = mongoose.model("User", userSchema);
 
-function validateUser(user) {
-  //complexity options work as flags.
-  //use requirementCount to set how many of these requirements must be fulfilled.
+function validateData(data) {
   const complexityOptions = {
     min: 4,
     max: 1024,
@@ -80,32 +78,46 @@ function validateUser(user) {
     symbol: 1,
     requirementCount: 3,
   };
+
   const schema = Joi.object({
-    name: Joi.string().min(4).max(50).required(),
-    email: Joi.string().min(4).max(255).required().email(),
-    password: passwordComplexity(complexityOptions).required(),
+    name: Joi.string().min(4).max(50),
+    email: Joi.string().min(7).max(255).email(),
+    password: passwordComplexity(complexityOptions),
     avatar: Joi.string(),
   });
 
-  return schema.validate(user);
+  return schema.validate(data);
+}
+
+function validateUser(user) {
+  const schema = Joi.object({
+    name: Joi.required(),
+    email: Joi.required(),
+    password: Joi.required(),
+  });
+
+  if (schema.validate(user).error) return schema.validate(user);
+  return validateData(user);
 }
 
 function validateEditUser(userData) {
   const schema = Joi.object({
-    name: Joi.string().min(5).max(50).required(),
-    avatar: Joi.string().required(),
+    name: Joi.required(),
+    avatar: Joi.required(),
   });
 
-  return schema.validate(userData);
+  if (schema.validate(userData).error) return schema.validate(userData);
+  return validateData(userData);
 }
 
 function validateLogin(req) {
   const schema = Joi.object({
-    email: Joi.string().min(5).max(255).required().email(),
-    password: Joi.string().min(5).max(1024).required(),
+    email: Joi.required(),
+    password: Joi.string().min(4).max(1024).required(),
   });
 
-  return schema.validate(req);
+  if (schema.validate(req).error) return schema.validate(req);
+  return validateData(_.omit(req, ["password"]));
 }
 
 function pickData(userData) {
@@ -113,6 +125,7 @@ function pickData(userData) {
 }
 
 exports.User = User;
+exports.validateData = validateData; //this is exported only for tests, no other use
 exports.validateUser = validateUser;
 exports.validateEditUser = validateEditUser;
 exports.pickUserData = pickData;
