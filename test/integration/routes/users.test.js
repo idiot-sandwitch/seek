@@ -3,6 +3,7 @@ const expect = require("chai").expect;
 const { User } = require("../../../models/user");
 const { VerificationToken } = require("../../../models/verification");
 const bcrypt = require("bcryptjs");
+const mongoose = require("mongoose");
 
 describe("user route endpoint", () => {
   let server;
@@ -36,7 +37,8 @@ describe("user route endpoint", () => {
       expect(res.body).to.not.have.deep.property("password", password);
     });
   });
-  describe("POST /add", () => {
+  describe("POST /add", function () {
+    this.timeout(10000);
     let name;
     let email;
     let password;
@@ -96,6 +98,48 @@ describe("user route endpoint", () => {
       expect(user).to.have.deep.property("name", name);
       expect(user).to.have.deep.property("email", email);
       expect(user).to.have.deep.property("password");
+    });
+    it("should return 200 if valid body is passed.", async () => {
+      const res = await exec();
+      expect(res.status).to.equal(200);
+    });
+  });
+  describe("PUT /resetPassword", function () {
+    this.timeout(10000);
+    let token, user, salt;
+    let name, email, password;
+    let old_password, new_password;
+    beforeEach(async () => {
+      name = "12345";
+      email = "123@123.com";
+      old_password = "old-Password123";
+      salt = await bcrypt.genSalt(10);
+      password = await bcrypt.hash(old_password, salt);
+      user = new User({ name, email, password, isVerified: true });
+      user = await user.save();
+      token = user.generateAuthToken();
+      new_password = "new-Password123";
+    });
+    const exec = () => {
+      return request(server)
+        .put("/api/users/resetPassword")
+        .set(process.env.JWT_HEADER, token)
+        .send({ old_password, new_password });
+    };
+    it("should return 401 if no token is passed.", async () => {
+      const res = await request(server).put("/api/users/resetPassword").send();
+      expect(res.status).to.equal(401);
+    });
+    it("should return 400 if old password is incorrect.", async () => {
+      old_password = "not-Old-password";
+      const res = await exec();
+      expect(res.status).to.equal(400);
+    });
+    it("should update the password in the databse if valid body is passed.", async () => {
+      await exec();
+      user = await User.findById(user._id);
+      const updated = await bcrypt.compare(new_password, user.password);
+      expect(updated).to.be.true;
     });
     it("should return 200 if valid body is passed.", async () => {
       const res = await exec();

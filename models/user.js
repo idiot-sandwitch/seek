@@ -120,6 +120,23 @@ function validateLogin(req) {
   return validateData(_.omit(req, ["password"]));
 }
 
+function validatePassReset(req) {
+  const complexityOptions = {
+    min: 4,
+    max: 1024,
+    lowerCase: 1,
+    upperCase: 1,
+    numeric: 1,
+    symbol: 1,
+    requirementCount: 3,
+  };
+  const schema = Joi.object({
+    old_password: Joi.string().required(),
+    new_password: passwordComplexity(complexityOptions).required(),
+  });
+  return schema.validate(req);
+}
+
 function pickData(userData) {
   return _.pick(userData, ["name", "email", "password"]);
 }
@@ -130,3 +147,4 @@ exports.validateUser = validateUser;
 exports.validateEditUser = validateEditUser;
 exports.pickUserData = pickData;
 exports.validateLogin = validateLogin;
+exports.validatePassReset = validatePassReset;
