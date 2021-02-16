@@ -36,7 +36,8 @@ describe("user route endpoint", () => {
       expect(res.body).to.not.have.deep.property("password", password);
     });
   });
-  describe("POST /add", () => {
+  describe("POST /add", function () {
+    this.timeout(10000);
     let name;
     let email;
     let password;
