@@ -9,6 +9,7 @@ const {
   User,
   validateUser,
   validateEditUser,
+  validatePassReset,
   pickUserData,
 } = require("../models/user");
 const express = require("express");
@@ -88,6 +89,24 @@ router.put("/edit", [auth, uploadAvatar.single("avatar")], async (req, res) => {
   if (result.n)
     res.status(200).send("Your profile has been successfully updated. ");
   else res.status(500).send("Error! please, try again later...");
+});
+
+router.put("/resetPassword", auth, async (req, res) => {
+  const { error } = validatePassReset(req.body);
+  if (error) return res.status(400).send(error.details[0].message);
+
+  //Note: Error checking isn't missing here, if we have passed the
+  //auth middleware, we know that the user exists for the passed token.
+  const user = await User.findById(req.user._id);
+  const validPassword = await bcrypt.compare(
+    req.body.old_password,
+    user.password
+  );
+  if (!validPassword) return res.status(400).send("Old password is incorrect.");
+  const salt = await bcrypt.genSalt(10);
+  user.password = await bcrypt.hash(req.body.new_password, salt);
+  await user.save();
+  res.status(200).send(_.pick(user, ["_id", "name", "email"]));
 });
 
 module.exports = router;
