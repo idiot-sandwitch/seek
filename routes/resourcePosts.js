@@ -13,7 +13,7 @@ const { User } = require("../models/user");
 const { Subject } = require("../models/subject");
 const { Course } = require("../models/course");
 
-router.get("/post/:id", async (req, res) => {
+router.get("/find/:id", async (req, res) => {
   const id = req.params.id;
   const post = await ResourcePost.findById(id);
   if (!post) res.status(404).send("Post not found!");
@@ -27,7 +27,7 @@ router.get("/post/:id", async (req, res) => {
 // });
 
 //TODO: remove this after above get request is working
-router.get("/posts", async (req, res) => {
+router.get("/all", async (req, res) => {
   try {
     const posts = await ResourcePost.find();
     res.status(200).send(posts);

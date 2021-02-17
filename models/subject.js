@@ -17,7 +17,8 @@ function validate(subject) {
     name: Joi.string().min(5).max(255).required(),
   });
   return schema.validate(subject);
-}
+  }
+
 
 function pickData(subject) {
   return _.pick(subject, ["name"]);

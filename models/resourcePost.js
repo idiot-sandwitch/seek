@@ -6,6 +6,7 @@ require("mongoose-type-url");
 
 //TODO: add schema and validation for branch, sem, subject as enum
 //TODO: implement uploading content files
+//TODO: Do url checking
 const resourePostSchema = new mongoose.Schema(
   {
     title: {
@@ -50,7 +51,7 @@ const resourePostSchema = new mongoose.Schema(
       default: false,
     },
     contentUrl: {
-      type: mongoose.SchemaTypes.Url,
+      type: String,
     },
   },
   { timestamps: true }
@@ -65,7 +66,7 @@ function validatePost(post) {
     replies: Joi.objectId(),
     subject: Joi.objectId().required(),
     course: Joi.objectId(),
-    editorChoice: Joi.Boolean(),
+    editorChoice: Joi.boolean(),
     contentUrl: Joi.string().min(3).max(255),
   });
 

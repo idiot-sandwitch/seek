@@ -1,5 +1,6 @@
+const { invalid } = require("joi");
 const Joi = require("joi");
-const { pick } = require("lodash");
+const _ = require("lodash");
 const mongoose = require("mongoose");
 
 const courseSchema = mongoose.Schema({
@@ -25,6 +26,25 @@ function pickData(course) {
   return _.pick(course, ["code"]);
 }
 
+async function areIdsValid(courses) {
+  const invalidCourseIds = [];
+
+  for (Id in courses) {
+    let course = await Course.findOne({ _id: Id });
+    if (!course) {
+      invalidCourseIds.push(Id);
+    }
+  }
+
+  if (invalidCourseIds.length > 0) {
+    console.log(`Courses: ${invalidCourseIds} do not exist`);
+    return false;
+  } else {
+    return true;
+  }
+}
+
 exports.Course = Course;
 exports.validateCourse = validate;
 exports.pickCourseData = pickData;
+exports.areCourseIdsValid = areIdsValid;

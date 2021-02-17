@@ -1,9 +1,10 @@
 const express = require("express");
 const route = express.Router();
 const { Course, validateCourse, pickCourseData } = require("../models/course");
+const auth = require("../middlewares/auth");
 
 //retrive
-route.get("/all", async (req, res) => {
+route.get("/all", auth, async (req, res) => {
   try {
     const courses = await Course.find().sort({ code: 1 });
     res.status(200).send(courses);
@@ -13,7 +14,7 @@ route.get("/all", async (req, res) => {
   }
 });
 
-route.get("/find/:id", async (req, res) => {
+route.get("/find/:id", auth, async (req, res) => {
   try {
     const course = await Course.findById(req.params.id);
     res.status(200).send(course);
@@ -24,7 +25,7 @@ route.get("/find/:id", async (req, res) => {
 });
 
 //Create
-route.post("/add", async (req, res) => {
+route.post("/add", auth, async (req, res) => {
   const result = validateCourse(req.body);
   if (result.error) {
     res.status(400).send(result.error.details[0].message);
@@ -42,15 +43,15 @@ route.post("/add", async (req, res) => {
 });
 
 //update
-route.put("/edit/:id", async (req, res) => {
+route.put("/edit/:id", auth, async (req, res) => {
   const { error } = validateCourse(req.body);
   if (error) {
     res.status(400).send(error.details[0].message);
   }
 
   try {
-    const course = await Course.findByIdAndUpdate(
-      req.params.id,
+    const course = await Course.findOneAndUpdate(
+      { _id: req.params.id },
       pickCourseData(req.body)
     );
     res.status(200).send(`${course.code} updated to ${req.body.code}`);
@@ -61,3 +62,5 @@ route.put("/edit/:id", async (req, res) => {
 });
 
 //delete
+
+module.exports = route;

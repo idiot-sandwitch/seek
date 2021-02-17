@@ -1,12 +1,13 @@
 const express = require("express");
 const route = express.Router();
+const auth = require("../middlewares/auth");
 const {
   Subject,
   validateSubject,
   pickSubjectData,
 } = require("../models/subject");
 
-route.get("/all", async (req, res) => {
+route.get("/all", auth, async (req, res) => {
   try {
     const subjects = await Subject.find().sort({ name: 1 });
     res.status(200).send(subjects);
@@ -16,7 +17,7 @@ route.get("/all", async (req, res) => {
   }
 });
 
-route.get("/find/:id", async (req, res) => {
+route.get("/find/:id", auth, async (req, res) => {
   try {
     const subject = await Subject.findById(req.params.id);
     res.send(subject);
@@ -26,14 +27,14 @@ route.get("/find/:id", async (req, res) => {
   }
 });
 
-route.put("/edit/:id", async (req, res) => {
+route.put("/edit/:id", auth, async (req, res) => {
   const { error } = validateSubject(req.body);
   if (error) {
     res.status(400).send(error.details[0].message);
   }
   try {
-    const subject = await Subject.findByIdAndUpdate(
-      req.params.id,
+    const subject = await Subject.findOneAndUpdate(
+      { _id: req.params.id },
       pickSubjectData(req.body)
     );
     res.status(200).send(`${subject.name} changed to ${req.body.name}`);
@@ -43,7 +44,7 @@ route.put("/edit/:id", async (req, res) => {
   }
 });
 
-route.post("/add", async (req, res) => {
+route.post("/add", auth, async (req, res) => {
   const { error } = validateSubject(req.body);
   if (error) {
     res.status(400).send(error.details[0].message);
@@ -51,7 +52,7 @@ route.post("/add", async (req, res) => {
 
   const subject = new Subject(pickSubjectData(req.body));
   try {
-    subject.save();
+    await subject.save();
     res.status(200).send(`${subject.name} added successfully`);
   } catch (e) {
     console.log(e.message);
