@@ -15,6 +15,11 @@ const verificationSchema = new mongoose.Schema({
     ref: "User",
     required: true,
   },
+  createdAt: {
+    type: Date,
+    expires: "3d",
+    default: Date.now,
+  },
 });
 
 const VerificationToken = mongoose.model(
