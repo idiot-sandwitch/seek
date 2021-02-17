@@ -4,6 +4,7 @@ const passwordComplexity = require("joi-password-complexity").default;
 const mongoose = require("mongoose");
 const _ = require("lodash");
 const { ResourcePost } = require("./resourcePost");
+const { string } = require("joi");
 
 //NOTE: remember to update anonymous user in startup/config.js after updating schema
 //TODO: implement branch, sem
@@ -132,7 +133,33 @@ function validatePassReset(req) {
   };
   const schema = Joi.object({
     old_password: Joi.string().required(),
-    new_password: passwordComplexity(complexityOptions).required(),
+    new_password: passwordComplexity(complexityOptions)
+      .disallow(Joi.ref("old_password"))
+      .required(),
+  });
+  return schema.validate(req);
+}
+
+function validateForgotPass(req) {
+  const schema = Joi.object({
+    email: Joi.string().email().required(),
+  });
+  return schema.validate(req);
+}
+
+function validateSetNewPass(req) {
+  const complexityOptions = {
+    min: 4,
+    max: 1024,
+    lowerCase: 1,
+    upperCase: 1,
+    numeric: 1,
+    symbol: 1,
+    requirementCount: 3,
+  };
+  const schema = Joi.object({
+    otp: Joi.string().length(8).required(),
+    password: passwordComplexity(complexityOptions).required(),
   });
   return schema.validate(req);
 }
@@ -148,3 +175,5 @@ exports.validateEditUser = validateEditUser;
 exports.pickUserData = pickData;
 exports.validateLogin = validateLogin;
 exports.validatePassReset = validatePassReset;
+exports.validateForgotPass = validateForgotPass;
+exports.validateSetNewPass = validateSetNewPass;

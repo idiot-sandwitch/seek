@@ -1,3 +1,4 @@
+const { ResetPassOTP } = require("../models/resetPass");
 const { sendMail } = require("../utility/mailer");
 const { VerificationToken } = require("../models/verification");
 const randomString = require("randomstring");
@@ -10,6 +11,8 @@ const {
   validateUser,
   validateEditUser,
   validatePassReset,
+  validateForgotPass,
+  validateSetNewPass,
   pickUserData,
 } = require("../models/user");
 const express = require("express");
@@ -107,6 +110,70 @@ router.put("/resetPassword", auth, async (req, res) => {
   user.password = await bcrypt.hash(req.body.new_password, salt);
   await user.save();
   res.status(200).send(_.pick(user, ["_id", "name", "email"]));
+});
+
+router.post("/forgotPassword", async (req, res) => {
+  const { error } = validateForgotPass(req.body);
+  if (error) return res.status(400).send(error.details[0].message);
+
+  const user = await User.findOne({ email: req.body.email });
+  if (!user) return res.status(404).send("account not found.");
+
+  const existingOTP = await ResetPassOTP.findOne({ user: user._id });
+  if (existingOTP)
+    return res.status(400).send("open password reset request already exists.");
+
+  const userReference = {
+    otp: randomString.generate({ charset: "numeric", length: 8 }),
+    user: user._id,
+  };
+  const resetToken = new ResetPassOTP(userReference);
+  await resetToken.save();
+
+  let body = {
+    from: "Seek Inc. <avijeetpandey87@gmail.com>",
+    to: user.email,
+    suject: "Password reset request.",
+    text: "",
+    html: `<p>Hi ${user.name},<br/>enter the following token on the link provided to recover your account.</p>
+    <br/><br/>
+    <center><a href = "https://google.co.in"><button>Click here to reset your account password</button></a></center>
+    <br/><br/>
+    <strong>Your password reset token:</strong>
+    <br/>
+    <center>${userReference.token}</center>
+    `,
+  };
+  await sendMail(body);
+  res
+    .status(200)
+    .send(
+      "Account recovery details were sent successfully to the registered email."
+    );
+});
+
+router.put("/setNewPassword", async (req, res) => {
+  const { error } = validateSetNewPass(req.body);
+  if (error) return res.status(400).send(error.details[0].message);
+
+  const resetOTP = await ResetPassOTP.findOne({ otp: req.body.otp });
+  if (!resetOTP) return res.status(400).send("Invalid or expired token.");
+
+  const user = await User.findById(resetOTP.user);
+  if (!user)
+    return res.status(400).send("Invalid token, the user does not exist.");
+
+  const samePass = await bcrypt.compare(req.body.password, user.password);
+  if (samePass)
+    return res
+      .status(400)
+      .send("The new password cannot be the same as the current password");
+
+  const salt = await bcrypt.genSalt(10);
+  user.password = await bcrypt.hash(req.body.password, salt);
+  await ResetPassOTP.findOneAndDelete({ otp: req.body.otp });
+  await user.save();
+  res.status(200).send("Password successfully updated.");
 });
 
 module.exports = router;
