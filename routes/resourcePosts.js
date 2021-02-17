@@ -3,14 +3,17 @@ const anonymous = require("../middlewares/anonymous");
 const router = require("express").Router();
 const vote = require("../middlewares/vote");
 const _ = require("lodash");
+
 const {
   ResourcePost,
   validateResourcePost,
   pickResourcePostData,
 } = require("../models/resourcePost");
 const { User } = require("../models/user");
+const { Subject } = require("../models/subject");
+const { Course } = require("../models/course");
 
-router.get("/post/:id", async (req, res) => {
+router.get("/find/:id", async (req, res) => {
   const id = req.params.id;
   const post = await ResourcePost.findById(id);
   if (!post) res.status(404).send("Post not found!");
@@ -24,7 +27,7 @@ router.get("/post/:id", async (req, res) => {
 // });
 
 //TODO: remove this after above get request is working
-router.get("/posts", async (req, res) => {
+router.get("/all", async (req, res) => {
   try {
     const posts = await ResourcePost.find();
     res.status(200).send(posts);
@@ -57,6 +60,21 @@ router.get("/findBySubject/:subject", async (req, res) => {
 router.post("/add", [auth, anonymous], async (req, res) => {
   const { error } = validateResourcePost(req.body);
   if (error) return res.status(400).send(error.details[0].message);
+
+  const user = User.findById(req.body.authorId);
+  if (!user) {
+    res.status(404).send("User does not exist");
+  }
+
+  const subject = Subject.findById(req.body.subject);
+  if (!subject) {
+    res.status(404).send("Subject does not exist");
+  }
+
+  const course = Course.findById(req.body.course);
+  if (!course) {
+    res.status(404).send("Course does not exist");
+  }
 
   let post = new ResourcePost(pickResourcePostData(req.body));
   try {

@@ -5,6 +5,9 @@ const replies = require("../routes/replies");
 const resourcePosts = require("../routes/resourcePosts");
 const error = require("../middlewares/error");
 const verify = require("../routes/verify");
+const subject = require("../routes/subjects");
+const course = require("../routes/courses");
+const branch = require("../routes/branches");
 
 module.exports = function (app) {
   app.use(express.json());
@@ -14,5 +17,8 @@ module.exports = function (app) {
   app.use("/api/verify", verify);
   app.use("/api/resourceposts", resourcePosts);
   app.use("/api/reply", replies);
+  app.use("/api/subject", subject);
+  app.use("/api/course", course);
+  app.use("/api/branch", branch);
   app.use(error);
 };
