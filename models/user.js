@@ -133,7 +133,9 @@ function validatePassReset(req) {
   };
   const schema = Joi.object({
     old_password: Joi.string().required(),
-    new_password: passwordComplexity(complexityOptions).required(),
+    new_password: passwordComplexity(complexityOptions)
+      .disallow(Joi.ref("old_password"))
+      .required(),
   });
   return schema.validate(req);
 }
