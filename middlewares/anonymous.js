@@ -1,6 +1,6 @@
 const Joi = require("joi");
 const _ = require("lodash");
-const { anonymousId } = require("../config");
+const { anonymousId } = require("../startup/config");
 
 module.exports = async function (req, res, next) {
   if (req.body.anonymous) {

@@ -4,16 +4,18 @@ const app = express();
 
 //Setup logging and environment variables
 const winston = require("winston");
-const config = require("./config.js");
+require("./startup/logging")(winston);
+const config = require("./startup/config");
 config.checkEnvVars();
 require("./startup/db")();
 config.createAnonymousUser();
 
 //Include the startup routes.
-require("./startup/logging")(winston);
 require("./startup/routes")(app);
 require("./startup/validation")();
 
 //Get port variable from the env, default is 3000.
 const port = process.env.PORT || 3000;
-app.listen(port, () => winston.info(`Listening on port ${port}...`));
+module.exports = app.listen(port, () =>
+  winston.info(`Listening on port ${port}...`)
+);
