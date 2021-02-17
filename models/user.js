@@ -137,6 +137,13 @@ function validatePassReset(req) {
   return schema.validate(req);
 }
 
+function validateForgotPass(req) {
+  const schema = Joi.object({
+    email: Joi.string().email().required(),
+  });
+  return schema.validate(req);
+}
+
 function pickData(userData) {
   return _.pick(userData, ["name", "email", "password"]);
 }
@@ -148,3 +155,4 @@ exports.validateEditUser = validateEditUser;
 exports.pickUserData = pickData;
 exports.validateLogin = validateLogin;
 exports.validatePassReset = validatePassReset;
+exports.validateForgotPass = validateForgotPass;
