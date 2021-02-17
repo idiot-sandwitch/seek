@@ -18,7 +18,7 @@ const verificationSchema = new mongoose.Schema({
 });
 
 const VerificationToken = mongoose.model(
-  "validation-tokens",
+  "verification-token",
   verificationSchema
 );
 
