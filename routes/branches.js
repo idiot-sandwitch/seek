@@ -1,7 +1,7 @@
 const express = require("express");
 const { Branch, validateBranch, pickBranchData } = require("../models/branch");
 const { areCourseIdsValid } = require("../models/course");
-const auth = require("../middlewares/auth")
+const auth = require("../middlewares/auth");
 const route = express.Router();
 
 //create
@@ -55,6 +55,7 @@ route.get("/find/:id", auth, async (req, res) => {
 //update
 
 route.put("/edit/:id", auth, async (req, res) => {
+  //if client only wants to edit some properties, they'll still have to send all properties for validation to work
   const { error } = validateBranch(pickBranchData(req.body));
   if (error) {
     console.log(error);
@@ -62,14 +63,12 @@ route.put("/edit/:id", auth, async (req, res) => {
   }
 
   //ISSUE: if branch/semester are not in request body then updated to NULL
+  //SOLVED: put req.body itself isntead of picking elements from req.body
   try {
     const branch = await Branch.findOneAndUpdate(
       { _id: req.params.id },
       {
-        $set: {
-          branch: req.body.branch,
-          semester: req.body.semester,
-        },
+        $set: req.body,
       }
     );
     res.status(200).send(`${branch.branch} updated sucessfully`);
