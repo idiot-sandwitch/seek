@@ -8,6 +8,7 @@ const verify = require("../routes/verify");
 const subject = require("../routes/subjects");
 const course = require("../routes/courses");
 const branch = require("../routes/branches");
+const comment = require("../routes/comments");
 
 module.exports = function (app) {
   app.use(express.json());
@@ -20,5 +21,6 @@ module.exports = function (app) {
   app.use("/api/subject", subject);
   app.use("/api/course", course);
   app.use("/api/branch", branch);
+  app.use("/api/comment", comment);
   app.use(error);
 };
