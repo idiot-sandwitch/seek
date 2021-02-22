@@ -13,7 +13,7 @@ if (process.env.NODE_ENV) winston.info(`NODE_ENV: ${process.env.NODE_ENV}`);
 
 const anon = new User({
   name: "Anonymous",
-  email: "Null",
+  email: "null@null.void",
   password: "Null",
   avatar: `${process.env.BASE_URL}avatars/anonymous.jpg`,
   isVerified: true,
@@ -24,11 +24,11 @@ const enVars = [
   "BASE_URL",
   "MAX_AVATAR_SIZE_MB",
   "JWT_HEADER",
-  "SENDGRID_API_KEY"
+  "SENDGRID_API_KEY",
 ];
 
 module.exports.createAnonymousUser = async function () {
-  const user = await User.findOne({ email: "Null" });
+  const user = await User.findOne({ email: "null@null.void" });
   if (user) winston.info(`Anonymous user already exists with _id: ${user.id}.`);
   else {
     anon.save().catch((err) => {
@@ -38,7 +38,7 @@ module.exports.createAnonymousUser = async function () {
   }
 };
 module.exports.anonymousId = async function () {
-  const user = await User.findOne({ email: "Null" });
+  const user = await User.findOne({ email: "null@null.void" });
   if (!user) {
     throw new Error("Could not find anonymous user.");
   }
