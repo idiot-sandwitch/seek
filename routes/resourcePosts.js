@@ -37,6 +37,20 @@ router.get("/all", async (req, res) => {
   }
 });
 
+router.get("/page/:page/:results", async (req, res) => {
+  const { results, page } = req.params;
+
+  try {
+    const posts = await ResourcePost.find()
+      .skip(page * results)
+      .limit(parseInt(results));
+    res.status(200).send(posts);
+  } catch (e) {
+    console.error(e.message);
+    res.status(404).send("No posts found!");
+  }
+});
+
 router.get("/findByCourse/:course", async (req, res) => {
   try {
     const posts = await ResourcePost.find({ course: req.params.course });
