@@ -3,6 +3,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Badge from "react-bootstrap/Badge";
 import Media from "react-bootstrap/Media";
+import Button from "react-bootstrap/Button";
 
 export const PostItem = ({
   post: {
@@ -21,16 +22,17 @@ export const PostItem = ({
   const showEditorBadge = (isChoice) => {
     if (isChoice) {
       return (
-        <Badge
-          style={{
-            borderColor: "gold",
-            color: "gold",
-            marginRight: "1em",
-          }}
-        >
-          <i class="fas fa-star"></i>
-          Editor's Choice
-        </Badge>
+        <Button className="badgeButton">
+          <Badge
+            style={{
+              borderColor: "gold",
+              color: "gold",
+            }}
+          >
+            <i style={{ marginRight: "10px" }} class="fas fa-star"></i>
+            Editor's Choice
+          </Badge>
+        </Button>
       );
     } else return null;
   };
@@ -88,21 +90,31 @@ export const PostItem = ({
         }}
       >
         <span style={{ marginRight: "1.5em", fontWeight: "bold" }}>
-          <i class="fas fa-arrow-up" style={{ marginRight: "0.4em" }}></i>
+          <Button className="iconButton">
+            <i class="fas fa-arrow-up" />
+          </Button>
           {votes}
-          <i class="fas fa-arrow-down" style={{ marginLeft: "0.4em" }}></i>
+          <Button className="iconButton">
+            <i class="fas fa-arrow-down" />
+          </Button>
         </span>
         <span style={{ marginRight: "1.5em", fontWeight: "bold" }}>
-          <i class="fas fa-comment-dots" style={{ marginRight: "0.4em" }}></i>
+          <Button className="iconButton">
+            <i class="fas fa-comment-dots" />
+          </Button>
           {comments.length}
         </span>
         <span>
-          <i class="fas fa-share"></i>
+          <Button className="iconButton">
+            <i class="fas fa-share"></i>
+          </Button>
         </span>
 
         <span className="ml-auto mr-3">
           {showEditorBadge(editorChoice)}
-          <Badge>SUBCODE</Badge>
+          <Button className="badgeButton">
+            <Badge>SUBCODE</Badge>
+          </Button>
         </span>
       </Row>
     </Container>

@@ -4,6 +4,8 @@
   border-radius: 0.5rem !important;
   padding-left: 0.5rem !important;
   padding-right: 0.6rem !important;
+  font-weight: lighter !important;
+  font-size: 1rem !important;
 }
 
 body {
@@ -12,6 +14,23 @@ body {
   color: #ffffff !important;
 }
 
+.iconButton {
+  margin-right: 0.5em;
+  margin-left: 0.5em;
+
+  padding: 0.3em !important;
+  background-color: transparent !important;
+  border: transparent !important;
+}
+
+.badgeButton {
+  margin-right: 0.5em;
+  margin-left: 0.5em;
+
+  padding: 0 !important;
+  background-color: transparent !important;
+  border: transparent !important;
+}
 h1,
 h2,
 h3,
