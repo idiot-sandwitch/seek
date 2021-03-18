@@ -66,7 +66,7 @@ router.post("/add", async (req, res) => {
     `,
   };
   await user.save();
-  await sendMail(body);
+  if (process.env.NODE_ENV === "production") await sendMail(body);
   res.status(200).send(_.pick(user, ["_id", "name", "email"]));
 });
 
@@ -144,7 +144,7 @@ router.post("/forgotPassword", async (req, res) => {
     <center>${userReference.token}</center>
     `,
   };
-  await sendMail(body);
+  if (process.env.NODE_ENV === "production") await sendMail(body);
   res
     .status(200)
     .send(
