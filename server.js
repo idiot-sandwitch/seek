@@ -14,8 +14,8 @@ config.createAnonymousUser();
 require("./startup/routes")(app);
 require("./startup/validation")();
 
-//Get port variable from the env, default is 3000.
-const port = process.env.PORT || 3000;
+//Get port variable from the env, default is 5000.
+const port = process.env.PORT || 5000;
 module.exports = app.listen(port, () =>
   winston.info(`Listening on port ${port}...`)
 );

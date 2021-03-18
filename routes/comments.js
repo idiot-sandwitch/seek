@@ -94,9 +94,8 @@ route.put("/editSubComment/:id/:subId", async (req, res) => {
 
   try {
     const comment = await Comment.findOne({ _id: req.params.id });
-    const subComcomment = await comment.replies.id(req.params.subId);
-
-    subComcomment.content = req.body.content;
+    const subComment = await comment.replies.id(req.params.subId);
+    subComment.content = req.body.content;
 
     await comment.save();
     res.status(200).send("Reply updated");
