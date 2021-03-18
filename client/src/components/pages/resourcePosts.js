@@ -20,6 +20,10 @@ export const ResourcePosts = () => {
     dispatch(getnPosts(page, 4));
   };
 
+  const pageEnd = () => {
+    //return false if no change in posts state
+    return true;
+  };
   // useEffect(() => {
   //   const loadPosts = async (page, results) => {
   //     setLoading(true);
@@ -49,9 +53,10 @@ export const ResourcePosts = () => {
       <InfiniteScroll
         dataLength={posts.length}
         next={loadPosts}
-        hasMore={true}
+        hasMore={pageEnd}
         loader={<h4>Loading</h4>}
         style={{ magin: "0px" }}
+        endMessage={<h4>Fuk off</h4>}
       >
         {posts.map((post) => (
           <PostItem key={post.title} post={post} />

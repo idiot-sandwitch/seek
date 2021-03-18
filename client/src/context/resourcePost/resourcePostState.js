@@ -53,9 +53,9 @@ const ResourcePostState = (props) => {
         __v: 0,
       },
       {
-        votes: 0,
+        votes: 3,
         replies: [],
-        editorChoice: false,
+        editorChoice: true,
         _id: "6052e76596c808549cecf085",
         title: "NodeJS tutorial by mosh",
         content: "Good course, very cool",
