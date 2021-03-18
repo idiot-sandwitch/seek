@@ -4,19 +4,22 @@ import "./App.css";
 import { Header } from "./components/layout/navbar";
 import { ResourcePosts } from "./components/pages/resourcePosts";
 import ResourcePostState from "./context/resourcePost/resourcePostState";
+import { Provider } from "react-redux";
+import store from "./store";
 function App() {
-  
   return (
-    <ResourcePostState>
-      <Router>
-        <div className="App">
-          <Header />
-          <Switch>
-            <Route exact path="/resources" component={ResourcePosts} />
-          </Switch>
-        </div>
-      </Router>
-    </ResourcePostState>
+    <Provider store={store}>
+      <ResourcePostState>
+        <Router>
+          <React.Fragment>
+            <Header />
+            <Switch>
+              <Route exact path='/resources' component={ResourcePosts} />
+            </Switch>
+          </React.Fragment>
+        </Router>
+      </ResourcePostState>
+    </Provider>
   );
 }
 

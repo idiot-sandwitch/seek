@@ -75,12 +75,9 @@ const ResourcePostState = (props) => {
   const [state, dispatch] = useReducer(resourecePostReducer, initialState);
 
   const getnPosts = async (page, results) => {
-    console.log("page:", { page });
-    console.log("results:", { results });
     const res = await axios.get(
       `http://localhost:5000/api/resourceposts/page/${page}/${results}`
     );
-    console.log(res.data);
 
     dispatch({ type: GET_N_POSTS, payload: res.data });
   };

@@ -1,19 +1,23 @@
-import React, { useContext, useEffect } from "react";
+import React from "react";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import { PostItem } from "../layout/post_item";
-import ResourcePostContext from "../../context/resourcePost/resourcePostContext";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { setPage, setStatus, getnPosts } from "../../features/user/postsSlice";
+import { useSelector, useDispatch } from "react-redux";
 
 export const ResourcePosts = () => {
-  const resourcePostContext = useContext(ResourcePostContext);
-  const { posts, setLoading, getnPosts, page, setPage } = resourcePostContext;
+  const dispatch = useDispatch();
 
-  const loadPosts = async () => {
-    setPage(page+1);
-    setLoading(true);
-    await getnPosts(page, 4);
+  const postState = useSelector((state) => state.posts);
+  const { posts, page } = postState;
+  console.log(posts.map);
+
+  const loadPosts = () => {
+    dispatch(setPage(page + 1));
+    dispatch(setStatus("loading"));
+    dispatch(getnPosts(page, 4));
   };
 
   // useEffect(() => {
@@ -38,7 +42,7 @@ export const ResourcePosts = () => {
               fontSize: "2em",
             }}
           >
-            <i className="fas fa-plus"></i> Create Post
+            <i className='fas fa-plus'></i> Create Post
           </Button>
         </Row>
       </Container>
