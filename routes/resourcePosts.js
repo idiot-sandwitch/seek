@@ -44,6 +44,9 @@ router.get("/page/:page/:results", async (req, res) => {
     const posts = await ResourcePost.find()
       .skip(page * results)
       .limit(parseInt(results));
+    if (posts === []) {
+      res.status(404).send("No posts found");
+    }
     res.status(200).send(posts);
   } catch (e) {
     console.error(e.message);

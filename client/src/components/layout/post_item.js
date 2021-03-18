@@ -5,17 +5,34 @@ import Badge from "react-bootstrap/Badge";
 import Media from "react-bootstrap/Media";
 import Button from "react-bootstrap/Button";
 
+/* {
+        "votes": 0,
+        "replies": [],
+        "editorChoice": false,
+        "_id": "604f1f114ed25a4eb87c7c0c",
+        "title": "Fake 3 NodeJS tutorial by mosh",
+        "content": "Good course, very cool",
+        "authorId": "602cd33c38c2747b15b7fefc",
+        "subject": "6026c8b30bdf2031385d3da2",
+        "course": "602d1c195fdcb95481d93412",
+        "contentUrl": "fakeUrl",
+        "createdAt": "2021-02-17T14:58:02.945Z",
+        "updatedAt": "2021-02-17T14:58:02.945Z",
+        "__v": 0
+        "type":
+    }*/
+
 export const PostItem = ({
   post: {
     title,
     content,
     type,
     authorId,
-    url,
+    contentUrl,
     votes,
-    comments,
+    replies,
     editorChoice,
-    code,
+    course,
     subject,
   },
 }) => {
@@ -29,7 +46,7 @@ export const PostItem = ({
               color: "gold",
             }}
           >
-            <i style={{ marginRight: "10px" }} class="fas fa-star"></i>
+            <i style={{ marginRight: "10px" }} className="fas fa-star"></i>
             Editor's Choice
           </Badge>
         </Button>
@@ -38,7 +55,7 @@ export const PostItem = ({
   };
 
   return (
-    <Container style={{ width: "80rem", padding: "1rem" }}>
+    <Container style={{ width: "100%", padding: "1rem" }}>
       <Row
         style={{
           backgroundColor: "#383838",
@@ -56,7 +73,7 @@ export const PostItem = ({
               padding: "1em",
             }}
           >
-            <i class="fas fa-file-alt"></i>
+            <i className="fas fa-file-alt"></i>
           </span>
         </Media>
         <Media.Body style={{ padding: "1em" }}>
@@ -75,8 +92,8 @@ export const PostItem = ({
             {content}
           </p>
           <span>
-            <i class="fas fa-link" style={{ marginRight: "10px" }} />
-            <a href={url}>URL</a>
+            <i className="fas fa-link" style={{ marginRight: "10px" }} />
+            <a href={contentUrl}>URL</a>
           </span>
         </Media.Body>
       </Row>
@@ -91,22 +108,22 @@ export const PostItem = ({
       >
         <span style={{ marginRight: "1.5em", fontWeight: "bold" }}>
           <Button className="iconButton">
-            <i class="fas fa-arrow-up" />
+            <i className="fas fa-arrow-up" />
           </Button>
           {votes}
           <Button className="iconButton">
-            <i class="fas fa-arrow-down" />
+            <i className="fas fa-arrow-down" />
           </Button>
         </span>
         <span style={{ marginRight: "1.5em", fontWeight: "bold" }}>
           <Button className="iconButton">
-            <i class="fas fa-comment-dots" />
+            <i className="fas fa-comment-dots" />
           </Button>
-          {comments.length}
+          {replies ? replies.length : 0}
         </span>
         <span>
           <Button className="iconButton">
-            <i class="fas fa-share"></i>
+            <i className="fas fa-share"></i>
           </Button>
         </span>
 
