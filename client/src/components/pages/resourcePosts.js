@@ -4,11 +4,15 @@ import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import { PostItem } from "../layout/post_item";
 import ResourcePostContext from "../../context/resourcePost/resourcePostContext";
+import AlertContext from "../../context/alert/alertContext";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { SeekAlert } from "../layout/alert";
 
 export const ResourcePosts = () => {
   const resourcePostContext = useContext(ResourcePostContext);
+  const alertContext = useContext(AlertContext);
   const { posts, setLoading, getnPosts, page, setPage } = resourcePostContext;
+  const { setAlert } = alertContext;
 
   const loadPosts = async () => {
     setPage(page + 1);
@@ -19,6 +23,10 @@ export const ResourcePosts = () => {
   const pageEnd = () => {
     //return false if no change in posts state
     return true;
+  };
+
+  const handleClick = () => {
+    setAlert("danger", "Why you touch me?");
   };
   // useEffect(() => {
   //   const loadPosts = async (page, results) => {
@@ -31,10 +39,12 @@ export const ResourcePosts = () => {
   //, height: "800px", overflowY: "scroll"
 
   return (
-    <Container style={{ marginTop: "3rem" }}>
+    <Container style={{ marginTop: "4rem" }}>
+      <SeekAlert />
       <Container style={{ width: "100%", padding: "1rem" }}>
         <Row>
           <Button
+            onClick={handleClick}
             block
             style={{
               backgroundColor: "#6109B3",
