@@ -6,14 +6,12 @@ import { PostItem } from "../layout/post_item";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { setPage, setStatus, getnPosts } from "../../features/user/postsSlice";
 import { useSelector, useDispatch } from "react-redux";
-import AlertContext from "../../context/alert/alertContext";
 
 export const ResourcePosts = () => {
   const dispatch = useDispatch();
   const postState = useSelector((state) => state.posts);
   const { posts, page } = postState;
-  const alertContext = useContext(AlertContext);
-  const { setAlert } = alertContext;
+
   useEffect(() => {
     dispatch(setStatus("loading"));
     dispatch(getnPosts({ page, results: 4 }));
@@ -29,11 +27,6 @@ export const ResourcePosts = () => {
     //return false if no change in posts state
     return true;
   };
-
-  const handleClick = () => {
-    setAlert("danger", "Why you touch me?");
-  };
-  
 
   //, height: "800px", overflowY: "scroll"
 
@@ -51,7 +44,7 @@ export const ResourcePosts = () => {
               fontSize: "2em",
             }}
           >
-            <i className='fas fa-plus'></i> Create Post
+            <i className="fas fa-plus"></i> Create Post
           </Button>
         </Row>
       </Container>
