@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
@@ -9,28 +9,24 @@ import { useSelector, useDispatch } from "react-redux";
 
 export const ResourcePosts = () => {
   const dispatch = useDispatch();
-
   const postState = useSelector((state) => state.posts);
   const { posts, page } = postState;
-  console.log(posts.map);
+
+  useEffect(() => {
+    dispatch(setStatus("loading"));
+    dispatch(getnPosts({ page, results: 4 }));
+  }, []);
 
   const loadPosts = () => {
     dispatch(setPage(page + 1));
     dispatch(setStatus("loading"));
-    dispatch(getnPosts(page, 4));
+    dispatch(getnPosts({ page: page, results: 4 }));
   };
 
   const pageEnd = () => {
     //return false if no change in posts state
     return true;
   };
-  // useEffect(() => {
-  //   const loadPosts = async (page, results) => {
-  //     setLoading(true);
-  //     await getnPosts(page, results);
-  //   };
-  //   loadPosts(page, 3);
-  // }, [page]);
 
   //, height: "800px", overflowY: "scroll"
 
