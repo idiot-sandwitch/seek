@@ -19,7 +19,9 @@ router.post("/", async (req, res) => {
   if (!user.isVerified) return res.status(401).send("User email not verified.");
 
   const token = user.generateAuthToken();
-  res.status(200).send(token); 
+  res
+    .status(200)
+    .send({ token, user: _.pick(user, ["_id", "avatar", "name", "email"]) });
 });
 
 module.exports = router;

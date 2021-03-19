@@ -67,7 +67,7 @@ router.post("/add", async (req, res) => {
   };
   await user.save();
   if (process.env.NODE_ENV === "production") await sendMail(body);
-  res.status(200).send(_.pick(user, ["_id", "name", "email"]));
+  res.status(200).send(_.pick(user, ["_id", "avatar", "name", "email"]));
 });
 
 router.put("/edit", [auth, uploadAvatar.single("avatar")], async (req, res) => {

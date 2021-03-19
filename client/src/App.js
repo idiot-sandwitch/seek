@@ -6,22 +6,25 @@ import { ResourcePosts } from "./components/pages/resourcePosts";
 import { Login } from "./components/pages/login";
 import ResourcePostState from "./context/resourcePost/resourcePostState";
 import AlertState from "./context/alert/alertState";
-
+import { Provider } from "react-redux";
+import store from "./store";
 function App() {
   return (
-    <ResourcePostState>
+    <Provider store={store}>
+      <ResourcePostState>
       <AlertState>
         <Router>
-          <div className="App">
+          <React.Fragment>
             <Header />
             <Switch>
-              <Route exact path="/resources" component={ResourcePosts} />
+              <Route exact path='/resources' component={ResourcePosts} />
               <Route exact path="/login" component={Login} />
             </Switch>
-          </div>
+          </React.Fragment>
         </Router>
-      </AlertState>
-    </ResourcePostState>
+        </AlertState>
+      </ResourcePostState>
+    </Provider>
   );
 }
 

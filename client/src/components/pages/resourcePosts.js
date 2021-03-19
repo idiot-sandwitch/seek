@@ -1,23 +1,28 @@
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import { PostItem } from "../layout/post_item";
-import ResourcePostContext from "../../context/resourcePost/resourcePostContext";
-import AlertContext from "../../context/alert/alertContext";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { SeekAlert } from "../layout/alert";
+import { setPage, setStatus, getnPosts } from "../../features/user/postsSlice";
+import { useSelector, useDispatch } from "react-redux";
+import AlertContext from "../../context/alert/alertContext";
 
 export const ResourcePosts = () => {
-  const resourcePostContext = useContext(ResourcePostContext);
+  const dispatch = useDispatch();
+  const postState = useSelector((state) => state.posts);
+  const { posts, page } = postState;
   const alertContext = useContext(AlertContext);
-  const { posts, setLoading, getnPosts, page, setPage } = resourcePostContext;
   const { setAlert } = alertContext;
+  useEffect(() => {
+    dispatch(setStatus("loading"));
+    dispatch(getnPosts({ page, results: 4 }));
+  }, []);
 
-  const loadPosts = async () => {
-    setPage(page + 1);
-    setLoading(true);
-    await getnPosts(page, 4);
+  const loadPosts = () => {
+    dispatch(setPage(page + 1));
+    dispatch(setStatus("loading"));
+    dispatch(getnPosts({ page: page, results: 4 }));
   };
 
   const pageEnd = () => {
@@ -28,13 +33,7 @@ export const ResourcePosts = () => {
   const handleClick = () => {
     setAlert("danger", "Why you touch me?");
   };
-  // useEffect(() => {
-  //   const loadPosts = async (page, results) => {
-  //     setLoading(true);
-  //     await getnPosts(page, results);
-  //   };
-  //   loadPosts(page, 3);
-  // }, [page]);
+  
 
   //, height: "800px", overflowY: "scroll"
 
@@ -52,7 +51,7 @@ export const ResourcePosts = () => {
               fontSize: "2em",
             }}
           >
-            <i className="fas fa-plus"></i> Create Post
+            <i className='fas fa-plus'></i> Create Post
           </Button>
         </Row>
       </Container>
