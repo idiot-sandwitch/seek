@@ -11,6 +11,7 @@ const branch = require("../routes/branches");
 const comment = require("../routes/comments");
 const cors = require("cors");
 
+//TODO: make it consistent
 module.exports = function (app) {
   app.use(express.json());
   app.use(express.static("public"));
