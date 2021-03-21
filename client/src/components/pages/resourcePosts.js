@@ -4,7 +4,7 @@ import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import { PostItem } from "../layout/post_item";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { setPage, setStatus, getnPosts } from "../../features/user/postsSlice";
+import { setPage, setStatus, getnPosts } from "../../features/posts/postsSlice";
 import { useSelector, useDispatch } from "react-redux";
 
 export const ResourcePosts = () => {
@@ -32,11 +32,9 @@ export const ResourcePosts = () => {
 
   return (
     <Container style={{ marginTop: "4rem" }}>
-      <SeekAlert />
       <Container style={{ width: "100%", padding: "1rem" }}>
         <Row>
           <Button
-            onClick={handleClick}
             block
             style={{
               backgroundColor: "#6109B3",
