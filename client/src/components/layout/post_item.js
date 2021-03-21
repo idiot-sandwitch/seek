@@ -77,7 +77,7 @@ export const PostItem = ({
           </span>
         </Media>
         <Media.Body style={{ padding: "1em" }}>
-          <span>{subject}</span>
+          <span>{subject.name}</span>
           <h1
             style={{
               marginBottom: "-0.7rem",
@@ -87,7 +87,7 @@ export const PostItem = ({
           >
             {title}
           </h1>
-          <span style={{ fontWeight: "lighter" }}>@{authorId}</span>
+          <span style={{ fontWeight: "lighter" }}>@{authorId.name}</span>
           <p style={{ marginTop: "1rem", margin: "0px", fontSize: "1.5rem" }}>
             {content}
           </p>
