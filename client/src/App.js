@@ -3,20 +3,26 @@ import { HashRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
 import { Header } from "./components/layout/navbar";
 import { ResourcePosts } from "./components/pages/resourcePosts";
-import ResourcePostState from "./context/resourcePost/resourcePostState";
+import { Provider } from "react-redux";
+import store from "./store";
+import { Login } from "./components/pages/login";
+import { Toaster } from "react-hot-toast";
 function App() {
-  
   return (
-    <ResourcePostState>
+    <Provider store={store}>
       <Router>
-        <div className="App">
+        <React.Fragment>
+          <React.Fragment>
+            <Toaster position='top-right' />
+          </React.Fragment>
           <Header />
           <Switch>
-            <Route exact path="/resources" component={ResourcePosts} />
+            <Route exact path='/resources' component={ResourcePosts} />
+            <Route exact path='/login' component={Login} />
           </Switch>
-        </div>
+        </React.Fragment>
       </Router>
-    </ResourcePostState>
+    </Provider>
   );
 }
 
