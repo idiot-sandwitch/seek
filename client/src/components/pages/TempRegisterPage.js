@@ -4,9 +4,6 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import Alert from "react-bootstrap/Alert";
-import Image from "react-bootstrap/Image";
-import logo from "../layouts/NavComponents/logo.svg";
 
 import { useForm } from "react-hook-form";
 import { joiResolver } from "@hookform/resolvers/joi";
@@ -58,10 +55,7 @@ const TempRegisterPage = () => {
   };
 
   return (
-    <Container>
-      <Row>
-        <Image src={logo} width='200px' height='60px'></Image>
-      </Row>
+    <Container style={{ marginTop: "3rem" }}>
       <Form as='form' onSubmit={handleSubmit(onSubmit)}>
         <Form.Group as={Row} controlId='formHorizontalName'>
           <Form.Label column sm={2}>
