@@ -17,7 +17,6 @@ body {
 .iconButton {
   margin-right: 0.5em;
   margin-left: 0.5em;
-
   padding: 0.3em !important;
   background-color: transparent !important;
   border: transparent !important;
@@ -31,6 +30,7 @@ body {
   background-color: transparent !important;
   border: transparent !important;
 }
+
 h1,
 h2,
 h3,
@@ -44,10 +44,104 @@ h6,
 .h5,
 .h6 {
   font-family: "Karla", sans-serif;
-  font-size: 3rem !important;
-  font-weight: 100 !important;
   margin-bottom: 0.5rem;
   line-height: 1.2;
+}
+
+.alert {
+  width: 100%;
+}
+
+.loginCard {
+  background-color: #1f1f1f;
+  border-radius: 0.5em;
+  margin: 2rem;
+  padding: 3rem;
+  height: 48rem;
+  width: 37rem !important;
+}
+
+.backgroundContainer {
+  height: 100%;
+  position: fixed;
+  min-width: 100%;
+  min-height: 100%;
+  margin-left: 0px;
+  margin-left: 0px;
+  background-image: url("https://images.unsplash.com/photo-1518514854541-fe58ae2a5ef1?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1350&q=80");
+  background-size: cover;
+  background-position: center;
+}
+
+.seekForm {
+  text-align: left;
+  margin: 3rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+.seekButton {
+  background-color: #2c2c2c !important;
+  border: solid #525252 1px !important;
+  width: 100%;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+}
+
+.seekButton:focus {
+  border: solid white 1px !important;
+  box-shadow: none !important;
+}
+
+.altLoginButton {
+  width: 4rem;
+  height: 4rem;
+  font-size: 2rem !important;
+  border: transparent !important;
+  border-radius: 50%/50% !important;
+  background-color: #0f1315 !important;
+  margin: auto;
+}
+.altLoginButton:hover {
+  font-size: 2rem !important;
+  background-color: white !important;
+  color: #0f1315 !important;
+}
+
+.altLoginButton:focus {
+  box-shadow: 0 0 0 1pt white !important;
+}
+
+#bgVid {
+  object-fit: cover;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+.seekInput {
+  background-color: #171717 !important;
+  border: solid #000000 !important;
+}
+
+.seekInput:focus {
+  background-color: white !important;
+  box-shadow: none !important;
+}
+
+.vidCredit {
+  border-top: solid #747474 1px !important;
+  border-bottom: solid #747474 1px !important;
+  color: white !important;
+  font-style: oblique;
+  font-size: small;
+  background-color: black;
+  position: absolute !important;
+  bottom: 1rem;
+  left: 1rem;
 }
 
 @import "../node_modules/bootstrap/scss/bootstrap";

@@ -4,7 +4,7 @@ import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import { PostItem } from "../layout/post_item";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { setPage, setStatus, getnPosts } from "../../features/user/postsSlice";
+import { setPage, setStatus, getnPosts } from "../../features/posts/postsSlice";
 import { useSelector, useDispatch } from "react-redux";
 
 export const ResourcePosts = () => {
@@ -31,7 +31,7 @@ export const ResourcePosts = () => {
   //, height: "800px", overflowY: "scroll"
 
   return (
-    <Container style={{ marginTop: "3rem" }}>
+    <Container style={{ marginTop: "4rem" }}>
       <Container style={{ width: "100%", padding: "1rem" }}>
         <Row>
           <Button
@@ -42,7 +42,7 @@ export const ResourcePosts = () => {
               fontSize: "2em",
             }}
           >
-            <i className='fas fa-plus'></i> Create Post
+            <i className="fas fa-plus"></i> Create Post
           </Button>
         </Row>
       </Container>
