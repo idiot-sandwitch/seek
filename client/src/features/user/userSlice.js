@@ -67,11 +67,6 @@ const signupUser = createAsyncThunk(
 
       if (res.status === 200) {
         const { data } = res;
-        const user = JSON.stringify({
-          _id: data._id,
-          name: data.name,
-          email: data.email,
-        });
         return data;
       } else {
         return thunkAPI.rejectWithValue(res.data);
