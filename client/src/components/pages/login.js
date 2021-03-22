@@ -152,6 +152,11 @@ export const Login = () => {
                   src="./LoginPage/loginIllustration.png"
                   style={{ width: "100%" }}
                 />
+                {/* <div style={{ marginTop: "10px !important" }}>
+                  <a href="http://www.freepik.com">
+                    Illustration Designed by macrovector / Freepik
+                  </a>
+                </div> */}
               </Col>{" "}
             </Row>
           </Container>
