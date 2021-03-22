@@ -1,8 +1,10 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
+import toast from "react-hot-toast";
+
 const initialState = {
-  status: "idle" | "loading" | "succeeded" | "failed" | "createdNew",
+  status: "idle",
   token: localStorage.getItem("token"),
   user: JSON.parse(localStorage.getItem("user")),
   error: null,
@@ -13,7 +15,7 @@ const headers = {
   accepts: "application/json",
 };
 
-export const loginUser = createAsyncThunk(
+const loginUser = createAsyncThunk(
   "user/login",
   async ({ email, password }, thunkAPI) => {
     try {
@@ -41,8 +43,6 @@ export const loginUser = createAsyncThunk(
         return thunkAPI.rejectWithValue(res.data);
       }
     } catch (err) {
-      console.log(err.response);
-      console.log("error", err.response.data);
       localStorage.removeItem("token");
       localStorage.removeItem("user");
       return thunkAPI.rejectWithValue(err.response.data);
@@ -50,7 +50,7 @@ export const loginUser = createAsyncThunk(
   }
 );
 
-export const signupUser = createAsyncThunk(
+const signupUser = createAsyncThunk(
   "user/signup",
   async ({ name, email, password }, thunkAPI) => {
     try {
@@ -67,43 +67,17 @@ export const signupUser = createAsyncThunk(
 
       if (res.status === 200) {
         const { data } = res;
-        console.log(res);
         const user = JSON.stringify({
           _id: data._id,
           name: data.name,
           email: data.email,
         });
-        localStorage.setItem("user", user);
         return data;
       } else {
         return thunkAPI.rejectWithValue(res.data);
       }
     } catch (err) {
-      console.log(err.response);
-      console.log("error", err.response.data);
-      localStorage.removeItem("user");
       return thunkAPI.rejectWithValue(err.response.data);
-    }
-  }
-);
-
-export const verifyUserEmail = createAsyncThunk(
-  "/user/verifyEmail",
-  async ({ token }, thunkAPI) => {
-    try {
-      const res = await axios({
-        method: "POST",
-        url: "http://localhost:5000/api/verify",
-        headers,
-        data: JSON.stringify({ token }),
-      });
-      if (res.status === 200) {
-        console.log(res);
-      } else {
-        return thunkAPI.rejectWithValue(res.data);
-      }
-    } catch (err) {
-      console.log(err.response.data);
     }
   }
 );
@@ -112,6 +86,14 @@ export const userSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
+    clearState: (state) => {
+      state = {
+        status: "idle",
+        token: localStorage.getItem("token"),
+        user: JSON.parse(localStorage.getItem("user")),
+        error: null,
+      };
+    },
     logoutUser: (state) => {
       state.status = "idle";
       state.token = "";
@@ -119,6 +101,7 @@ export const userSlice = createSlice({
       state.error = null;
       localStorage.removeItem("token");
       localStorage.removeItem("user");
+      toast.success("You've been logged out successfully.");
     },
   },
   extraReducers: {
@@ -130,29 +113,37 @@ export const userSlice = createSlice({
       state.token = payload.token;
       state.user = payload.user;
       state.error = null;
+      toast.success(
+        `Welcome ${payload.user.name.split(" ")[0]}, happy seeking!`
+      );
     },
     [loginUser.rejected]: (state, { payload }) => {
       state.status = "failed";
       state.token = "";
       state.user = null;
       state.error = payload;
+      toast.error(payload);
     },
     [signupUser.pending]: (state) => {
       state.status = "loading";
     },
     [signupUser.fulfilled]: (state, { payload }) => {
-      state.status = "succeeded";
-      state.user = payload;
       state.status = "createdNew";
+      state.error = null;
+      toast.success(
+        "Account created successfully! Check your email for verification"
+      );
     },
     [signupUser.rejected]: (state, { payload }) => {
       state.status = "failed";
-      state.user = null;
       state.error = payload;
+      toast.error(payload);
     },
   },
 });
 
-export const { logoutUser } = userSlice.actions;
+export { loginUser, signupUser };
+
+export const { logoutUser, clearState } = userSlice.actions;
 
 export default userSlice.reducer;

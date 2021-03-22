@@ -4,7 +4,7 @@ import axios from "axios";
 const initialState = {
   posts: [],
   page: 0,
-  status: "idle" | "loading" | "succeeded" | "failed",
+  status: "idle",
   error: null,
 };
 
@@ -19,7 +19,6 @@ export const getnPosts = createAsyncThunk(
       if (res.status === 200) return res.data;
       else return thunkAPI.rejectWithValue(res.data);
     } catch (err) {
-      console.log(err);
       return err.response.data;
     }
   }
@@ -34,7 +33,6 @@ const postsSlice = createSlice({
       state.posts = "succeeded";
     },
     setPage: (state, { payload }) => {
-      console.log(payload);
       state.page = payload;
       state.status = "succeeded";
     },
