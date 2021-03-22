@@ -29,7 +29,9 @@ router.get("/find/:id", async (req, res) => {
 //TODO: remove this after above get request is working
 router.get("/all", async (req, res) => {
   try {
-    const posts = await ResourcePost.find();
+    const posts = await ResourcePost.find()
+      .populate("authorId", "name avatar")
+      .populate("subject", "name");
     res.status(200).send(posts);
   } catch (e) {
     console.error(e.message);
@@ -43,7 +45,9 @@ router.get("/page/:page/:results", async (req, res) => {
   try {
     const posts = await ResourcePost.find()
       .skip(page * results)
-      .limit(parseInt(results));
+      .limit(parseInt(results))
+      .populate("authorId", "name avatar")
+      .populate("subject", "name");
     if (posts === []) {
       res.status(404).send("No posts found");
     }
@@ -56,7 +60,9 @@ router.get("/page/:page/:results", async (req, res) => {
 
 router.get("/findByCourse/:course", async (req, res) => {
   try {
-    const posts = await ResourcePost.find({ course: req.params.course });
+    const posts = await ResourcePost.find({ course: req.params.course })
+      .populate("authorId", "name avatar")
+      .populate("subject", "name");
     res.status(200).send(posts);
   } catch (e) {
     console.error(e.message);
@@ -66,7 +72,9 @@ router.get("/findByCourse/:course", async (req, res) => {
 
 router.get("/findBySubject/:subject", async (req, res) => {
   try {
-    const posts = await ResourcePost.find({ subject: req.params.subject });
+    const posts = await ResourcePost.find({ subject: req.params.subject })
+      .populate("authorId", "name avatar")
+      .populate("subject", "name");
     res.status(200).send(posts);
   } catch (e) {
     console.error(e.message);
