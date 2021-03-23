@@ -19,7 +19,7 @@ const TempVerifyUserForm = ({ match }) => {
   );
   const token = match.params.token;
 
-  const { register, handleSubmit, errors } = useForm({});
+  const { register, handleSubmit } = useForm({});
   const verifyUserEmail = async ({ token }) => {
     try {
       const res = await axios({
@@ -50,6 +50,7 @@ const TempVerifyUserForm = ({ match }) => {
         "if the link in the email doesn't work, enter the code sent to your email to verify your account"
       );
     } else verifyUserEmail({ token });
+    // eslint-disable-next-line
   }, [token, status]);
 
   const onSubmit = (data) => {

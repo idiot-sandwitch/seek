@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-
+import { useSelector } from "react-redux";
 import toast from "react-hot-toast";
 
 const initialState = {
@@ -10,19 +10,22 @@ const initialState = {
   error: null,
 };
 
-const headers = {
-  "Content-Type": "application/json",
-  accepts: "application/json",
-};
+const authAxios = axios.create({
+  baseURL: "http://localhost:5000/",
+  timeout: 5000,
+  headers: {
+    "Content-Type": "application/json",
+    accepts: "application/json",
+  },
+});
 
 const loginUser = createAsyncThunk(
   "user/login",
   async ({ email, password }, thunkAPI) => {
     try {
-      const res = await axios({
+      const res = await authAxios({
         method: "POST",
-        url: "http://localhost:5000/api/auth",
-        headers,
+        url: "api/auth",
         data: JSON.stringify({
           email,
           password,
@@ -49,19 +52,45 @@ const loginUser = createAsyncThunk(
     }
   }
 );
-
 const signupUser = createAsyncThunk(
   "user/signup",
   async ({ name, email, password }, thunkAPI) => {
     try {
-      const res = await axios({
+      const res = await authAxios({
         method: "POST",
-        url: "http://localhost:5000/api/users/add",
-        headers,
+        url: "api/users/add",
         data: JSON.stringify({
           name,
           email,
           password,
+        }),
+      });
+
+      if (res.status === 200) {
+        const { data } = res;
+        return data;
+      } else {
+        return thunkAPI.rejectWithValue(res.data);
+      }
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err.response.data);
+    }
+  }
+);
+
+const resetPassword = createAsyncThunk(
+  "user/resetPassword",
+  async ({ old_password, new_password }, thunkAPI) => {
+    try {
+      const res = await authAxios({
+        method: "PUT",
+        url: "api/users/resetPassword",
+        headers: {
+          "x-auth-token": localStorage.getItem("token"),
+        },
+        data: JSON.stringify({
+          old_password,
+          new_password,
         }),
       });
 
@@ -134,10 +163,16 @@ export const userSlice = createSlice({
       state.error = payload;
       toast.error(payload);
     },
+    [resetPassword.fulfilled]: (state, { payload }) => {
+      toast.success("Password reset successfully!");
+    },
+    [resetPassword.rejected]: (state, { payload }) => {
+      toast.error(payload);
+    },
   },
 });
 
-export { loginUser, signupUser };
+export { loginUser, signupUser, resetPassword };
 
 export const { logoutUser, clearState } = userSlice.actions;
 
