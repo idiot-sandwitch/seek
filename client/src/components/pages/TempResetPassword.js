@@ -86,7 +86,7 @@ const TempResetPassword = () => {
         </Form.Group>
         <Form.Group as={Row}>
           <Col sm={{ span: 10, offset: 2 }}>
-            <Button type='submit'>Create Account</Button>
+            <Button type='submit'>Reset Password</Button>
           </Col>
         </Form.Group>
       </Form>
