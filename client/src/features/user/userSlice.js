@@ -172,7 +172,7 @@ export const userSlice = createSlice({
   },
 });
 
-export { loginUser, signupUser, resetPassword };
+export { loginUser, signupUser, resetPassword, authAxios };
 
 export const { logoutUser, clearState } = userSlice.actions;
 

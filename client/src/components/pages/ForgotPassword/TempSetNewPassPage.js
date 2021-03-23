@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -6,15 +6,18 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
 import { useHistory } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
-import { resetPassword } from "../../features/user/userSlice";
+import toast from "react-hot-toast";
 import { joiResolver } from "@hookform/resolvers/joi";
 import passwordComplexity from "joi-password-complexity";
 import Joi from "joi";
+import { authAxios, clearState } from "../../../features/user/userSlice";
+import { useSelector, useDispatch } from "react-redux";
 
-const TempResetPassword = () => {
+const TempSetNewPassPage = () => {
+  const history = useHistory();
   const dispatch = useDispatch();
+  const { token, user } = useSelector((state) => state.auth);
 
   const complexityOptions = {
     min: 4,
@@ -26,60 +29,78 @@ const TempResetPassword = () => {
     requirementCount: 3,
   };
   const resetPassSchema = Joi.object({
-    old_password: Joi.string().required(),
-    new_password: passwordComplexity(complexityOptions)
-      .disallow(Joi.ref("old_password"))
-      .required(),
-    confirm_new_password: Joi.string()
-      .valid(Joi.ref("new_password"))
-      .required(),
+    otp: Joi.string().length(8).required(),
+    password: passwordComplexity(complexityOptions).required(),
+    confirm_password: Joi.string().valid(Joi.ref("password")).required(),
   });
-  const { register, handleSubmit, errors } = useForm({
+  const { register, handleSubmit } = useForm({
     resolver: joiResolver(resetPassSchema),
   });
-
-  const onSubmit = (data) => {
-    dispatch(resetPassword(data));
+  const resetUserPassword = async ({ otp, password }) => {
+    try {
+      const res = await authAxios({
+        method: "PUT",
+        url: "api/users/setNewPassword",
+        data: JSON.stringify({ otp, password }),
+      });
+      if (res.status === 200) {
+        toast.success(res.data);
+        history.push("/login");
+      }
+    } catch (err) {
+      toast.error(err.response.data);
+    }
   };
 
+  useEffect(() => {
+    if (user && token) {
+      history.push("/");
+    }
+    dispatch(clearState());
+    //eslint-disable-next-line
+  }, []);
+
+  const onSubmit = (data) => {
+    resetUserPassword(data);
+  };
   return (
     <Container style={{ marginTop: "4rem" }}>
       <Form as='form' onSubmit={handleSubmit(onSubmit)}>
         <Form.Group as={Row} controlId='formHorizontalName'>
           <Form.Label column sm={2}>
-            old Password
+            New Password
           </Form.Label>
           <Col sm={10}>
             <Form.Control
-              name='old_password'
+              name='password'
               type='password'
-              placeholder='enter current account password'
+              placeholder='enter new account password'
               ref={register}
             />
           </Col>
         </Form.Group>
         <Form.Group as={Row} controlId='formHorizontalName'>
           <Form.Label column sm={2}>
-            new password
+            Confirm Password
           </Form.Label>
           <Col sm={10}>
             <Form.Control
-              name='new_password'
-              type='password'
-              placeholder='enter the new  password'
-              ref={register}
-            />
-          </Col>
-        </Form.Group>
-        <Form.Group as={Row} controlId='formHorizontalName'>
-          <Form.Label column sm={2}>
-            confirm password
-          </Form.Label>
-          <Col sm={10}>
-            <Form.Control
-              name='confirm_new_password'
+              name='confirm_password'
               type='password'
               placeholder='re-enter the new password'
+              ref={register}
+            />
+          </Col>
+        </Form.Group>
+        <Form.Group as={Row} controlId='formHorizontalName'>
+          <Form.Label column sm={2}>
+            secure otp
+          </Form.Label>
+          <Col sm={10}>
+            <Form.Control
+              name='otp'
+              type='password'
+              placeholder='enter the 8-digit otp sent to registered email'
               ref={register}
             />
           </Col>
@@ -94,4 +115,4 @@ const TempResetPassword = () => {
   );
 };
 
-export default TempResetPassword;
+export default TempSetNewPassPage;
