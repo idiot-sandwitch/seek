@@ -10,7 +10,7 @@ import { useSelector, useDispatch } from "react-redux";
 export const ResourcePosts = () => {
   const dispatch = useDispatch();
   const postState = useSelector((state) => state.posts);
-  const { posts, page } = postState;
+  const { posts, page, hasMore } = postState;
 
   useEffect(() => {
     dispatch(setStatus("loading"));
@@ -21,11 +21,6 @@ export const ResourcePosts = () => {
     dispatch(setPage(page + 1));
     dispatch(setStatus("loading"));
     dispatch(getnPosts({ page: page, results: 4 }));
-  };
-
-  const pageEnd = () => {
-    //return false if no change in posts state
-    return true;
   };
 
   //, height: "800px", overflowY: "scroll"
@@ -42,14 +37,14 @@ export const ResourcePosts = () => {
               fontSize: "2em",
             }}
           >
-            <i className="fas fa-plus"></i> Create Post
+            <i className='fas fa-plus'></i> Create Post
           </Button>
         </Row>
       </Container>
       <InfiniteScroll
         dataLength={posts.length}
         next={loadPosts}
-        hasMore={pageEnd}
+        hasMore={hasMore}
         loader={<h4>Loading</h4>}
         style={{ magin: "0px" }}
         endMessage={<h4>Fuk off</h4>}
