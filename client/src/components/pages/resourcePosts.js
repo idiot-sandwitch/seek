@@ -15,12 +15,13 @@ export const ResourcePosts = () => {
   useEffect(() => {
     dispatch(setStatus("loading"));
     dispatch(getnPosts({ page, results: 4 }));
+    dispatch(setPage(page + 1));
   }, []);
 
   const loadPosts = () => {
-    dispatch(setPage(page + 1));
     dispatch(setStatus("loading"));
     dispatch(getnPosts({ page: page, results: 4 }));
+    dispatch(setPage(page + 1));
   };
 
   //FIXME: make this return false when load posts run but posts state does not change
@@ -43,7 +44,7 @@ export const ResourcePosts = () => {
               fontSize: "2em",
             }}
           >
-            <i className="fas fa-plus"></i> Create Post
+            <i className='fas fa-plus'></i> Create Post
           </Button>
         </Row>
       </Container>
