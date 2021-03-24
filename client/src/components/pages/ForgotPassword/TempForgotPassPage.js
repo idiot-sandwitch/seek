@@ -8,7 +8,8 @@ import Button from "react-bootstrap/Button";
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useSelector, useDispatch } from "react-redux";
-import { authAxios, clearState } from "../../../features/user/userSlice";
+import { clearState } from "../../../features/user/userSlice";
+import axios from "../../../features/axiosSetup";
 import toast from "react-hot-toast";
 
 const TempForgotPassPage = () => {
@@ -22,7 +23,7 @@ const TempForgotPassPage = () => {
   };
   const sendResetPassRequest = async ({ email }) => {
     try {
-      const res = await authAxios({
+      const res = await axios({
         method: "POST",
         url: "/api/users/forgotPassword",
         data: JSON.stringify({ email }),

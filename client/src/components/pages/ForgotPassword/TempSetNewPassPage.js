@@ -11,7 +11,8 @@ import toast from "react-hot-toast";
 import { joiResolver } from "@hookform/resolvers/joi";
 import passwordComplexity from "joi-password-complexity";
 import Joi from "joi";
-import { authAxios, clearState } from "../../../features/user/userSlice";
+import { clearState } from "../../../features/user/userSlice";
+import axios from "../../../features/axiosSetup";
 import { useSelector, useDispatch } from "react-redux";
 
 const TempSetNewPassPage = () => {
@@ -38,7 +39,7 @@ const TempSetNewPassPage = () => {
   });
   const resetUserPassword = async ({ otp, password }) => {
     try {
-      const res = await authAxios({
+      const res = await axios({
         method: "PUT",
         url: "api/users/setNewPassword",
         data: JSON.stringify({ otp, password }),

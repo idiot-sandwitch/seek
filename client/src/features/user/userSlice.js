@@ -1,8 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
-import { useSelector } from "react-redux";
 import toast from "react-hot-toast";
-
+import axios from "../axiosSetup";
 const initialState = {
   status: "idle",
   token: localStorage.getItem("token"),
@@ -10,20 +8,11 @@ const initialState = {
   error: null,
 };
 
-const authAxios = axios.create({
-  baseURL: "http://localhost:5000/",
-  timeout: 5000,
-  headers: {
-    "Content-Type": "application/json",
-    accepts: "application/json",
-  },
-});
-
 const loginUser = createAsyncThunk(
   "user/login",
   async ({ email, password }, thunkAPI) => {
     try {
-      const res = await authAxios({
+      const res = await axios({
         method: "POST",
         url: "api/auth",
         data: JSON.stringify({
@@ -56,7 +45,7 @@ const signupUser = createAsyncThunk(
   "user/signup",
   async ({ name, email, password }, thunkAPI) => {
     try {
-      const res = await authAxios({
+      const res = await axios({
         method: "POST",
         url: "api/users/add",
         data: JSON.stringify({
@@ -82,7 +71,7 @@ const resetPassword = createAsyncThunk(
   "user/resetPassword",
   async ({ old_password, new_password }, thunkAPI) => {
     try {
-      const res = await authAxios({
+      const res = await axios({
         method: "PUT",
         url: "api/users/resetPassword",
         headers: {
@@ -172,7 +161,7 @@ export const userSlice = createSlice({
   },
 });
 
-export { loginUser, signupUser, resetPassword, authAxios };
+export { loginUser, signupUser, resetPassword };
 
 export const { logoutUser, clearState } = userSlice.actions;
 
