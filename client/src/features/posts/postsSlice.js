@@ -1,9 +1,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import axios from "../axiosSetup";
+import toast from "react-hot-toast";
 
 const initialState = {
   posts: [],
   page: 0,
+  hasMore: true,
   status: "idle",
   error: null,
 };
@@ -14,7 +16,7 @@ export const getnPosts = createAsyncThunk(
     try {
       const res = await axios({
         method: "GET",
-        url: `http://localhost:5000/api/resourceposts/page/${page}/${results}`,
+        url: `api/resourceposts/page/${page}/${results}`,
       });
       if (res.status === 200) return res.data;
       else return thunkAPI.rejectWithValue(res.data);
@@ -42,13 +44,19 @@ const postsSlice = createSlice({
   },
   extraReducers: {
     [getnPosts.fulfilled]: (state, { payload }) => {
-      payload.forEach((post) => state.posts.push(post));
+      if (payload.length !== 0) {
+        payload.forEach((post) => state.posts.push(post));
+        state.hasMore = true;
+      } else {
+        state.hasMore = false;
+      }
       state.status = "succeeded";
       state.error = null;
     },
     [getnPosts.rejected]: (state, { payload }) => {
       state.status = "failed";
       state.error = payload;
+      toast.error(payload);
     },
   },
 });
