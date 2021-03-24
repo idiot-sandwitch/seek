@@ -3,6 +3,7 @@ import Container from "react-bootstrap/esm/Container";
 import { Comment_item } from "./comment_item";
 
 export const Comments = () => {
+  //TODO:Make state for commnents, load comments when opening individual post
   const mycomments = [
     {
       authorId: 12324,
@@ -237,13 +238,11 @@ export const Comments = () => {
   ];
 
   return (
-    <Container style={{ marginTop: "5rem" }}>
       <Container className="seekCommentBox">
         {" "}
         {mycomments.map((comment) => (
           <Comment_item key={comment.authorId} comment={comment} />
         ))}
       </Container>
-    </Container>
   );
 };

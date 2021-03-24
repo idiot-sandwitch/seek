@@ -8,6 +8,8 @@ import { Provider } from "react-redux";
 import store from "./store";
 import { Login } from "./components/pages/login";
 import { Toaster } from "react-hot-toast";
+import { IndividualPost } from "./components/pages/individualPost";
+
 function App() {
   return (
     <Provider store={store}>
@@ -21,6 +23,7 @@ function App() {
             <Route exact path="/resources" component={ResourcePosts} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/teachers" component={Comments} />
+            <Route exact path="/" component={IndividualPost} />
           </Switch>
         </React.Fragment>
       </Router>

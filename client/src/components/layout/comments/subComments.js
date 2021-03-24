@@ -4,11 +4,10 @@ import Container from "react-bootstrap/esm/Container";
 
 export const SubComments = ({ subComments }) => {
   return (
-    <Container>
-      {" "}
+    <div>
       {subComments.map((subComment) => (
         <SubCommentItem subComment={subComment} />
       ))}
-    </Container>
+    </div>
   );
 };

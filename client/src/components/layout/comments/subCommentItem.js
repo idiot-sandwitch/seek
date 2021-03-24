@@ -12,7 +12,10 @@ export const SubCommentItem = ({
   };
 
   return (
-    <Container>
+    <Container
+      className="seekSubComment"
+      style={{ marginTop: "1vw !important" }}
+    >
       <span style={{ whiteSpace: "nowrap" }}>
         <h5 style={{ display: "inline-block" }}>{authorId}</h5>{" "}
         <Link smooth to="/teachers#pappuId">

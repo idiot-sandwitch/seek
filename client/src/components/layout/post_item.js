@@ -5,23 +5,6 @@ import Badge from "react-bootstrap/esm/Badge";
 import Media from "react-bootstrap/esm/Media";
 import Button from "react-bootstrap/esm/Button";
 
-/* {
-        "votes": 0,
-        "replies": [],
-        "editorChoice": false,
-        "_id": "604f1f114ed25a4eb87c7c0c",
-        "title": "Fake 3 NodeJS tutorial by mosh",
-        "content": "Good course, very cool",
-        "authorId": "602cd33c38c2747b15b7fefc",
-        "subject": "6026c8b30bdf2031385d3da2",
-        "course": "602d1c195fdcb95481d93412",
-        "contentUrl": "fakeUrl",
-        "createdAt": "2021-02-17T14:58:02.945Z",
-        "updatedAt": "2021-02-17T14:58:02.945Z",
-        "__v": 0
-        "type":
-    }*/
-
 export const PostItem = ({
   post: {
     title,

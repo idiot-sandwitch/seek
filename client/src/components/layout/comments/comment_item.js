@@ -31,7 +31,7 @@ export const Comment_item = ({
           </span>
         </Container>
       </Row>
-      <Row className="seekSubComment">
+      <Row className="seekSubCommentBox">
         <SubComments subComments={subComments} />
       </Row>
     </Container>
