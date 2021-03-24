@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
-import Container from "react-bootstrap/Container";
-import Button from "react-bootstrap/Button";
-import Row from "react-bootstrap/Row";
+import Container from "react-bootstrap/esm/Container";
+import Button from "react-bootstrap/esm/Button";
+import Row from "react-bootstrap/esm/Row";
 import { PostItem } from "../layout/post_item";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { setPage, setStatus, getnPosts } from "../../features/posts/postsSlice";
@@ -15,12 +15,13 @@ export const ResourcePosts = () => {
   useEffect(() => {
     dispatch(setStatus("loading"));
     dispatch(getnPosts({ page, results: 4 }));
+    dispatch(setPage(page + 1));
   }, []);
 
   const loadPosts = () => {
-    dispatch(setPage(page + 1));
     dispatch(setStatus("loading"));
     dispatch(getnPosts({ page: page, results: 4 }));
+    dispatch(setPage(page + 1));
   };
 
   //, height: "800px", overflowY: "scroll"
@@ -47,10 +48,10 @@ export const ResourcePosts = () => {
         hasMore={hasMore}
         loader={<h4>Loading</h4>}
         style={{ magin: "0px" }}
-        endMessage={<h4>Fuk off</h4>}
+        endMessage={<h4>End of posts</h4>}
       >
         {posts.map((post) => (
-          <PostItem key={post.title} post={post} />
+          <PostItem key={post._id} post={post} />
         ))}
       </InfiniteScroll>
     </Container>

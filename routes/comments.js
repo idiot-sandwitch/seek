@@ -19,12 +19,13 @@ route.post("/add", async (req, res) => {
   }
 
   const comment = new Comment(pickCommentData(req.body));
+  //TODO: add comment ID to resource post comments array
 
   try {
     await comment.save();
     res.status(200).send({ comment });
   } catch (e) {
-    conslole.log(e);
+    console.log(e);
     req.status(500).send("Comment failed");
   }
 });

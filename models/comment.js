@@ -4,12 +4,12 @@ const _ = require("lodash");
 Joi.ObjectId = require("joi-objectid")(Joi);
 
 const subCommentSchema = new mongoose.Schema({
-  authorId: {
+  authorId: { 
     type: mongoose.SchemaTypes.ObjectId,
     ref: "User",
     required: true,
   },
-  replyToId: {
+  replyToId: { //comment ki id
     type: mongoose.SchemaTypes.ObjectId,
     ref: "User",
     required: true,
