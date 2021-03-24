@@ -1,9 +1,9 @@
 import React from "react";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Badge from "react-bootstrap/Badge";
-import Media from "react-bootstrap/Media";
-import Button from "react-bootstrap/Button";
+import Container from "react-bootstrap/esm/Container";
+import Row from "react-bootstrap/esm/Row";
+import Badge from "react-bootstrap/esm/Badge";
+import Media from "react-bootstrap/esm/Media";
+import Button from "react-bootstrap/esm/Button";
 
 /* {
         "votes": 0,

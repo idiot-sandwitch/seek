@@ -37,6 +37,12 @@ const resourePostSchema = new mongoose.Schema(
         ref: "Reply",
       },
     ],
+    comments: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Comment",
+      },
+    ],
     subject: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Subject",

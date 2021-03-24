@@ -1,7 +1,7 @@
 import React from "react";
-import Navbar from "react-bootstrap/Navbar";
-import Nav from "react-bootstrap/Nav";
-import Image from "react-bootstrap/Image";
+import Navbar from "react-bootstrap/esm/Navbar";
+import Nav from "react-bootstrap/esm/Nav";
+import Image from "react-bootstrap/esm/Image";
 import { useSelector } from "react-redux";
 
 export const Header = () => {

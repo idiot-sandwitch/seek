@@ -14,6 +14,7 @@ const { Subject } = require("../models/subject");
 const { Course } = require("../models/course");
 
 router.get("/find/:id", async (req, res) => {
+  //TODO: Populate comments
   const id = req.params.id;
   const post = await ResourcePost.findById(id);
   if (!post) res.status(404).send("Post not found!");
