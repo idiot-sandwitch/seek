@@ -126,7 +126,7 @@ export const Login = () => {
                   <Button className="seekButton" type="submit">
                     SIGN IN
                   </Button>
-                  <Button className="seekButton" type="submit">
+                  <Button className="seekButton" href="#forgotPassword">
                     SIGN UP INSTEAD
                   </Button>
                 </Form>
@@ -135,6 +135,7 @@ export const Login = () => {
                     fontSize: "2rem",
                   }}
                 >
+                  {" "}
                   OR
                 </span>
                 <Row
@@ -164,11 +165,13 @@ export const Login = () => {
                   src="./LoginPage/loginIllustration.png"
                   style={{ width: "100%" }}
                 />
-                {/* <div style={{ marginTop: "10px !important" }}>
-                  <a href="http://www.freepik.com">
-                    Illustration Designed by macrovector / Freepik
-                  </a>
-                </div> */}
+                {
+                  <Row className="artCredit">
+                    <a href="http://www.freepik.com">
+                      Illustration Designed by macrovector / Freepik
+                    </a>
+                  </Row>
+                }
               </Col>{" "}
             </Row>
           </Container>

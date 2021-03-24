@@ -9,7 +9,10 @@ import store from "./store";
 import { Login } from "./components/pages/login";
 import { Toaster } from "react-hot-toast";
 import { IndividualPost } from "./components/pages/individualPost";
+import SignUp from "./components/pages/signup";
 
+//TODO: make signUp page
+//TODO: Make user verification page
 function App() {
   return (
     <Provider store={store}>
@@ -23,6 +26,7 @@ function App() {
             <Route exact path="/resources" component={ResourcePosts} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/teachers" component={IndividualPost} />
+            <Route exact path="/forgotPassword" component={SignUp} />
           </Switch>
         </React.Fragment>
       </Router>

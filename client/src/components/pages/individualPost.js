@@ -6,6 +6,7 @@ import Media from "react-bootstrap/esm/Media";
 import Button from "react-bootstrap/esm/Button";
 import { Comments } from "../layout/comments/comments";
 
+//TODO: Add a close post button
 export const IndividualPost = () => {
   const post = {
     title: "titile",

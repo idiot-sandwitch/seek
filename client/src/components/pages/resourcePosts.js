@@ -7,6 +7,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { setPage, setStatus, getnPosts } from "../../features/posts/postsSlice";
 import { useSelector, useDispatch } from "react-redux";
 
+//TODO: make createPost page
 export const ResourcePosts = () => {
   const dispatch = useDispatch();
   const postState = useSelector((state) => state.posts);
@@ -38,7 +39,7 @@ export const ResourcePosts = () => {
               fontSize: "2em",
             }}
           >
-            <i className='fas fa-plus'></i> Create Post
+            <i className="fas fa-plus"></i> Create Post
           </Button>
         </Row>
       </Container>

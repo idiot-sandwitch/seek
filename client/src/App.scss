@@ -67,7 +67,6 @@ h6,
   min-width: 100%;
   min-height: 100%;
   margin-left: 0px;
-  margin-left: 0px;
   background-image: url("https://images.unsplash.com/photo-1518514854541-fe58ae2a5ef1?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1350&q=80");
   background-size: cover;
   background-position: center;
@@ -75,7 +74,10 @@ h6,
 
 .seekForm {
   text-align: left;
-  margin: 3rem;
+  margin-left: 3rem;
+  margin-right: 3rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
   padding-left: 2rem;
   padding-right: 2rem;
 }
@@ -87,9 +89,16 @@ h6,
   width: 100%;
   margin-bottom: 1rem;
   margin-top: 1rem;
+  transition-timing-function: ease-out !important;
+  //transition: background-color 500ms !important;
 }
 
 .seekButton:focus {
+  box-shadow: 0 0 0 3pt white !important;
+  background-color: #6109b3 !important;
+}
+
+.seekButton:hover {
   border: solid white 1px !important;
   box-shadow: none !important;
 }
@@ -110,7 +119,7 @@ h6,
 }
 
 .altLoginButton:focus {
-  box-shadow: 0 0 0 1pt white !important;
+  box-shadow: 0 0 0 3pt white !important;
 }
 
 #bgVid {
@@ -126,6 +135,10 @@ h6,
 .seekInput {
   background-color: #171717 !important;
   border: solid #000000 !important;
+}
+
+.seekInput:hover {
+  border: solid white !important;
 }
 
 .seekInput:focus {
@@ -176,4 +189,10 @@ h6,
   margin-right: 0% !important;
   padding: 0.6% !important;
 }
+
+.artCredit {
+  margin-top: 20% !important;
+  justify-content: space-around;
+}
+
 @import "../node_modules/bootstrap/scss/bootstrap";

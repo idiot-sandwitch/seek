@@ -4,6 +4,7 @@ import { Comment_item } from "./comment_item";
 
 export const Comments = () => {
   //TODO:Make state for commnents, load comments when opening individual post
+  //TODO:add infinite scroll to comments
   const mycomments = [
     {
       authorId: 12324,
