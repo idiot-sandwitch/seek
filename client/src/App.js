@@ -22,8 +22,7 @@ function App() {
           <Switch>
             <Route exact path="/resources" component={ResourcePosts} />
             <Route exact path="/login" component={Login} />
-            <Route exact path="/teachers" component={Comments} />
-            <Route exact path="/" component={IndividualPost} />
+            <Route exact path="/teachers" component={IndividualPost} />
           </Switch>
         </React.Fragment>
       </Router>
