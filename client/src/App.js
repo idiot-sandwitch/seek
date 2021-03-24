@@ -2,7 +2,7 @@ import React from "react";
 import { HashRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
 import { Header } from "./components/layout/navbar";
-import { Comment_item } from "./components/layout/comments/comment_item";
+import { Comments } from "./components/layout/comments/comments";
 import { ResourcePosts } from "./components/pages/resourcePosts";
 import { Provider } from "react-redux";
 import store from "./store";
@@ -20,7 +20,7 @@ function App() {
           <Switch>
             <Route exact path="/resources" component={ResourcePosts} />
             <Route exact path="/login" component={Login} />
-            <Route exact path="/teachers" component={Comment_item} />
+            <Route exact path="/teachers" component={Comments} />
           </Switch>
         </React.Fragment>
       </Router>

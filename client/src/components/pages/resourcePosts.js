@@ -23,6 +23,7 @@ export const ResourcePosts = () => {
     dispatch(getnPosts({ page: page, results: 4 }));
   };
 
+  //FIXME: make this return false when load posts run but posts state does not change
   const pageEnd = () => {
     //return false if no change in posts state
     return true;
@@ -52,10 +53,10 @@ export const ResourcePosts = () => {
         hasMore={pageEnd}
         loader={<h4>Loading</h4>}
         style={{ magin: "0px" }}
-        endMessage={<h4>Fuk off</h4>}
+        endMessage={<h4>End of posts</h4>}
       >
         {posts.map((post) => (
-          <PostItem key={post.title} post={post} />
+          <PostItem key={post._id} post={post} />
         ))}
       </InfiniteScroll>
     </Container>
