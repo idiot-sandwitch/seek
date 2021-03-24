@@ -2,6 +2,7 @@ import React from "react";
 import Button from "react-bootstrap/esm/Button";
 import Container from "react-bootstrap/esm/Container";
 import Row from "react-bootstrap/esm/Row";
+import { HashLink as Link } from "react-router-hash-link";
 
 export const Comment_item = () => {
   return (
@@ -46,7 +47,9 @@ export const Comment_item = () => {
           <Container>
             <span style={{ whiteSpace: "nowrap" }}>
               <h5 style={{ display: "inline-block" }}>TappuHalwaai</h5>{" "}
-              <a href="#pappuId">@PappuHalwaai</a>
+              <Link smooth to="/teachers#pappuId">
+                @PappuHalwaai
+              </Link>
             </span>
             <p>
               I had no idea when I would be ready to write this. Part of me

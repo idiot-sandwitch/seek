@@ -31,6 +31,7 @@
     "nodemailer": "^6.4.18",
     "randomstring": "^1.1.5",
     "react-infinite-scroll-component": "^6.0.0",
+    "react-router-hash-link": "^2.4.0",
     "react-scripts": "^4.0.3",
     "winston": "^3.3.3",
     "winston-mongodb": "^5.0.5"
