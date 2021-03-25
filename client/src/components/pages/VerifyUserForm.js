@@ -11,7 +11,7 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import toast from "react-hot-toast";
 
-const TempVerifyUserForm = ({ match }) => {
+const VerifyUserForm = ({ match }) => {
   const history = useHistory();
   const [status, setStatus] = useState("info");
   const [message, setMessage] = useState(
@@ -61,23 +61,26 @@ const TempVerifyUserForm = ({ match }) => {
       <Row>
         <Alert variant={status}>{message}</Alert>
       </Row>
-      <Form as='form' onSubmit={handleSubmit(onSubmit)}>
-        <Form.Group as={Row} controlId='formHorizontalName'>
+      <Form className="seekForm" as="form" onSubmit={handleSubmit(onSubmit)}>
+        <Form.Group as={Row} controlId="formHorizontalName">
           <Form.Label column sm={2}>
             Verification token
           </Form.Label>
           <Col sm={10}>
             <Form.Control
-              name='token'
-              type='text'
-              placeholder='enter token sent  to registered email'
+              className="seekInput"
+              name="token"
+              type="text"
+              placeholder="Enter the token sent to registered email"
               ref={register}
             />
           </Col>
         </Form.Group>
         <Form.Group as={Row}>
           <Col sm={{ span: 10, offset: 2 }}>
-            <Button type='submit'>Create Account</Button>
+            <Button className="seekButton" type="submit">
+              Create Account
+            </Button>
           </Col>
         </Form.Group>
       </Form>
@@ -85,4 +88,4 @@ const TempVerifyUserForm = ({ match }) => {
   );
 };
 
-export default TempVerifyUserForm;
+export default VerifyUserForm;

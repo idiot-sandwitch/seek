@@ -13,7 +13,7 @@ import { joiResolver } from "@hookform/resolvers/joi";
 import passwordComplexity from "joi-password-complexity";
 import Joi from "joi";
 
-const TempResetPassword = () => {
+const ResetPassword = () => {
   const dispatch = useDispatch();
 
   const complexityOptions = {
@@ -44,49 +44,54 @@ const TempResetPassword = () => {
 
   return (
     <Container style={{ marginTop: "4rem" }}>
-      <Form as='form' onSubmit={handleSubmit(onSubmit)}>
-        <Form.Group as={Row} controlId='formHorizontalName'>
+      <Form as="form" onSubmit={handleSubmit(onSubmit)}>
+        <Form.Group as={Row} controlId="formHorizontalName">
           <Form.Label column sm={2}>
             old Password
           </Form.Label>
           <Col sm={10}>
             <Form.Control
-              name='old_password'
-              type='password'
-              placeholder='enter current account password'
+              className="seekInput"
+              name="old_password"
+              type="password"
+              placeholder="enter current account password"
               ref={register}
             />
           </Col>
         </Form.Group>
-        <Form.Group as={Row} controlId='formHorizontalName'>
+        <Form.Group as={Row} controlId="formHorizontalName">
           <Form.Label column sm={2}>
             new password
           </Form.Label>
           <Col sm={10}>
             <Form.Control
-              name='new_password'
-              type='password'
-              placeholder='enter the new  password'
+              className="seekInput"
+              name="new_password"
+              type="password"
+              placeholder="enter the new  password"
               ref={register}
             />
           </Col>
         </Form.Group>
-        <Form.Group as={Row} controlId='formHorizontalName'>
+        <Form.Group as={Row} controlId="formHorizontalName">
           <Form.Label column sm={2}>
             confirm password
           </Form.Label>
           <Col sm={10}>
             <Form.Control
-              name='confirm_new_password'
-              type='password'
-              placeholder='re-enter the new password'
+              className="seekInput"
+              name="confirm_new_password"
+              type="password"
+              placeholder="re-enter the new password"
               ref={register}
             />
           </Col>
         </Form.Group>
         <Form.Group as={Row}>
           <Col sm={{ span: 10, offset: 2 }}>
-            <Button type='submit'>Reset Password</Button>
+            <Button className="seekButton" type="submit">
+              Reset Password
+            </Button>
           </Col>
         </Form.Group>
       </Form>
@@ -94,4 +99,4 @@ const TempResetPassword = () => {
   );
 };
 
-export default TempResetPassword;
+export default ResetPassword;

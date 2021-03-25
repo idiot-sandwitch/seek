@@ -14,6 +14,8 @@ import passwordComplexity from "joi-password-complexity";
 import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { signupUser } from "../../features/user/userSlice";
+import Alert from "react-bootstrap/esm/Alert";
+import toast from "react-hot-toast";
 
 const SignUp = () => {
   const dispatch = useDispatch();
@@ -53,6 +55,10 @@ const SignUp = () => {
 
   const onSubmit = (data) => {
     dispatch(signupUser(data));
+  };
+
+  const showError = (message) => {
+    toast.error(message);
   };
 
   return (
@@ -117,6 +123,8 @@ const SignUp = () => {
                   />
                 </Form.Group>
 
+                {errors.name && showError(errors.name.message)}
+
                 <Form.Group as={Row} controlId="formHorizontalEmail">
                   <Form.Label>Email</Form.Label>
                   <Form.Control
@@ -128,6 +136,7 @@ const SignUp = () => {
                   />
                 </Form.Group>
 
+                {errors.email && showError(errors.email.message)}
                 <Form.Group as={Row} controlId="formHorizontalPassword">
                   <Form.Label>Password</Form.Label>
                   <Form.Control
@@ -141,8 +150,14 @@ const SignUp = () => {
                     This field is required
                   </Form.Control.Feedback>
                 </Form.Group>
+                {errors.password && showError(errors.password.message)}
+
                 <Form.Group as={Row} controlId="formHorizontalPassword">
-                  <Form.Label>Confirm Password</Form.Label>
+                  <Form.Label>
+                    Confirm Password
+                    {errors.confirmPassword &&
+                      showError(errors.confirmPassword.message)}
+                  </Form.Label>
                   <Form.Control
                     className="seekInput"
                     name="confirmPassword"
@@ -151,6 +166,7 @@ const SignUp = () => {
                     ref={register}
                   />
                 </Form.Group>
+
                 <Form.Group as={Row}>
                   <Button className="seekButton" type="submit">
                     Create Account
