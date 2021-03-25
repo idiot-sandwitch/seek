@@ -29,18 +29,12 @@ const resourePostSchema = new mongoose.Schema(
     votes: {
       type: Number,
       default: 0,
-      min: 0, //why not allow negative votes?
     },
-    replies: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Reply",
-      },
-    ],
     comments: [
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Comment",
+        required: true,
       },
     ],
     subject: {
@@ -69,7 +63,6 @@ function validatePost(post) {
     title: Joi.string().min(3).max(150).required(),
     content: Joi.string().min(1).required(),
     authorId: Joi.objectId().required(),
-    replies: Joi.objectId(),
     subject: Joi.objectId().required(),
     course: Joi.objectId(),
     editorChoice: Joi.boolean(),
@@ -84,7 +77,6 @@ function pickData(post) {
     "title",
     "content",
     "authorId",
-    //"replies", replies not implemented yet
     "subject",
     "course",
     "editorChoice",

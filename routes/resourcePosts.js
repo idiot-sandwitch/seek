@@ -2,6 +2,7 @@ const auth = require("../middlewares/auth");
 const anonymous = require("../middlewares/anonymous");
 const router = require("express").Router();
 const vote = require("../middlewares/vote");
+const comment = require("../middlewares/comment");
 const _ = require("lodash");
 
 const {
@@ -87,30 +88,39 @@ router.post("/add", [auth, anonymous], async (req, res) => {
   const { error } = validateResourcePost(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
-  const user = User.findById(req.body.authorId);
-  if (!user) {
-    res.status(404).send("User does not exist");
-  }
+  //TODO: Use promise.all here
+  const user = await User.findById(req.body.authorId);
+  if (!user) return res.status(404).send("User does not exist");
 
-  const subject = Subject.findById(req.body.subject);
-  if (!subject) {
-    res.status(404).send("Subject does not exist");
-  }
+  const subject = await Subject.findById(req.body.subject);
+  if (!subject) return res.status(404).send("Subject does not exist");
 
-  const course = Course.findById(req.body.course);
-  if (!course) {
-    res.status(404).send("Course does not exist");
-  }
+  //TODO: implement course
+  // const course = await Course.findById(req.body.course);
+  // if (!course) {
+  //   res.status(404).send("Course does not exist");
+  // }
 
   let post = new ResourcePost(pickResourcePostData(req.body));
   try {
     await post.save();
-    res.status(200).send({ id: post.id });
+    return res.status(200).send({ id: post.id });
   } catch (error) {
     res.status(500).send("Failed creating post, try again later...");
     console.error(error);
   }
 });
+
+router.post(
+  "/comment",
+  auth,
+  anonymous,
+  (req, res, next) => {
+    req.body.contentType = ResourcePost.collection.collectionName;
+    next();
+  },
+  comment
+);
 
 router.put(
   "/upvote",
