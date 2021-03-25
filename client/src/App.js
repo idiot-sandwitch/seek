@@ -10,7 +10,8 @@ import { Login } from "./components/pages/login";
 import { Toaster } from "react-hot-toast";
 import { IndividualPost } from "./components/pages/individualPost";
 import SignUp from "./components/pages/signup";
-import TempVerifyUserForm from "./components/pages/TempVerifyUserForm";
+import VerifyUserForm from "./components/pages/VerifyUserForm";
+import ResetPassword from "./components/pages/ResetPassword";
 
 //TODO: make signUp page
 //TODO: Make user verification page
@@ -31,7 +32,7 @@ function App() {
             <Route
               exact
               path="/verify/:token?"
-              render={(props) => <TempVerifyUserForm {...props} />}
+              render={(props) => <VerifyUserForm {...props} />}
             />
           </Switch>
         </React.Fragment>
