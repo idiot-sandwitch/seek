@@ -12,7 +12,7 @@ import { clearState } from "../../../features/user/userSlice";
 import axios from "../../../features/axiosSetup";
 import toast from "react-hot-toast";
 
-const TempForgotPassPage = () => {
+const ForgotPassPage = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const { token, user } = useSelector((state) => state.auth);
@@ -50,23 +50,26 @@ const TempForgotPassPage = () => {
 
   return (
     <Container style={{ marginTop: "4rem" }}>
-      <Form as='form' onSubmit={handleSubmit(onSubmit)}>
-        <Form.Group as={Row} controlId='formHorizontalName'>
+      <Form className="seekForm" as="form" onSubmit={handleSubmit(onSubmit)}>
+        <Form.Group as={Row} controlId="formHorizontalName">
           <Form.Label column sm={2}>
             Enter your email
           </Form.Label>
           <Col sm={10}>
             <Form.Control
-              name='email'
-              type='email'
-              placeholder='enter registered email address'
+              className="seekInput"
+              name="email"
+              type="email"
+              placeholder="enter registered email address"
               ref={register}
             />
           </Col>
         </Form.Group>
         <Form.Group as={Row}>
           <Col sm={{ span: 10, offset: 2 }}>
-            <Button type='submit'>Create Account</Button>
+            <Button className="seekButton" type="submit">
+              Create Account
+            </Button>
           </Col>
         </Form.Group>
       </Form>
@@ -74,4 +77,4 @@ const TempForgotPassPage = () => {
   );
 };
 
-export default TempForgotPassPage;
+export default ForgotPassPage;

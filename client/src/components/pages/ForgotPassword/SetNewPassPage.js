@@ -15,7 +15,7 @@ import { clearState } from "../../../features/user/userSlice";
 import axios from "../../../features/axiosSetup";
 import { useSelector, useDispatch } from "react-redux";
 
-const TempSetNewPassPage = () => {
+const SetNewPassPage = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const { token, user } = useSelector((state) => state.auth);
@@ -66,49 +66,54 @@ const TempSetNewPassPage = () => {
   };
   return (
     <Container style={{ marginTop: "4rem" }}>
-      <Form as='form' onSubmit={handleSubmit(onSubmit)}>
-        <Form.Group as={Row} controlId='formHorizontalName'>
+      <Form className="seekForm" as="form" onSubmit={handleSubmit(onSubmit)}>
+        <Form.Group as={Row} controlId="formHorizontalName">
           <Form.Label column sm={2}>
             New Password
           </Form.Label>
           <Col sm={10}>
             <Form.Control
-              name='password'
-              type='password'
-              placeholder='enter new account password'
+              className="seekInput"
+              name="password"
+              type="password"
+              placeholder="Enter new account password"
               ref={register}
             />
           </Col>
         </Form.Group>
-        <Form.Group as={Row} controlId='formHorizontalName'>
+        <Form.Group as={Row} controlId="formHorizontalName">
           <Form.Label column sm={2}>
             Confirm Password
           </Form.Label>
           <Col sm={10}>
             <Form.Control
-              name='confirm_password'
-              type='password'
-              placeholder='re-enter the new password'
+              className="seekInput"
+              name="confirm_password"
+              type="password"
+              placeholder="Re-enter the new password"
               ref={register}
             />
           </Col>
         </Form.Group>
-        <Form.Group as={Row} controlId='formHorizontalName'>
+        <Form.Group as={Row} controlId="formHorizontalName">
           <Form.Label column sm={2}>
-            secure otp
+            Secure OTP
           </Form.Label>
           <Col sm={10}>
             <Form.Control
-              name='otp'
-              type='password'
-              placeholder='enter the 8-digit otp sent to registered email'
+              className="seekInput"
+              name="otp"
+              type="password"
+              placeholder="Enter the 8-digit otp sent to registered email"
               ref={register}
             />
           </Col>
         </Form.Group>
         <Form.Group as={Row}>
           <Col sm={{ span: 10, offset: 2 }}>
-            <Button type='submit'>Reset Password</Button>
+            <Button className="seekButton" type="submit">
+              Reset Password
+            </Button>
           </Col>
         </Form.Group>
       </Form>
@@ -116,4 +121,4 @@ const TempSetNewPassPage = () => {
   );
 };
 
-export default TempSetNewPassPage;
+export default SetNewPassPage;
