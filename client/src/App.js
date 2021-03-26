@@ -34,6 +34,7 @@ function App() {
               path="/verify/:token?"
               render={(props) => <VerifyUserForm {...props} />}
             />
+
           </Switch>
         </React.Fragment>
       </Router>

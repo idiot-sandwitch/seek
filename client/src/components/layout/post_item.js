@@ -4,6 +4,7 @@ import Row from "react-bootstrap/esm/Row";
 import Badge from "react-bootstrap/esm/Badge";
 import Media from "react-bootstrap/esm/Media";
 import Button from "react-bootstrap/esm/Button";
+import { Link } from "react-router-dom";
 
 export const PostItem = ({
   post: {
@@ -99,7 +100,7 @@ export const PostItem = ({
           </Button>
         </span>
         <span style={{ marginRight: "1.5em", fontWeight: "bold" }}>
-          <Button className="iconButton">
+          <Button href="#teachers" className="iconButton">
             <i className="fas fa-comment-dots" />
           </Button>
           {replies ? replies.length : 0}
