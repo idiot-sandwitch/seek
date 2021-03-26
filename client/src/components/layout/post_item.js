@@ -13,7 +13,7 @@ export const PostItem = ({
     authorId,
     contentUrl,
     votes,
-    replies,
+    comments,
     editorChoice,
     course,
     subject,
@@ -102,7 +102,7 @@ export const PostItem = ({
           <Button className="iconButton">
             <i className="fas fa-comment-dots" />
           </Button>
-          {replies ? replies.length : 0}
+          {comments ? comments.length : 0}
         </span>
         <span>
           <Button className="iconButton">

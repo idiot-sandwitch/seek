@@ -30,7 +30,7 @@ router.post("/comment", [auth, anonymous], async (req, res) => {
       { _id: new mongoose.Types.ObjectId(req.body.commentId) },
       {
         $addToSet: {
-          subComments: { _id: subComment.id },
+          subComments: subComment._id,
         },
       }
     );

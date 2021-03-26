@@ -20,7 +20,7 @@ module.exports = async function (req, res) {
       .collection(req.body.contentType)
       .updateOne(
         { _id: new mongoose.Types.ObjectId(req.body.postId) },
-        { $addToSet: { comments: { id: comment._id } } }
+        { $addToSet: { comments: comment._id } }
       );
     res.status(200).send({ id: comment.id });
   } catch (e) {

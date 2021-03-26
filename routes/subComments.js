@@ -31,7 +31,7 @@ router.post("/comment", [auth, anonymous], async (req, res) => {
     await subComment.save();
     await Comment.updateOne(
       { _id: new mongoose.Types.ObjectId(req.body.commentId) },
-      { $addToSet: { subComments: { _id: subComment._id } } }
+      { $addToSet: { subComments: subComment._id } }
     );
     res.status(200).send({ id: subComment._id });
   } catch (e) {

@@ -17,7 +17,9 @@ const { Course } = require("../models/course");
 router.get("/find/:id", async (req, res) => {
   //TODO: Populate comments
   const id = req.params.id;
-  const post = await ResourcePost.findById(id);
+  const post = await ResourcePost.findById(id)
+    .populate("authorId", "name avatar")
+    .populate("subject", "name");
   if (!post) res.status(404).send("Post not found!");
   else res.status(200).send(post);
 });
