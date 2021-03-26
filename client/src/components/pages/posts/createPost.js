@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { useForm } from "react-hook-form";
 import { Typeahead } from "react-bootstrap-typeahead";
@@ -10,9 +10,13 @@ import Col from "react-bootstrap/esm/Col";
 
 export const CreatePost = () => {
   const { register, handleSubmit, reset, getValues } = useForm();
+  //TODO: Make redux states for these arrays
 
   const subjects = ["Machine Learning", "Meth Chemistry", "C++ Programming"];
   const courses = ["MAT1003", "ECE3001", "PHY1001"];
+
+  const [subject, setSubject] = useState("");
+  const [course, setCourse] = useState("");
 
   const checkDuplicateSubjects = () => {
     //TODO: use getValues to see if subject field's text is already present
@@ -26,6 +30,19 @@ export const CreatePost = () => {
     return true;
   };
 
+  const onSubmit = (data) => {
+    data["subject"] = subject;
+    data["course"] = course;
+    console.log(data);
+  };
+
+  const handleSubject = (event) => {
+    setSubject(event.target.value) ;
+  };
+  const handleCourse = (event) => {
+    setCourse(event.target.value);
+  };
+
   return (
     <Container style={{ marginTop: "5rem" }}>
       <Container className="seekPostCard">
@@ -34,6 +51,7 @@ export const CreatePost = () => {
           style={{ marginLeft: "0px", marginRight: "0px" }}
           className="seekForm"
           as="form"
+          onSubmit={handleSubmit(onSubmit)}
         >
           <Form.Group>
             <Form.Label>Title</Form.Label>
@@ -49,6 +67,7 @@ export const CreatePost = () => {
             <Form.Control
               className="seekInput"
               name="content"
+              ref={register}
               as="textarea"
               placeholder="Describe your post a little"
             />
@@ -63,6 +82,7 @@ export const CreatePost = () => {
                 options={subjects}
                 name="subject"
                 placeholder="Select a subject"
+                onBlur={handleSubject}
               />
             </Form.Group>
             <Form.Group as={Col}>
@@ -74,6 +94,8 @@ export const CreatePost = () => {
                 options={courses}
                 name="course"
                 placeholder="Select a subject"
+                inputProps={{ ref: { register } }}
+                onBlur={handleCourse}
               />
             </Form.Group>
           </Form.Row>
@@ -84,6 +106,7 @@ export const CreatePost = () => {
             <Form.Control
               className="seekInput"
               name="url"
+              ref={register}
               placeholder="Enter the link to the resourse"
             />
           </Form.Group>

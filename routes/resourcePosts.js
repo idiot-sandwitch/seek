@@ -87,17 +87,17 @@ router.post("/add", [auth, anonymous], async (req, res) => {
   const { error } = validateResourcePost(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
-  const user = User.findById(req.body.authorId);
+  const user = await User.findById(req.body.authorId);
   if (!user) {
     res.status(404).send("User does not exist");
   }
 
-  const subject = Subject.findById(req.body.subject);
+  const subject = await Subject.findById(req.body.subject);
   if (!subject) {
     res.status(404).send("Subject does not exist");
   }
 
-  const course = Course.findById(req.body.course);
+  const course = await Course.findById(req.body.course);
   if (!course) {
     res.status(404).send("Course does not exist");
   }
