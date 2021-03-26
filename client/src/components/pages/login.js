@@ -22,7 +22,7 @@ export const Login = () => {
   const { token, user, status } = useSelector((state) => state.auth);
   //Redirect to home page if user already logged in.
 
-  const { register, handleSubmit, reset } = useForm();
+  const { register, handleSubmit, reset, getValues } = useForm();
   const onSubmit = (data) => {
     console.log(data);
     dispatch(loginUser(data));
@@ -33,6 +33,9 @@ export const Login = () => {
     dispatch(logoutUser());
   };
 
+  const value = () => {
+    console.log(getValues("email"));
+  };
   useEffect(() => {
     if (user && token) {
       history.push("/");
@@ -149,7 +152,9 @@ export const Login = () => {
                   <Button className="altLoginButton">
                     <i className=" fab fa-google" />
                   </Button>
-                  <Button className="altLoginButton">
+                  <Button
+                    className="altLoginButton"
+                  >
                     <i className=" fab fa-github" />
                   </Button>
                   <Button className="altLoginButton">
