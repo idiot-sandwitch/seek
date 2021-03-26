@@ -19,7 +19,8 @@ router.get("/find/:id", async (req, res) => {
   const id = req.params.id;
   const post = await ResourcePost.findById(id)
     .populate("authorId", "name avatar")
-    .populate("subject", "name");
+    .populate("subject", "name")
+    .populate("course", "code");
   if (!post) res.status(404).send("Post not found!");
   else res.status(200).send(post);
 });
@@ -35,7 +36,8 @@ router.get("/all", async (req, res) => {
   try {
     const posts = await ResourcePost.find()
       .populate("authorId", "name avatar")
-      .populate("subject", "name");
+      .populate("subject", "name")
+      .populate("course", "code");
     res.status(200).send(posts);
   } catch (e) {
     console.error(e.message);
@@ -51,7 +53,8 @@ router.get("/page/:page/:results", async (req, res) => {
       .skip(page * results)
       .limit(parseInt(results))
       .populate("authorId", "name avatar")
-      .populate("subject", "name");
+      .populate("subject", "name")
+      .populate("course", "code");
     if (posts === []) {
       res.status(404).send("No posts found");
     }
@@ -66,7 +69,8 @@ router.get("/findByCourse/:course", async (req, res) => {
   try {
     const posts = await ResourcePost.find({ course: req.params.course })
       .populate("authorId", "name avatar")
-      .populate("subject", "name");
+      .populate("subject", "name")
+      .populate("course", "code");
     res.status(200).send(posts);
   } catch (e) {
     console.error(e.message);
@@ -78,7 +82,8 @@ router.get("/findBySubject/:subject", async (req, res) => {
   try {
     const posts = await ResourcePost.find({ subject: req.params.subject })
       .populate("authorId", "name avatar")
-      .populate("subject", "name");
+      .populate("subject", "name")
+      .populate("course", "code");
     res.status(200).send(posts);
   } catch (e) {
     console.error(e.message);
@@ -97,11 +102,10 @@ router.post("/add", [auth, anonymous], async (req, res) => {
   const subject = await Subject.findById(req.body.subject);
   if (!subject) return res.status(404).send("Subject does not exist");
 
-  //TODO: implement course
-  // const course = await Course.findById(req.body.course);
-  // if (!course) {
-  //   res.status(404).send("Course does not exist");
-  // }
+  const course = await Course.findById(req.body.course);
+  if (!course) {
+    res.status(404).send("Course does not exist");
+  }
 
   let post = new ResourcePost(pickResourcePostData(req.body));
   try {
