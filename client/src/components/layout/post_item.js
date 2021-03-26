@@ -5,6 +5,8 @@ import Badge from "react-bootstrap/esm/Badge";
 import Media from "react-bootstrap/esm/Media";
 import Button from "react-bootstrap/esm/Button";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { upvote, downvote } from "../../features/posts/postsSlice";
 
 export const PostItem = ({
   post: {
@@ -21,6 +23,13 @@ export const PostItem = ({
     subject,
   },
 }) => {
+  const dispatch = useDispatch();
+  const handleUpvote = () => {
+    dispatch(upvote(_id));
+  };
+  const handleDownvote = () => {
+    dispatch(downvote(_id));
+  };
   const showEditorBadge = (isChoice) => {
     if (isChoice) {
       return (
@@ -102,11 +111,11 @@ export const PostItem = ({
         }}
       >
         <span style={{ marginRight: "1.5em", fontWeight: "bold" }}>
-          <Button className='iconButton'>
+          <Button className='iconButton' onClick={handleUpvote}>
             <i className='fas fa-arrow-up' />
           </Button>
           {votes}
-          <Button className='iconButton'>
+          <Button className='iconButton' onClick={handleDownvote}>
             <i className='fas fa-arrow-down' />
           </Button>
         </span>
