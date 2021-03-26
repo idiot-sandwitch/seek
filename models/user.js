@@ -49,6 +49,20 @@ const userSchema = new mongoose.Schema({
       },
     },
   ],
+  downvoted: [
+    {
+      _id: false,
+      id: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+      },
+      contentType: {
+        type: String,
+        enum: [ResourcePost.collection.collectionName],
+        required: true,
+      },
+    },
+  ],
   //TODO: Set anonymous users' isVerified to true when creating them so as to make them be able to login.
   isVerified: {
     type: Boolean,
