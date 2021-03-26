@@ -12,9 +12,10 @@ import { IndividualPost } from "./components/pages/individualPost";
 import SignUp from "./components/pages/signup";
 import VerifyUserForm from "./components/pages/VerifyUserForm";
 import SetNewPassPage from "./components/pages/ForgotPassword/SetNewPassPage";
+import { CreatePost } from "./components/pages/posts/createPost";
 
-//TODO: make signUp page
-//TODO: Make user verification page
+//TODO:DONE make signUp page
+//TODO:DONE Make user verification page
 function App() {
   return (
     <Provider store={store}>
@@ -34,7 +35,7 @@ function App() {
               path="/verify/:token?"
               render={(props) => <VerifyUserForm {...props} />}
             />
-
+            <Route exact path="/" component={CreatePost} />
           </Switch>
         </React.Fragment>
       </Router>
