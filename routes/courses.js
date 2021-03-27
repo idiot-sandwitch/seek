@@ -34,8 +34,8 @@ route.post("/add", auth, async (req, res) => {
   const course = new Course(pickCourseData(req.body));
 
   try {
-    await course.save();
-    res.status(200).send("Course created successfully");
+    const resCor = await course.save();
+    res.status(200).send(resCor);
   } catch (e) {
     console.log(e);
     res.status(500).send("Course creation failed");

@@ -52,8 +52,8 @@ route.post("/add", auth, async (req, res) => {
 
   const subject = new Subject(pickSubjectData(req.body));
   try {
-    await subject.save();
-    res.status(200).send(`${subject.name} added successfully`);
+    const newSub = await subject.save();
+    res.status(200).send(newSub);
   } catch (e) {
     console.log(e.message);
     res.status(500).send();

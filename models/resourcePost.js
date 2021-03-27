@@ -69,7 +69,7 @@ function validatePost(post) {
     title: Joi.string().min(3).max(150).required(),
     content: Joi.string().min(1).required(),
     authorId: Joi.objectId().required(),
-    replies: Joi.objectId(),
+    replies: Joi.array(),
     subject: Joi.objectId().required(),
     course: Joi.objectId(),
     editorChoice: Joi.boolean(),

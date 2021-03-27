@@ -21,9 +21,9 @@ module.exports = function (app) {
   app.use("/api/verify", verify);
   app.use("/api/resourceposts", resourcePosts);
   app.use("/api/reply", replies);
-  app.use("/api/subject", subject);
-  app.use("/api/course", course);
-  app.use("/api/branch", branch);
-  app.use("/api/comment", comment);
+  app.use("/api/subjects", subject);
+  app.use("/api/courses", course);
+  app.use("/api/branches", branch);
+  app.use("/api/comments", comment);
   app.use(error);
 };
