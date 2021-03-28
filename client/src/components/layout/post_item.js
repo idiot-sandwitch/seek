@@ -7,6 +7,7 @@ import Button from "react-bootstrap/esm/Button";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { upvote, downvote } from "../../features/posts/postsSlice";
+import toast from "react-hot-toast";
 
 export const PostItem = ({
   post: {
@@ -128,7 +129,15 @@ export const PostItem = ({
           </span>
         </Link>
         <span>
-          <Button className='iconButton'>
+          <Button
+            className='iconButton'
+            onClick={() => {
+              navigator.clipboard.writeText(
+                `${process.env.REACT_APP_FRONTEND_URL}/#/post/${_id}`
+              );
+              toast.success("copied to clipboard");
+            }}
+          >
             <i className='fas fa-share'></i>
           </Button>
         </span>
