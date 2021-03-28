@@ -2,7 +2,7 @@ import React from "react";
 import Container from "react-bootstrap/esm/Container";
 import { Comment_item } from "./comment_item";
 
-export const Comments = () => {
+export const Comments = ({ comments }) => {
   //TODO:Make state for commnents, load comments when opening individual post
   //TODO:add infinite scroll to comments
   const mycomments = [
@@ -239,11 +239,11 @@ export const Comments = () => {
   ];
 
   return (
-      <Container className="seekCommentBox">
-        {" "}
-        {mycomments.map((comment) => (
-          <Comment_item key={comment.authorId} comment={comment} />
-        ))}
-      </Container>
+    <Container className='seekCommentBox'>
+      {" "}
+      {comments.map((comment) => (
+        <Comment_item key={comment.authorId} comment={comment} />
+      ))}
+    </Container>
   );
 };
