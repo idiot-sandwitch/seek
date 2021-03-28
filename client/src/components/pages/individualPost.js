@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Container from "react-bootstrap/esm/Container";
 import Row from "react-bootstrap/esm/Row";
 import Badge from "react-bootstrap/esm/Badge";
@@ -6,278 +6,103 @@ import Media from "react-bootstrap/esm/Media";
 import Button from "react-bootstrap/esm/Button";
 import { Comments } from "../layout/comments/comments";
 
-import { clearState, loadPost } from "../../features/post/postSlice";
 import { useHistory } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { upvote, downvote } from "../../features/post/postSlice";
 import toast from "react-hot-toast";
+import axios from "../../features/axiosSetup";
 
 //TODO: Add a close post button
 export const IndividualPost = ({ match }) => {
   const history = useHistory();
-  const dispatch = useDispatch();
+
   const postId = match.params.id;
-  const { data, status, error } = useSelector((state) => state.post);
-  const rpost = {
-    title: "titile",
-    content: "aaa",
-    type: "",
-    authorId: { name: "AAA" },
-    contentUrl: "123",
-    votes: "232312",
-    comments: [
-      {
-        authorId: 12324,
-        postId: 23123,
-        content: ` I had no idea when I would be ready to write this. Part of me
-                    thought it would be early on, when I was still really feeling the
-                    pain of what happened. I thought I would sit in the corner of my
-                    bedroom with the lights dimmed, just rolling off my thoughts. I’d
-                    have a glass of red wine, cozy up with a blanket, and finally get
-                    the chance to address what happened.`,
-        votes: 32,
-        subComments: [
-          {
-            authorId: 2321,
-            replyToId: 32312,
-            content: ` I had no idea when I would be ready to write this. Part of me
-                    thought it would be early on, when I was still really feeling the
-                    pain of what happened. I thought I would sit in the corner of my
-                    bedroom with the lights dimmed, just rolling off my thoughts. I’d
-                    have a glass of red wine, cozy up with a blanket, and finally get
-                    the chance to address “what happened”.`,
-            votes: 69,
-          },
-          {
-            authorId: 223321,
-            replyToId: 32312,
-            content: ` I had no idea when I would be ready to write this. Part of me
-                    thought it would be early on, when I was still really feeling the
-                    pain of what happened. I thought I would sit in the corner of my
-                    bedroom with the lights dimmed, just rolling off my thoughts. I’d
-                    have a glass of red wine, cozy up with a blanket, and finally get
-                    the chance to address “what happened”.`,
-            votes: 69,
-          },
-          {
-            authorId: 23211,
-            replyToId: 32312,
-            content: ` I had no idea when I would be ready to write this. Part of me
-                    thought it would be early on, when I was still really feeling the
-                    pain of what happened. I thought I would sit in the corner of my
-                    bedroom with the lights dimmed, just rolling off my thoughts. I’d
-                    have a glass of red wine, cozy up with a blanket, and finally get
-                    the chance to address “what happened”.`,
-            votes: 69,
-          },
-        ],
-      },
-      {
-        authorId: 12354,
-        postId: 23123,
-        content: ` I had no idea when I would be ready to write this. Part of me
-                    thought it would be early on, when I was still really feeling the
-                    pain of what happened. I thought I would sit in the corner of my
-                    bedroom with the lights dimmed, just rolling off my thoughts. I’d
-                    have a glass of red wine, cozy up with a blanket, and finally get
-                    the chance to address what happened.`,
-        votes: 32,
-        subComments: [
-          {
-            authorId: 23281,
-            replyToId: 32312,
-            content: ` I had no idea when I would be ready to write this. Part of me
-                    thought it would be early on, when I was still really feeling the
-                    pain of what happened. I thought I would sit in the corner of my
-                    bedroom with the lights dimmed, just rolling off my thoughts. I’d
-                    have a glass of red wine, cozy up with a blanket, and finally get
-                    the chance to address “what happened”.`,
-            votes: 69,
-          },
-          {
-            authorId: 2321,
-            replyToId: 32312,
-            content: ` I had no idea when I would be ready to write this. Part of me
-                    thought it would be early on, when I was still really feeling the
-                    pain of what happened. I thought I would sit in the corner of my
-                    bedroom with the lights dimmed, just rolling off my thoughts. I’d
-                    have a glass of red wine, cozy up with a blanket, and finally get
-                    the chance to address “what happened”.`,
-            votes: 69,
-          },
-          {
-            authorId: 2321,
-            replyToId: 32312,
-            content: ` I had no idea when I would be ready to write this. Part of me
-                    thought it would be early on, when I was still really feeling the
-                    pain of what happened. I thought I would sit in the corner of my
-                    bedroom with the lights dimmed, just rolling off my thoughts. I’d
-                    have a glass of red wine, cozy up with a blanket, and finally get
-                    the chance to address “what happened”.`,
-            votes: 69,
-          },
-        ],
-      },
-      {
-        authorId: 12364,
-        postId: 23123,
-        content: ` I had no idea when I would be ready to write this. Part of me
-                    thought it would be early on, when I was still really feeling the
-                    pain of what happened. I thought I would sit in the corner of my
-                    bedroom with the lights dimmed, just rolling off my thoughts. I’d
-                    have a glass of red wine, cozy up with a blanket, and finally get
-                    the chance to address what happened.`,
-        votes: 32,
-        subComments: [
-          {
-            authorId: 2321,
-            replyToId: 32312,
-            content: ` I had no idea when I would be ready to write this. Part of me
-                    thought it would be early on, when I was still really feeling the
-                    pain of what happened. I thought I would sit in the corner of my
-                    bedroom with the lights dimmed, just rolling off my thoughts. I’d
-                    have a glass of red wine, cozy up with a blanket, and finally get
-                    the chance to address “what happened”.`,
-            votes: 69,
-          },
-          {
-            authorId: 2321,
-            replyToId: 32312,
-            content: ` I had no idea when I would be ready to write this. Part of me
-                    thought it would be early on, when I was still really feeling the
-                    pain of what happened. I thought I would sit in the corner of my
-                    bedroom with the lights dimmed, just rolling off my thoughts. I’d
-                    have a glass of red wine, cozy up with a blanket, and finally get
-                    the chance to address “what happened”.`,
-            votes: 69,
-          },
-          {
-            authorId: 2321,
-            replyToId: 32312,
-            content: ` I had no idea when I would be ready to write this. Part of me
-                    thought it would be early on, when I was still really feeling the
-                    pain of what happened. I thought I would sit in the corner of my
-                    bedroom with the lights dimmed, just rolling off my thoughts. I’d
-                    have a glass of red wine, cozy up with a blanket, and finally get
-                    the chance to address “what happened”.`,
-            votes: 69,
-          },
-        ],
-      },
-      {
-        authorId: 12384,
-        postId: 23123,
-        content: ` I had no idea when I would be ready to write this. Part of me
-                    thought it would be early on, when I was still really feeling the
-                    pain of what happened. I thought I would sit in the corner of my
-                    bedroom with the lights dimmed, just rolling off my thoughts. I’d
-                    have a glass of red wine, cozy up with a blanket, and finally get
-                    the chance to address what happened.`,
-        votes: 32,
-        subComments: [
-          {
-            authorId: 2321,
-            replyToId: 32312,
-            content: ` I had no idea when I would be ready to write this. Part of me
-                    thought it would be early on, when I was still really feeling the
-                    pain of what happened. I thought I would sit in the corner of my
-                    bedroom with the lights dimmed, just rolling off my thoughts. I’d
-                    have a glass of red wine, cozy up with a blanket, and finally get
-                    the chance to address “what happened”.`,
-            votes: 69,
-          },
-          {
-            authorId: 2321,
-            replyToId: 32312,
-            content: ` I had no idea when I would be ready to write this. Part of me
-                    thought it would be early on, when I was still really feeling the
-                    pain of what happened. I thought I would sit in the corner of my
-                    bedroom with the lights dimmed, just rolling off my thoughts. I’d
-                    have a glass of red wine, cozy up with a blanket, and finally get
-                    the chance to address “what happened”.`,
-            votes: 69,
-          },
-          {
-            authorId: 2321,
-            replyToId: 32312,
-            content: ` I had no idea when I would be ready to write this. Part of me
-                    thought it would be early on, when I was still really feeling the
-                    pain of what happened. I thought I would sit in the corner of my
-                    bedroom with the lights dimmed, just rolling off my thoughts. I’d
-                    have a glass of red wine, cozy up with a blanket, and finally get
-                    the chance to address “what happened”.`,
-            votes: 69,
-          },
-        ],
-      },
-      {
-        authorId: 12345,
-        postId: 23123,
-        content: ` I had no idea when I would be ready to write this. Part of me
-                    thought it would be early on, when I was still really feeling the
-                    pain of what happened. I thought I would sit in the corner of my
-                    bedroom with the lights dimmed, just rolling off my thoughts. I’d
-                    have a glass of red wine, cozy up with a blanket, and finally get
-                    the chance to address what happened.`,
-        votes: 32,
-        subComments: [
-          {
-            authorId: 2321,
-            replyToId: 32312,
-            content: ` I had no idea when I would be ready to write this. Part of me
-                    thought it would be early on, when I was still really feeling the
-                    pain of what happened. I thought I would sit in the corner of my
-                    bedroom with the lights dimmed, just rolling off my thoughts. I’d
-                    have a glass of red wine, cozy up with a blanket, and finally get
-                    the chance to address “what happened”.`,
-            votes: 69,
-          },
-          {
-            authorId: 2321,
-            replyToId: 32312,
-            content: ` I had no idea when I would be ready to write this. Part of me
-                    thought it would be early on, when I was still really feeling the
-                    pain of what happened. I thought I would sit in the corner of my
-                    bedroom with the lights dimmed, just rolling off my thoughts. I’d
-                    have a glass of red wine, cozy up with a blanket, and finally get
-                    the chance to address “what happened”.`,
-            votes: 69,
-          },
-          {
-            authorId: 2321,
-            replyToId: 32312,
-            content: ` I had no idea when I would be ready to write this. Part of me
-                    thought it would be early on, when I was still really feeling the
-                    pain of what happened. I thought I would sit in the corner of my
-                    bedroom with the lights dimmed, just rolling off my thoughts. I’d
-                    have a glass of red wine, cozy up with a blanket, and finally get
-                    the chance to address “what happened”.`,
-            votes: 69,
-          },
-        ],
-      },
-    ],
-    editorChoice: true,
-    course: { code: "AAAA" },
-    subject: { name: "MAT101" },
+  const [post, setPost] = useState(null);
+  const [status, setStatus] = useState("idle");
+  const [error, setError] = useState(null);
+
+  const loadPost = async () => {
+    setStatus("pending");
+    try {
+      const res = await axios({
+        method: "GET",
+        url: `/api/resourceposts/find/${postId}`,
+      });
+      if (res.status === 200) {
+        setPost(res.data);
+        setStatus("fulfilled");
+        setError(null);
+      }
+    } catch (err) {
+      console.log(err);
+      setPost(null);
+      setStatus("rejected");
+      setError(err.response.data);
+    }
   };
 
   useEffect(() => {
-    dispatch(loadPost(postId));
+    if (!postId) {
+      toast.error("invalid post.");
+      history.push("/resources");
+    }
+    loadPost();
     // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
-    if (status === "failed") {
+    if (error !== null) {
+      toast.error(error);
       history.push("/resources");
-      dispatch(clearState());
     }
     // eslint-disable-next-line
-  }, [status]);
-  if (status === "loading") return <p>Loading Post</p>;
-  else if (status === "succeded") {
+  }, [error]);
+
+  const upvote = async () => {
+    try {
+      const res = await axios({
+        method: "PUT",
+        url: "api/resourceposts/upvote",
+        headers: {
+          "x-auth-token": localStorage.getItem("token"),
+        },
+        data: JSON.stringify({ id: postId }),
+      });
+      if (res.status === 200) {
+        const { data } = await axios({
+          method: "GET",
+          url: `api/resourceposts/find/${postId}`,
+        });
+        setPost({ ...post, votes: data.votes });
+      }
+    } catch (err) {
+      return toast.error(err.response.data);
+    }
+  };
+  const downvote = async () => {
+    try {
+      const res = await axios({
+        method: "PUT",
+        url: "api/resourceposts/downvote",
+        headers: {
+          "x-auth-token": localStorage.getItem("token"),
+        },
+        data: JSON.stringify({ id: postId }),
+      });
+      if (res.status === 200) {
+        const { data } = await axios({
+          method: "GET",
+          url: `api/resourceposts/find/${postId}`,
+        });
+        setPost({ ...post, votes: data.votes });
+      }
+    } catch (err) {
+      return toast.error(err.response.data);
+    }
+  };
+
+  //TODO: Add loader here
+  if (status === "pending") return <p>Loading Post</p>;
+  else if (status === "fulfilled") {
     const {
-      _id,
       title,
       content,
       type,
@@ -289,7 +114,7 @@ export const IndividualPost = ({ match }) => {
       course,
       subject,
       comments,
-    } = data;
+    } = post;
 
     const showEditorBadge = (isChoice) => {
       if (isChoice) {
@@ -363,18 +188,12 @@ export const IndividualPost = ({ match }) => {
             }}
           >
             <span style={{ marginRight: "1.5em", fontWeight: "bold" }}>
-              <Button
-                className='iconButton'
-                onClick={() => dispatch(upvote(_id))}
-              >
+              <Button className='iconButton' onClick={() => upvote()}>
                 <i className='fas fa-arrow-up' />
               </Button>
               {votes}
               <Button className='iconButton'>
-                <i
-                  className='fas fa-arrow-down'
-                  onClick={() => dispatch(downvote(_id))}
-                />
+                <i className='fas fa-arrow-down' onClick={() => downvote()} />
               </Button>
             </span>
             <span style={{ marginRight: "1.5em", fontWeight: "bold" }}>
@@ -388,7 +207,7 @@ export const IndividualPost = ({ match }) => {
                 className='iconButton'
                 onClick={() => {
                   navigator.clipboard.writeText(
-                    `${process.env.REACT_APP_FRONTEND_URL}/#/post/${_id}`
+                    `${process.env.REACT_APP_FRONTEND_URL}/#/post/${postId}`
                   );
                   toast.success("copied to clipboard");
                 }}
