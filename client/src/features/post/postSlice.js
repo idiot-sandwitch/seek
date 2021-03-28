@@ -10,7 +10,7 @@ const loadPost = createAsyncThunk("post/load", async (id, thunkAPI) => {
   try {
     const res = await axios({
       method: "GET",
-      url: `/api/resourceposts/find/${id}`,
+      url: `/api/resourceposts/find/${id}?comments`,
     });
     if (res.status === 200) return res.data;
   } catch (err) {
