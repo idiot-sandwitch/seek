@@ -20,10 +20,10 @@ module.exports = function (app) {
   app.use("/api/auth", auth);
   app.use("/api/verify", verify);
   app.use("/api/resourceposts", resourcePosts);
-  app.use("/api/reply", replies);
   app.use("/api/subjects", subject);
   app.use("/api/courses", course);
   app.use("/api/branches", branch);
-  app.use("/api/comments", comment);
+  app.use("/api/comments", comments);
+  app.use("/api/subComments", subComments);
   app.use(error);
 };

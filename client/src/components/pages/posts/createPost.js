@@ -10,10 +10,10 @@ import Container from "react-bootstrap/esm/Container";
 import Form from "react-bootstrap/esm/Form";
 import Button from "react-bootstrap/esm/Button";
 import Col from "react-bootstrap/esm/Col";
-
+import toast from "react-hot-toast";
 //TODO: Add toasts to handle errors and warnings
 
-export const CreatePost = () => {
+const CreatePost = () => {
   const auth = useSelector((state) => state.auth);
   const { user } = auth;
 
@@ -54,130 +54,151 @@ export const CreatePost = () => {
   const isInitialRender = useRef(true); //is true if it is the initial render of components
   const history = useHistory();
 
-  //fetch subjects and courses from the backend
-  useEffect(async () => {
-    let newCourses = [];
-    let newSubjects = [];
+  const checkDuplicateCourse = () => true;
+  const checkDuplicateSubjects = () => true;
 
-    const resCourse = await axios({
-      method: "GET",
-      url: "api/courses/all",
-      headers: { "x-auth-token": localStorage.getItem(`token`) },
-    });
+  const fetchSubjects = async () => {
+    try {
+      let newCourses = [];
+      let newSubjects = [];
 
-    resCourse.data.forEach((item) => {
-      newCourses = [...newCourses, item.code];
-    });
-
-    const resSubject = await axios({
-      method: "GET",
-      url: "api/subjects/all",
-      headers: { "x-auth-token": localStorage.getItem(`token`) },
-    });
-
-    resSubject.data.forEach((item) => {
-      newSubjects = [...newSubjects, item.name];
-    });
-
-    setCorObjs([...resCourse.data]);
-    setSubObjs([...resSubject.data]);
-
-    setCourses(newCourses);
-    setSubjects(newSubjects);
-  }, []);
-
-  useEffect(async () => {
-    if (isInitialRender.current) {
-      isInitialRender.current = false;
-    } else {
-      const data = {
-        title: formData.title,
-        content: formData.content,
-        contentUrl: formData.url,
-        replies: [],
-        editorChoice: false,
-      };
-
-      //check subject
-      if (subject !== "" && subjects.find(isSubjectPresent) !== undefined) {
-        const sub = subObjs.find((element) => element.name === subject);
-        data["subject"] = sub._id;
-      } else if (subject !== "") {
-        const resSubject = await axios({
-          method: "POST",
-          url: "api/subjects/add",
-          headers: { "x-auth-token": localStorage.getItem(`token`) },
-          data: JSON.stringify({ name: subject }),
-        });
-        data["subject"] = resSubject.data._id;
-      }
-
-      //check course
-      if (course !== "" && courses.find(isCoursePresent) !== undefined) {
-        const cor = corObjs.find((element) => element.code === course);
-        data["course"] = cor._id;
-      } else if (course !== "") {
-        const resCourse = await axios({
-          method: "POST",
-          url: "api/courses/add",
-          headers: { "x-auth-token": localStorage.getItem(`token`) },
-          data: JSON.stringify({ code: course }),
-        });
-        data["course"] = resCourse.data._id;
-      }
-
-      data["authorId"] = user._id;
-
-      await axios({
-        method: "POST",
-        url: "api/resourceposts/add",
+      const resCourse = await axios({
+        method: "GET",
+        url: "api/courses/all",
         headers: { "x-auth-token": localStorage.getItem(`token`) },
-        data: JSON.stringify({
-          title: data.title,
-          content: data.content,
-          course: data.course,
-          subject: data.subject,
-          contentUrl: data.contentUrl,
-          authorId: data.authorId,
-          replies: data.replies,
-          editorChoice: data.editorChoice,
-        }),
       });
 
-      //useHistory to goto resourcePosts page
-      setTimeout(() => {
-        history.push("resources");
-      }, 1500);
+      resCourse.data.forEach((item) => {
+        newCourses = [...newCourses, item.code];
+      });
+
+      const resSubject = await axios({
+        method: "GET",
+        url: "api/subjects/all",
+        headers: { "x-auth-token": localStorage.getItem(`token`) },
+      });
+
+      resSubject.data.forEach((item) => {
+        newSubjects = [...newSubjects, item.name];
+      });
+
+      setCorObjs([...resCourse.data]);
+      setSubObjs([...resSubject.data]);
+
+      setCourses(newCourses);
+      setSubjects(newSubjects);
+    } catch (err) {
+      toast.error(err.response.data);
     }
+  };
+
+  //fetch subjects and courses from the backend
+  useEffect(() => {
+    fetchSubjects();
+  }, []);
+  const wrangleData = async () => {
+    try {
+      if (isInitialRender.current) {
+        isInitialRender.current = false;
+      } else {
+        const data = {
+          title: formData.title,
+          content: formData.content,
+          contentUrl: formData.url,
+          replies: [],
+          editorChoice: false,
+        };
+
+        //check subject
+        if (subject !== "" && subjects.find(isSubjectPresent) !== undefined) {
+          const sub = subObjs.find((element) => element.name === subject);
+          data["subject"] = sub._id;
+        } else if (subject !== "") {
+          const resSubject = await axios({
+            method: "POST",
+            url: "api/subjects/add",
+            headers: { "x-auth-token": localStorage.getItem(`token`) },
+            data: JSON.stringify({ name: subject }),
+          });
+          data["subject"] = resSubject.data._id;
+        }
+
+        //check course
+        if (course !== "" && courses.find(isCoursePresent) !== undefined) {
+          const cor = corObjs.find((element) => element.code === course);
+          data["course"] = cor._id;
+        } else if (course !== "") {
+          const resCourse = await axios({
+            method: "POST",
+            url: "api/courses/add",
+            headers: { "x-auth-token": localStorage.getItem(`token`) },
+            data: JSON.stringify({ code: course }),
+          });
+          data["course"] = resCourse.data._id;
+        }
+
+        data["authorId"] = user._id;
+
+        const res = await axios({
+          method: "POST",
+          url: "api/resourceposts/add",
+          headers: { "x-auth-token": localStorage.getItem(`token`) },
+          data: JSON.stringify({
+            title: data.title,
+            content: data.content,
+            course: data.course,
+            subject: data.subject,
+            contentUrl: data.contentUrl,
+            authorId: data.authorId,
+            replies: data.replies,
+            editorChoice: data.editorChoice,
+          }),
+        });
+        if (res.status === 200) {
+          toast.success("Resource successfully added!");
+          await setTimeout(() => {
+            history.push("resources");
+          }, 1500);
+        }
+
+        //useHistory to goto resourcePosts page
+      }
+    } catch (err) {
+      toast.error(err.response.data);
+    }
+  };
+  useEffect(() => {
+    wrangleData();
+    //eslint-disable-next-line
   }, [formData]);
 
   return (
     <Container style={{ marginTop: "5rem" }}>
-      <Container className="seekPostCard">
+      <Container className='seekPostCard'>
         <h1 style={{ fontWeight: "bolder" }}>CREATE A NEW POST</h1>
         <Form
           style={{ marginLeft: "0px", marginRight: "0px" }}
-          className="seekForm"
-          as="form"
+          className='seekForm'
+          as='form'
           onSubmit={handleSubmit(onSubmit)}
         >
           <Form.Group>
             <Form.Label>Title</Form.Label>
             <Form.Control
-              className="seekInput"
-              name="title"
+              className='seekInput'
+              name='title'
               ref={register}
-              type="text"
-              placeholder="Enter the post title"
+              type='text'
+              placeholder='Enter the post title'
             />
           </Form.Group>
           <Form.Group>
             <Form.Control
-              className="seekInput"
-              name="content"
+              className='seekInput'
+              name='content'
               ref={register}
-              as="textarea"
-              placeholder="Describe your post a little"
+              as='textarea'
+              placeholder='Describe your post a little'
             />
           </Form.Group>
           <Form.Row>
@@ -186,10 +207,10 @@ export const CreatePost = () => {
               <Typeahead
                 positionFixed
                 allowNew={checkDuplicateSubjects}
-                id="subject"
+                id='subject'
                 options={subjects}
-                name="subject"
-                placeholder="Select a subject"
+                name='subject'
+                placeholder='Select a subject'
                 onBlur={handleSubject}
               />
             </Form.Group>
@@ -198,10 +219,10 @@ export const CreatePost = () => {
               <Typeahead
                 positionFixed
                 allowNew={checkDuplicateCourse}
-                id="course"
+                id='course'
                 options={courses}
-                name="course"
-                placeholder="Select a subject"
+                name='course'
+                placeholder='Select a subject'
                 inputProps={{ ref: { register } }}
                 onBlur={handleCourse}
               />
@@ -209,17 +230,17 @@ export const CreatePost = () => {
           </Form.Row>
           <Form.Group>
             <Form.Label>
-              <i className="fas fa-link" /> {"  "} URL
+              <i className='fas fa-link' /> {"  "} URL
             </Form.Label>
             <Form.Control
-              className="seekInput"
-              name="url"
+              className='seekInput'
+              name='url'
               ref={register}
-              placeholder="Enter the link to the resourse"
+              placeholder='Enter the link to the resourse'
             />
           </Form.Group>
 
-          <Button className="seekButton" type="submit">
+          <Button className='seekButton' type='submit'>
             CREATE POST
           </Button>
         </Form>
@@ -236,3 +257,5 @@ export const CreatePost = () => {
     </Container>
   );
 };
+
+export default CreatePost;

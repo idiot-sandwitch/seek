@@ -6,6 +6,7 @@ import { Login } from "./components/pages/login";
 import { ResourcePosts } from "./components/pages/resourcePosts";
 import SignUp from "./components/pages/signup";
 import VerifyUserForm from "./components/pages/VerifyUserForm";
+import CreatePost from "./components/pages/posts/createPost";
 
 const Routes = () => {
   return (
@@ -23,6 +24,7 @@ const Routes = () => {
         path='/verify/:token?'
         render={(props) => <VerifyUserForm {...props} />}
       />
+      <Route exact path='/' component={CreatePost} />
     </Switch>
   );
 };

@@ -31,6 +31,9 @@ route.post("/add", auth, async (req, res) => {
     res.status(400).send(result.error.details[0].message);
   }
 
+  const exists = await Course.findOne({ code: req.body.code });
+  if (exists) return res.status(400).send("Course already exists.");
+
   const course = new Course(pickCourseData(req.body));
 
   try {
