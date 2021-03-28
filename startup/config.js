@@ -1,6 +1,3 @@
-const { User } = require("../models/user");
-const winston = require("winston");
-
 if (process.env.NODE_ENV) {
   require("dotenv").config({
     path: `${__dirname}/../.env.${process.env.NODE_ENV}`,
@@ -10,6 +7,8 @@ if (process.env.NODE_ENV) {
 }
 
 if (process.env.NODE_ENV) winston.info(`NODE_ENV: ${process.env.NODE_ENV}`);
+const { User } = require("../models/user");
+const winston = require("winston");
 
 const anon = new User({
   name: "Anonymous",
