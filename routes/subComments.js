@@ -40,6 +40,12 @@ router.post("/comment", [auth, anonymous], async (req, res) => {
   }
 });
 
+router.get("/find/:id", async (req, res) => {
+  const subComment = await SubComment.findById(req.params.id);
+  if (!subComment) return res.status(404).send("SubComment not found!");
+  return res.status(200).send(subComment);
+});
+
 router.put(
   "/upvote",
   auth,

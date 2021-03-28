@@ -9,7 +9,12 @@ import { Comments } from "../layout/comments/comments";
 import { clearState, loadPost } from "../../features/post/postSlice";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { upvote, downvote } from "../../features/post/postSlice";
+import {
+  upvote,
+  downvote,
+  voteComment,
+  voteSubComment,
+} from "../../features/post/postSlice";
 import toast from "react-hot-toast";
 
 //TODO: Add a close post button
@@ -31,6 +36,17 @@ export const IndividualPost = ({ match }) => {
     }
     // eslint-disable-next-line
   }, [status]);
+
+  const commentVoteHandler = ({ commentId, vote }) => {
+    //vote is boolean, false means downvote
+    dispatch(voteComment({ commentId, vote }));
+  };
+
+  const subCommentVoteHandler = ({ subCommentId, vote }) => {
+    //vote is boolean, false means downvote
+    dispatch(voteSubComment({ subCommentId, vote }));
+  };
+
   if (status === "loading") return <p>Loading Post</p>;
   else if (status === "succeded") {
     const {
@@ -40,7 +56,6 @@ export const IndividualPost = ({ match }) => {
       authorId,
       contentUrl,
       votes,
-      replies,
       editorChoice,
       course,
       subject,
@@ -50,14 +65,14 @@ export const IndividualPost = ({ match }) => {
     const showEditorBadge = (isChoice) => {
       if (isChoice) {
         return (
-          <Button className='badgeButton'>
+          <Button className="badgeButton">
             <Badge
               style={{
                 borderColor: "gold",
                 color: "gold",
               }}
             >
-              <i style={{ marginRight: "10px" }} className='fas fa-star'></i>
+              <i style={{ marginRight: "10px" }} className="fas fa-star"></i>
               Editor's Choice
             </Badge>
           </Button>
@@ -85,7 +100,7 @@ export const IndividualPost = ({ match }) => {
                   padding: "1em",
                 }}
               >
-                <i className='fas fa-file-alt'></i>
+                <i className="fas fa-file-alt"></i>
               </span>
             </Media>
             <Media.Body style={{ padding: "1em" }}>
@@ -106,7 +121,7 @@ export const IndividualPost = ({ match }) => {
                 {content}
               </p>
               <span>
-                <i className='fas fa-link' style={{ marginRight: "10px" }} />
+                <i className="fas fa-link" style={{ marginRight: "10px" }} />
                 <a href={contentUrl}>URL</a>
               </span>
             </Media.Body>
@@ -120,28 +135,28 @@ export const IndividualPost = ({ match }) => {
           >
             <span style={{ marginRight: "1.5em", fontWeight: "bold" }}>
               <Button
-                className='iconButton'
+                className="iconButton"
                 onClick={() => dispatch(upvote(_id))}
               >
-                <i className='fas fa-arrow-up' />
+                <i className="fas fa-arrow-up" />
               </Button>
               {votes}
-              <Button className='iconButton'>
+              <Button className="iconButton">
                 <i
-                  className='fas fa-arrow-down'
+                  className="fas fa-arrow-down"
                   onClick={() => dispatch(downvote(_id))}
                 />
               </Button>
             </span>
             <span style={{ marginRight: "1.5em", fontWeight: "bold" }}>
-              <Button className='iconButton'>
-                <i className='fas fa-comment-dots' />
+              <Button className="iconButton">
+                <i className="fas fa-comment-dots" />
               </Button>
-              {replies ? replies.length : 0}
+              {comments ? comments.length : 0}
             </span>
             <span>
               <Button
-                className='iconButton'
+                className="iconButton"
                 onClick={() => {
                   navigator.clipboard.writeText(
                     `${process.env.REACT_APP_FRONTEND_URL}/#/post/${_id}`
@@ -149,19 +164,23 @@ export const IndividualPost = ({ match }) => {
                   toast.success("copied to clipboard");
                 }}
               >
-                <i className='fas fa-share'></i>
+                <i className="fas fa-share"></i>
               </Button>
             </span>
 
-            <span className='ml-auto mr-3'>
+            <span className="ml-auto mr-3">
               {showEditorBadge(editorChoice)}
-              <Button className='badgeButton'>
+              <Button className="badgeButton">
                 <Badge>{course.code}</Badge>
               </Button>
             </span>
           </Row>
           <Row>
-            <Comments comments={comments} />
+            <Comments
+              comments={comments}
+              voteHandler={commentVoteHandler}
+              subVoteHandler={subCommentVoteHandler}
+            />
           </Row>
         </Container>
       </Container>

@@ -4,7 +4,8 @@ import { HashLink as Link } from "react-router-hash-link";
 import Button from "react-bootstrap/esm/Button";
 
 export const SubCommentItem = ({
-  subComment: { authorId, replyToId, content, votes },
+  subComment: { authorId, replyToId, content, votes, _id },
+  voteHandler,
 }) => {
   const getCommentAuthor = (commentId) => {
     //FIXME: return comment's author name
@@ -24,11 +25,17 @@ export const SubCommentItem = ({
       </span>
       <p>{content}</p>
       <span>
-        <Button className="iconButton">
+        <Button
+          onClick={() => voteHandler({ subCommentId: _id, vote: true })}
+          className="iconButton"
+        >
           <i className="fas fa-arrow-up" />
         </Button>
         {votes}
-        <Button className="iconButton">
+        <Button
+          onClick={() => voteHandler({ subCommentId: _id, vote: false })}
+          className="iconButton"
+        >
           <i className="fas fa-arrow-down" />
         </Button>
         <span />

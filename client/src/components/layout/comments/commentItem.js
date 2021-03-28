@@ -5,32 +5,40 @@ import Row from "react-bootstrap/esm/Row";
 import { SubComments } from "./subComments";
 
 export const CommentItem = ({
-  comment: { authorId, content, votes, subComments },
+  comment: { authorId, content, votes, subComments, _id },
+  voteHandler,
+  subVoteHandler,
 }) => {
   return (
     <Container>
-      <Row id='pappuId' className='seekComment'>
+      <Row id="pappuId" className="seekComment">
         <Container>
           <h5>{authorId.name}</h5> <p>{content}</p>
           <span>
-            <Button className='iconButton'>
-              <i className='fas fa-arrow-up' />
+            <Button
+              onClick={() => voteHandler({ commentId: _id, vote: true })}
+              className="iconButton"
+            >
+              <i className="fas fa-arrow-up" />
             </Button>
             {votes}
-            <Button className='iconButton'>
-              <i className='fas fa-arrow-down' />
+            <Button
+              onClick={() => voteHandler({ commentId: _id, vote: false })}
+              className="iconButton"
+            >
+              <i className="fas fa-arrow-down" />
             </Button>
             <span />
             <span style={{ marginRight: "1.5em", fontWeight: "bold" }}></span>
-            <Button className='iconButton'>
-              <i className='fas fa-comment-dots' />
+            <Button className="iconButton">
+              <i className="fas fa-comment-dots" />
             </Button>
             {subComments.length}
           </span>
         </Container>
       </Row>
-      <Row className='seekSubCommentBox'>
-        <SubComments subComments={subComments} />
+      <Row className="seekSubCommentBox">
+        <SubComments subComments={subComments} voteHandler={subVoteHandler} />
       </Row>
     </Container>
   );

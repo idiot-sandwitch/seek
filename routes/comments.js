@@ -41,6 +41,12 @@ router.post("/comment", [auth, anonymous], async (req, res) => {
   }
 });
 
+router.get("/find/:id", async (req, res) => {
+  const comment = await Comment.findById(req.params.id);
+  if (!comment) return res.status(404).send("Comment not found!");
+  return res.status(200).send(comment);
+});
+
 router.put(
   "/upvote",
   auth,

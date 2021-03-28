@@ -69,6 +69,56 @@ const downvote = createAsyncThunk(
   }
 );
 
+const voteComment = createAsyncThunk(
+  "post/commentVote",
+  async ({ commentId, vote }, thunkAPI) => {
+    try {
+      const res = await axios({
+        method: "PUT",
+        url: `api/comments/${vote ? "upvote" : "downvote"}`,
+        headers: {
+          "x-auth-token": localStorage.getItem("token"),
+        },
+        data: JSON.stringify({ id: commentId }),
+      });
+      if (res.status === 200) {
+        const { data } = await axios({
+          method: "GET",
+          url: `api/comments/find/${commentId}`,
+        });
+        return data;
+      }
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err.response.data);
+    }
+  }
+);
+
+const voteSubComment = createAsyncThunk(
+  "post/subCommentVote",
+  async ({ subCommentId, vote }, thunkAPI) => {
+    try {
+      const res = await axios({
+        method: "PUT",
+        url: `api/subcomments/${vote ? "upvote" : "downvote"}`,
+        headers: {
+          "x-auth-token": localStorage.getItem("token"),
+        },
+        data: JSON.stringify({ id: subCommentId }),
+      });
+      if (res.status === 200) {
+        const { data } = await axios({
+          method: "GET",
+          url: `api/subcomments/find/${subCommentId}`,
+        });
+        return data;
+      }
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err.response.data);
+    }
+  }
+);
+
 export const postSlice = createSlice({
   name: "post",
   initialState,
@@ -107,9 +157,39 @@ export const postSlice = createSlice({
     [downvote.rejected]: (state, { payload }) => {
       toast.error(payload);
     },
+    [voteComment.fulfilled]: (state, { payload }) => {
+      state.data.comments.find((comment, index) => {
+        if (comment._id === payload._id) {
+          state.data.comments[index].votes = payload.votes;
+          return true;
+        }
+        return false;
+      });
+    },
+    [voteComment.rejected]: (state, { payload }) => {
+      toast.error(payload);
+    },
+    [voteSubComment.fulfilled]: (state, { payload }) => {
+      state.data.comments.find((comment, i) => {
+        if (comment._id === payload.commentId) {
+          state.data.comments[i].subComments.find((subcomment, j) => {
+            if (subcomment._id === payload._id) {
+              state.data.comments[i].subComments[j].votes = payload.votes;
+              return true;
+            }
+            return false;
+          });
+          return true;
+        }
+        return false;
+      });
+    },
+    [voteSubComment.rejected]: (state, { payload }) => {
+      toast.error(payload);
+    },
   },
 });
 
-export { loadPost, upvote, downvote };
+export { loadPost, upvote, downvote, voteComment, voteSubComment };
 export const { clearState } = postSlice.actions;
 export default postSlice.reducer;
