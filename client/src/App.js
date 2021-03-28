@@ -16,7 +16,7 @@ function App() {
       <Router>
         <React.Fragment>
           <React.Fragment>
-            <Toaster position='top-right' />
+            <Toaster position='bottom-right' />
           </React.Fragment>
           <Routes />
           <Header />
