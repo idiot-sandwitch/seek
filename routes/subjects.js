@@ -49,7 +49,6 @@ route.post("/add", auth, async (req, res) => {
   if (error) {
     res.status(400).send(error.details[0].message);
   }
-
   const subject = new Subject(pickSubjectData(req.body));
   try {
     const newSub = await subject.save();
