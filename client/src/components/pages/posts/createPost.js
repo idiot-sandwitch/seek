@@ -173,7 +173,7 @@ const CreatePost = () => {
   }, [formData]);
 
   return (
-    <Container style={{ marginTop: "5rem" }}>
+    <Container style={{ marginTop: "2rem" }}>
       <Container className='seekPostCard'>
         <h1 style={{ fontWeight: "bolder" }}>CREATE A NEW POST</h1>
         <Form
