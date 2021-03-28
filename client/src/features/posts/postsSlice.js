@@ -10,7 +10,7 @@ const initialState = {
   error: null,
 };
 
-export const getnPosts = createAsyncThunk(
+const getnPosts = createAsyncThunk(
   "posts/fetch",
   async ({ page, results }, thunkAPI) => {
     try {
@@ -19,9 +19,58 @@ export const getnPosts = createAsyncThunk(
         url: `api/resourceposts/page/${page}/${results}`,
       });
       if (res.status === 200) return res.data;
-      else return thunkAPI.rejectWithValue(res.data);
     } catch (err) {
-      return err.response.data;
+      return thunkAPI.rejectWithValue(err.response.data);
+    }
+  }
+);
+
+const upvote = createAsyncThunk(
+  "posts/upvoteSinglePost",
+  async (id, thunkAPI) => {
+    try {
+      const res = await axios({
+        method: "PUT",
+        url: "api/resourceposts/upvote",
+        headers: {
+          "x-auth-token": localStorage.getItem("token"),
+        },
+        data: JSON.stringify({ id }),
+      });
+      if (res.status === 200) {
+        const { data } = await axios({
+          method: "GET",
+          url: `api/resourceposts/find/${id}`,
+        });
+        return { newPost: data, id };
+      }
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err.response.data);
+    }
+  }
+);
+
+const downvote = createAsyncThunk(
+  "posts/downvoteSinglePost",
+  async (id, thunkAPI) => {
+    try {
+      const res = await axios({
+        method: "PUT",
+        url: "api/resourceposts/downvote",
+        headers: {
+          "x-auth-token": localStorage.getItem("token"),
+        },
+        data: JSON.stringify({ id }),
+      });
+      if (res.status === 200) {
+        const { data } = await axios({
+          method: "GET",
+          url: `api/resourceposts/find/${id}`,
+        });
+        return { newPost: data, id };
+      }
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err.response.data);
     }
   }
 );
@@ -58,8 +107,24 @@ const postsSlice = createSlice({
       state.error = payload;
       toast.error(payload);
     },
+    [upvote.fulfilled]: (state, { payload }) => {
+      state.posts.find((post) => post._id === payload.id).votes =
+        payload.newPost.votes;
+    },
+    [upvote.rejected]: (state, { payload }) => {
+      toast.error(payload);
+    },
+    [downvote.fulfilled]: (state, { payload }) => {
+      state.posts.find((post) => post._id === payload.id).votes =
+        payload.newPost.votes;
+    },
+    [downvote.rejected]: (state, { payload }) => {
+      toast.error(payload);
+    },
   },
 });
+
+export { getnPosts, upvote, downvote };
 
 export const { setPosts, setPage, setStatus } = postsSlice.actions;
 
