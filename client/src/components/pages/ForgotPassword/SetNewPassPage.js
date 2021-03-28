@@ -66,52 +66,52 @@ const SetNewPassPage = () => {
   };
   return (
     <Container style={{ marginTop: "4rem" }}>
-      <Form className="seekForm" as="form" onSubmit={handleSubmit(onSubmit)}>
-        <Form.Group as={Row} controlId="formHorizontalName">
+      <Form className='seekForm' as='form' onSubmit={handleSubmit(onSubmit)}>
+        <Form.Group as={Row}>
           <Form.Label column sm={2}>
             New Password
           </Form.Label>
           <Col sm={10}>
             <Form.Control
-              className="seekInput"
-              name="password"
-              type="password"
-              placeholder="Enter new account password"
+              className='seekInput'
+              name='password'
+              type='password'
+              placeholder='Enter new account password'
               ref={register}
             />
           </Col>
         </Form.Group>
-        <Form.Group as={Row} controlId="formHorizontalName">
+        <Form.Group as={Row}>
           <Form.Label column sm={2}>
             Confirm Password
           </Form.Label>
           <Col sm={10}>
             <Form.Control
-              className="seekInput"
-              name="confirm_password"
-              type="password"
-              placeholder="Re-enter the new password"
+              className='seekInput'
+              name='confirm_password'
+              type='password'
+              placeholder='Re-enter the new password'
               ref={register}
             />
           </Col>
         </Form.Group>
-        <Form.Group as={Row} controlId="formHorizontalName">
+        <Form.Group as={Row}>
           <Form.Label column sm={2}>
             Secure OTP
           </Form.Label>
           <Col sm={10}>
             <Form.Control
-              className="seekInput"
-              name="otp"
-              type="password"
-              placeholder="Enter the 8-digit otp sent to registered email"
+              className='seekInput'
+              name='otp'
+              type='password'
+              placeholder='Enter the 8-digit otp sent to registered email'
               ref={register}
             />
           </Col>
         </Form.Group>
         <Form.Group as={Row}>
           <Col sm={{ span: 10, offset: 2 }}>
-            <Button className="seekButton" type="submit">
+            <Button className='seekButton' type='submit'>
               Reset Password
             </Button>
           </Col>

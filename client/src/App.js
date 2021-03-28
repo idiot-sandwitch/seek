@@ -8,8 +8,6 @@ import store from "./store";
 import { Toaster } from "react-hot-toast";
 import Routes from "./routes";
 
-//TODO:DONE make signUp page
-//TODO:DONE Make user verification page
 function App() {
   return (
     <Provider store={store}>

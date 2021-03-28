@@ -6,13 +6,10 @@ import { PostItem } from "../layout/post_item";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { setPage, setStatus, getnPosts } from "../../features/posts/postsSlice";
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
 import CreatePost from "./posts/createPost";
 
-//TODO: make createPost page
 export const ResourcePosts = () => {
   const dispatch = useDispatch();
-  const history = useHistory();
   const postState = useSelector((state) => state.posts);
   const { posts, page, hasMore } = postState;
   const [formIsVisible, setFormVisibility] = useState(false);
@@ -21,6 +18,7 @@ export const ResourcePosts = () => {
     dispatch(setStatus("loading"));
     dispatch(getnPosts({ page, results: 4 }));
     dispatch(setPage(page + 1));
+    // eslint-disable-next-line
   }, []);
 
   const loadPosts = () => {
@@ -28,9 +26,9 @@ export const ResourcePosts = () => {
     dispatch(getnPosts({ page: page, results: 4 }));
     dispatch(setPage(page + 1));
   };
-  const gotoCreatePage = () => {
-    history.push("/createPost");
-  };
+  // const gotoCreatePage = () => {
+  //   history.push("/createPost");
+  // };
 
   //, height: "800px", overflowY: "scroll"
 

@@ -1,12 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
-import { useHistory } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { resetPassword } from "../../features/user/userSlice";
 import { joiResolver } from "@hookform/resolvers/joi";
@@ -34,7 +33,7 @@ const ResetPassword = () => {
       .valid(Joi.ref("new_password"))
       .required(),
   });
-  const { register, handleSubmit, errors } = useForm({
+  const { register, handleSubmit } = useForm({
     resolver: joiResolver(resetPassSchema),
   });
 
@@ -44,52 +43,52 @@ const ResetPassword = () => {
 
   return (
     <Container style={{ marginTop: "4rem" }}>
-      <Form as="form" onSubmit={handleSubmit(onSubmit)}>
-        <Form.Group as={Row} controlId="formHorizontalName">
+      <Form as='form' onSubmit={handleSubmit(onSubmit)}>
+        <Form.Group as={Row} controlId='formHorizontalName'>
           <Form.Label column sm={2}>
             old Password
           </Form.Label>
           <Col sm={10}>
             <Form.Control
-              className="seekInput"
-              name="old_password"
-              type="password"
-              placeholder="enter current account password"
+              className='seekInput'
+              name='old_password'
+              type='password'
+              placeholder='enter current account password'
               ref={register}
             />
           </Col>
         </Form.Group>
-        <Form.Group as={Row} controlId="formHorizontalName">
+        <Form.Group as={Row} controlId='formHorizontalName'>
           <Form.Label column sm={2}>
             new password
           </Form.Label>
           <Col sm={10}>
             <Form.Control
-              className="seekInput"
-              name="new_password"
-              type="password"
-              placeholder="enter the new  password"
+              className='seekInput'
+              name='new_password'
+              type='password'
+              placeholder='enter the new  password'
               ref={register}
             />
           </Col>
         </Form.Group>
-        <Form.Group as={Row} controlId="formHorizontalName">
+        <Form.Group as={Row} controlId='formHorizontalName'>
           <Form.Label column sm={2}>
             confirm password
           </Form.Label>
           <Col sm={10}>
             <Form.Control
-              className="seekInput"
-              name="confirm_new_password"
-              type="password"
-              placeholder="re-enter the new password"
+              className='seekInput'
+              name='confirm_new_password'
+              type='password'
+              placeholder='re-enter the new password'
               ref={register}
             />
           </Col>
         </Form.Group>
         <Form.Group as={Row}>
           <Col sm={{ span: 10, offset: 2 }}>
-            <Button className="seekButton" type="submit">
+            <Button className='seekButton' type='submit'>
               Reset Password
             </Button>
           </Col>

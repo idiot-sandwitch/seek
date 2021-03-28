@@ -11,7 +11,6 @@ import Form from "react-bootstrap/esm/Form";
 import Button from "react-bootstrap/esm/Button";
 import Col from "react-bootstrap/esm/Col";
 import toast from "react-hot-toast";
-//TODO: Add toasts to handle errors and warnings
 
 const CreatePost = () => {
   const auth = useSelector((state) => state.auth);
