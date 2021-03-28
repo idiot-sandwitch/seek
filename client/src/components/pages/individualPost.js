@@ -24,8 +24,9 @@ export const IndividualPost = ({ match }) => {
     try {
       const res = await axios({
         method: "GET",
-        url: `/api/resourceposts/find/${postId}`,
+        url: `/api/resourceposts/find/${postId}?comments`,
       });
+      console.log(res);
       if (res.status === 200) {
         setPost(res.data);
         setStatus("fulfilled");
@@ -119,14 +120,14 @@ export const IndividualPost = ({ match }) => {
     const showEditorBadge = (isChoice) => {
       if (isChoice) {
         return (
-          <Button className='badgeButton'>
+          <Button className="badgeButton">
             <Badge
               style={{
                 borderColor: "gold",
                 color: "gold",
               }}
             >
-              <i style={{ marginRight: "10px" }} className='fas fa-star'></i>
+              <i style={{ marginRight: "10px" }} className="fas fa-star"></i>
               Editor's Choice
             </Badge>
           </Button>
@@ -154,7 +155,7 @@ export const IndividualPost = ({ match }) => {
                   padding: "1em",
                 }}
               >
-                <i className='fas fa-file-alt'></i>
+                <i className="fas fa-file-alt"></i>
               </span>
             </Media>
             <Media.Body style={{ padding: "1em" }}>
@@ -175,7 +176,7 @@ export const IndividualPost = ({ match }) => {
                 {content}
               </p>
               <span>
-                <i className='fas fa-link' style={{ marginRight: "10px" }} />
+                <i className="fas fa-link" style={{ marginRight: "10px" }} />
                 <a href={contentUrl}>URL</a>
               </span>
             </Media.Body>
@@ -188,23 +189,23 @@ export const IndividualPost = ({ match }) => {
             }}
           >
             <span style={{ marginRight: "1.5em", fontWeight: "bold" }}>
-              <Button className='iconButton' onClick={() => upvote()}>
-                <i className='fas fa-arrow-up' />
+              <Button className="iconButton" onClick={() => upvote()}>
+                <i className="fas fa-arrow-up" />
               </Button>
               {votes}
-              <Button className='iconButton'>
-                <i className='fas fa-arrow-down' onClick={() => downvote()} />
+              <Button className="iconButton">
+                <i className="fas fa-arrow-down" onClick={() => downvote()} />
               </Button>
             </span>
             <span style={{ marginRight: "1.5em", fontWeight: "bold" }}>
-              <Button className='iconButton'>
-                <i className='fas fa-comment-dots' />
+              <Button className="iconButton">
+                <i className="fas fa-comment-dots" />
               </Button>
               {replies ? replies.length : 0}
             </span>
             <span>
               <Button
-                className='iconButton'
+                className="iconButton"
                 onClick={() => {
                   navigator.clipboard.writeText(
                     `${process.env.REACT_APP_FRONTEND_URL}/#/post/${postId}`
@@ -212,13 +213,13 @@ export const IndividualPost = ({ match }) => {
                   toast.success("copied to clipboard");
                 }}
               >
-                <i className='fas fa-share'></i>
+                <i className="fas fa-share"></i>
               </Button>
             </span>
 
-            <span className='ml-auto mr-3'>
+            <span className="ml-auto mr-3">
               {showEditorBadge(editorChoice)}
-              <Button className='badgeButton'>
+              <Button className="badgeButton">
                 <Badge>{course.code}</Badge>
               </Button>
             </span>

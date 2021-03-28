@@ -12,7 +12,7 @@ const {
 } = require("../models/subComment");
 
 router.post("/comment", [auth, anonymous], async (req, res) => {
-  req.body.replyToModel = SubComment.collection.collectionName;
+  req.body.replyToModel = "SubComment";
   req.body = pickSubCommentData(req.body);
 
   const { error } = validateSubComment(req.body);

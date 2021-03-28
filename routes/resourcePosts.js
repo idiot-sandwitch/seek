@@ -16,11 +16,36 @@ const { Course } = require("../models/course");
 
 router.get("/find/:id", async (req, res) => {
   //TODO: Populate comments
+  const populateCommentObj = {
+    path: "comments",
+    populate: [
+      {
+        path: "subComments",
+        populate: [
+          {
+            path: "authorId",
+            select: "name avatar",
+          },
+          {
+            path: "replyToId",
+            populate: {
+              path: "authorId",
+              select: "name",
+            },
+            select: "authorId",
+          },
+        ],
+      },
+      { path: "authorId", select: "name avatar" },
+    ],
+  };
+
   const id = req.params.id;
   const post = await ResourcePost.findById(id)
     .populate("authorId", "name avatar")
     .populate("subject", "name")
-    .populate("course", "code");
+    .populate("course", "code")
+    .populate(req.query.comments !== undefined ? populateCommentObj : "");
   if (!post) res.status(404).send("Post not found!");
   else res.status(200).send(post);
 });

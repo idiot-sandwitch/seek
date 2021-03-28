@@ -4,7 +4,7 @@ const _ = require("lodash");
 const { Comment } = require("./comment");
 Joi.ObjectId = require("joi-objectid")(Joi);
 
-const replyToModelTypes = [Comment.collection.collectionName, "subcomments"];
+const replyToModelTypes = ["Comment", "SubComment"];
 const subCommentSchema = new mongoose.Schema(
   {
     authorId: {

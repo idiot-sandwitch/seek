@@ -17,9 +17,9 @@ export const SubCommentItem = ({
       style={{ marginTop: "1vw !important" }}
     >
       <span style={{ whiteSpace: "nowrap" }}>
-        <h5 style={{ display: "inline-block" }}>{authorId}</h5>{" "}
+        <h5 style={{ display: "inline-block" }}>{authorId.name}</h5>{" "}
         <Link smooth to="/teachers#pappuId">
-          @{getCommentAuthor(replyToId)}
+          @{getCommentAuthor(replyToId.authorId.name)}
         </Link>
       </span>
       <p>{content}</p>

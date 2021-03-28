@@ -239,10 +239,10 @@ export const Comments = ({ comments }) => {
   ];
 
   return (
-    <Container className='seekCommentBox'>
+    <Container className="seekCommentBox">
       {" "}
       {comments.map((comment) => (
-        <Comment_item key={comment.authorId} comment={comment} />
+        <Comment_item key={comment.authorId._id} comment={comment} />
       ))}
     </Container>
   );
