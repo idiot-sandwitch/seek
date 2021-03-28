@@ -59,7 +59,7 @@ export const PostItem = ({
         }}
       >
         <Media>
-          <Link to={`/post/:${_id}`}>
+          <Link to={`/post/${_id}`}>
             <span
               style={{
                 marginBottom: "auto",
@@ -73,11 +73,11 @@ export const PostItem = ({
           </Link>
         </Media>
         <Media.Body style={{ padding: "1em" }}>
-          <Link to={`/post/:${_id}`}>
+          <Link to={`/post/${_id}`}>
             {/* Should redirect to a list of posts sorted by the clicked subject */}
             <span>{subject.name}</span>{" "}
           </Link>
-          <Link to={`/post/:${_id}`}>
+          <Link to={`/post/${_id}`}>
             <h1
               style={{
                 marginBottom: "-0.7rem",
@@ -88,7 +88,7 @@ export const PostItem = ({
               {title}
             </h1>
           </Link>
-          <Link to={`/post/:${_id}`}>
+          <Link to={`/post/${_id}`}>
             {/* Should redirect to user profile page instead when that's ready.*/}
             <span style={{ fontWeight: "lighter" }}>@{authorId.name}</span>
           </Link>
@@ -119,7 +119,7 @@ export const PostItem = ({
             <i className='fas fa-arrow-down' />
           </Button>
         </span>
-        <Link to={`/post/:${_id}`}>
+        <Link to={`/post/${_id}`}>
           <span style={{ marginRight: "1.5em", fontWeight: "bold" }}>
             <Button className='iconButton'>
               <i className='fas fa-comment-dots' />
