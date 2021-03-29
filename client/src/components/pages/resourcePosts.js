@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Container from "react-bootstrap/esm/Container";
 import Button from "react-bootstrap/esm/Button";
 import Row from "react-bootstrap/esm/Row";
@@ -6,17 +6,19 @@ import { PostItem } from "../layout/post_item";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { setPage, setStatus, getnPosts } from "../../features/posts/postsSlice";
 import { useSelector, useDispatch } from "react-redux";
+import CreatePost from "./posts/createPost";
 
-//TODO: make createPost page
 export const ResourcePosts = () => {
   const dispatch = useDispatch();
   const postState = useSelector((state) => state.posts);
   const { posts, page, hasMore } = postState;
+  const [formIsVisible, setFormVisibility] = useState(false);
 
   useEffect(() => {
     dispatch(setStatus("loading"));
     dispatch(getnPosts({ page, results: 4 }));
     dispatch(setPage(page + 1));
+    // eslint-disable-next-line
   }, []);
 
   const loadPosts = () => {
@@ -24,6 +26,9 @@ export const ResourcePosts = () => {
     dispatch(getnPosts({ page: page, results: 4 }));
     dispatch(setPage(page + 1));
   };
+  // const gotoCreatePage = () => {
+  //   history.push("/createPost");
+  // };
 
   //, height: "800px", overflowY: "scroll"
 
@@ -38,10 +43,12 @@ export const ResourcePosts = () => {
               border: "none",
               fontSize: "2em",
             }}
+            onClick={() => setFormVisibility(!formIsVisible)}
           >
-            <i className="fas fa-plus"></i> Create Post
+            <i className='fas fa-plus'></i> Create Post
           </Button>
         </Row>
+        {formIsVisible && <CreatePost />}
       </Container>
       <InfiniteScroll
         dataLength={posts.length}

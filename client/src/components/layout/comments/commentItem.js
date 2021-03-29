@@ -2,24 +2,30 @@ import React from "react";
 import Button from "react-bootstrap/esm/Button";
 import Container from "react-bootstrap/esm/Container";
 import Row from "react-bootstrap/esm/Row";
-import { HashLink as Link } from "react-router-hash-link";
 import { SubComments } from "./subComments";
 
-export const Comment_item = ({
-  comment: { authorId, postId, content, votes, subComments },
+export const CommentItem = ({
+  comment: { authorId, content, votes, subComments, _id },
+  voteHandler,
+  subVoteHandler,
 }) => {
   return (
     <Container>
       <Row id="pappuId" className="seekComment">
         <Container>
-          {" "}
-          <h5>{authorId}</h5> <p>{content}</p>
+          <h5>{authorId.name}</h5> <p>{content}</p>
           <span>
-            <Button className="iconButton">
+            <Button
+              onClick={() => voteHandler({ commentId: _id, vote: true })}
+              className="iconButton"
+            >
               <i className="fas fa-arrow-up" />
             </Button>
             {votes}
-            <Button className="iconButton">
+            <Button
+              onClick={() => voteHandler({ commentId: _id, vote: false })}
+              className="iconButton"
+            >
               <i className="fas fa-arrow-down" />
             </Button>
             <span />
@@ -32,7 +38,7 @@ export const Comment_item = ({
         </Container>
       </Row>
       <Row className="seekSubCommentBox">
-        <SubComments subComments={subComments} />
+        <SubComments subComments={subComments} voteHandler={subVoteHandler} />
       </Row>
     </Container>
   );

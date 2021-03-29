@@ -1,12 +1,15 @@
 import React from "react";
 import { SubCommentItem } from "./subCommentItem";
-import Container from "react-bootstrap/esm/Container";
 
-export const SubComments = ({ subComments }) => {
+export const SubComments = ({ subComments, voteHandler }) => {
   return (
     <div>
       {subComments.map((subComment) => (
-        <SubCommentItem subComment={subComment} />
+        <SubCommentItem
+          key={subComment._id}
+          subComment={subComment}
+          voteHandler={voteHandler}
+        />
       ))}
     </div>
   );

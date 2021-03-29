@@ -49,11 +49,13 @@ route.post("/add", auth, async (req, res) => {
   if (error) {
     res.status(400).send(error.details[0].message);
   }
+  const exists = await Subject.findOne({ name: req.body.name });
 
+  if (exists) return res.status(400).send("Subject already exists.");
   const subject = new Subject(pickSubjectData(req.body));
   try {
-    await subject.save();
-    res.status(200).send(`${subject.name} added successfully`);
+    const newSub = await subject.save();
+    res.status(200).send(newSub);
   } catch (e) {
     console.log(e.message);
     res.status(500).send();

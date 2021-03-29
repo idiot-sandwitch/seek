@@ -31,11 +31,14 @@ route.post("/add", auth, async (req, res) => {
     res.status(400).send(result.error.details[0].message);
   }
 
+  const exists = await Course.findOne({ code: req.body.code });
+  if (exists) return res.status(400).send("Course already exists.");
+
   const course = new Course(pickCourseData(req.body));
 
   try {
-    await course.save();
-    res.status(200).send("Course created successfully");
+    const resCor = await course.save();
+    res.status(200).send(resCor);
   } catch (e) {
     console.log(e);
     res.status(500).send("Course creation failed");

@@ -195,4 +195,14 @@ h6,
   justify-content: space-around;
 }
 
+.seekPostCard {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  border-radius: 1rem;
+  font-size: 1.5rem;
+  height: 100% !important;
+  background-color: #292929;
+  text-align: center;
+}
+
 @import "../node_modules/bootstrap/scss/bootstrap";

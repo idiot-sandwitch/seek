@@ -20,7 +20,7 @@ export const Header = () => {
         </Nav.Link>
       </Nav>
       <Navbar.Brand className='ml-auto mr-3' style={{ fontWeight: "bolder" }}>
-        <a href='#'>
+        <a href='/'>
           <Image src='seekLogoSmall.png' style={{ width: "5em" }} />
         </a>
       </Navbar.Brand>

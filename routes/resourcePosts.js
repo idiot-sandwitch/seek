@@ -2,6 +2,7 @@ const auth = require("../middlewares/auth");
 const anonymous = require("../middlewares/anonymous");
 const router = require("express").Router();
 const vote = require("../middlewares/vote");
+const comment = require("../middlewares/comment");
 const _ = require("lodash");
 
 const {
@@ -15,8 +16,36 @@ const { Course } = require("../models/course");
 
 router.get("/find/:id", async (req, res) => {
   //TODO: Populate comments
+  const populateCommentObj = {
+    path: "comments",
+    populate: [
+      {
+        path: "subComments",
+        populate: [
+          {
+            path: "authorId",
+            select: "name avatar",
+          },
+          {
+            path: "replyToId",
+            populate: {
+              path: "authorId",
+              select: "name",
+            },
+            select: "authorId",
+          },
+        ],
+      },
+      { path: "authorId", select: "name avatar" },
+    ],
+  };
+
   const id = req.params.id;
-  const post = await ResourcePost.findById(id);
+  const post = await ResourcePost.findById(id)
+    .populate("authorId", "name avatar")
+    .populate("subject", "name")
+    .populate("course", "code")
+    .populate(req.query.comments !== undefined ? populateCommentObj : "");
   if (!post) res.status(404).send("Post not found!");
   else res.status(200).send(post);
 });
@@ -32,7 +61,8 @@ router.get("/all", async (req, res) => {
   try {
     const posts = await ResourcePost.find()
       .populate("authorId", "name avatar")
-      .populate("subject", "name");
+      .populate("subject", "name")
+      .populate("course", "code");
     res.status(200).send(posts);
   } catch (e) {
     console.error(e.message);
@@ -48,7 +78,8 @@ router.get("/page/:page/:results", async (req, res) => {
       .skip(page * results)
       .limit(parseInt(results))
       .populate("authorId", "name avatar")
-      .populate("subject", "name");
+      .populate("subject", "name")
+      .populate("course", "code");
     if (posts === []) {
       res.status(404).send("No posts found");
     }
@@ -63,7 +94,8 @@ router.get("/findByCourse/:course", async (req, res) => {
   try {
     const posts = await ResourcePost.find({ course: req.params.course })
       .populate("authorId", "name avatar")
-      .populate("subject", "name");
+      .populate("subject", "name")
+      .populate("course", "code");
     res.status(200).send(posts);
   } catch (e) {
     console.error(e.message);
@@ -75,7 +107,8 @@ router.get("/findBySubject/:subject", async (req, res) => {
   try {
     const posts = await ResourcePost.find({ subject: req.params.subject })
       .populate("authorId", "name avatar")
-      .populate("subject", "name");
+      .populate("subject", "name")
+      .populate("course", "code");
     res.status(200).send(posts);
   } catch (e) {
     console.error(e.message);
@@ -87,17 +120,14 @@ router.post("/add", [auth, anonymous], async (req, res) => {
   const { error } = validateResourcePost(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
-  const user = User.findById(req.body.authorId);
-  if (!user) {
-    res.status(404).send("User does not exist");
-  }
+  //TODO: Use promise.all here
+  const user = await User.findById(req.body.authorId);
+  if (!user) return res.status(404).send("User does not exist");
 
-  const subject = Subject.findById(req.body.subject);
-  if (!subject) {
-    res.status(404).send("Subject does not exist");
-  }
+  const subject = await Subject.findById(req.body.subject);
+  if (!subject) return res.status(404).send("Subject does not exist");
 
-  const course = Course.findById(req.body.course);
+  const course = await Course.findById(req.body.course);
   if (!course) {
     res.status(404).send("Course does not exist");
   }
@@ -105,12 +135,23 @@ router.post("/add", [auth, anonymous], async (req, res) => {
   let post = new ResourcePost(pickResourcePostData(req.body));
   try {
     await post.save();
-    res.status(200).send({ id: post.id });
+    return res.status(200).send({ id: post.id });
   } catch (error) {
     res.status(500).send("Failed creating post, try again later...");
     console.error(error);
   }
 });
+
+router.post(
+  "/comment",
+  auth,
+  anonymous,
+  (req, res, next) => {
+    req.body.contentType = ResourcePost.collection.collectionName;
+    next();
+  },
+  comment
+);
 
 router.put(
   "/upvote",

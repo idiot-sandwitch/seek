@@ -1,14 +1,14 @@
 const express = require("express");
 const users = require("../routes/users");
 const auth = require("../routes/auth");
-const replies = require("../routes/replies");
 const resourcePosts = require("../routes/resourcePosts");
 const error = require("../middlewares/error");
 const verify = require("../routes/verify");
 const subject = require("../routes/subjects");
 const course = require("../routes/courses");
 const branch = require("../routes/branches");
-const comment = require("../routes/comments");
+const comments = require("../routes/comments");
+const subComments = require("../routes/subComments");
 const cors = require("cors");
 
 //TODO: make it consistent
@@ -20,10 +20,10 @@ module.exports = function (app) {
   app.use("/api/auth", auth);
   app.use("/api/verify", verify);
   app.use("/api/resourceposts", resourcePosts);
-  app.use("/api/reply", replies);
-  app.use("/api/subject", subject);
-  app.use("/api/course", course);
-  app.use("/api/branch", branch);
-  app.use("/api/comment", comment);
+  app.use("/api/subjects", subject);
+  app.use("/api/courses", course);
+  app.use("/api/branches", branch);
+  app.use("/api/comments", comments);
+  app.use("/api/subComments", subComments);
   app.use(error);
 };
