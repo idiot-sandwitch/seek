@@ -24,11 +24,31 @@ router.get("/me", auth, async (req, res) => {
     "name",
     "email",
     "avatar",
+    "isVerified",
+    "sex",
+    "about",
+    "linkedinUrl",
+    "githubUrl",
+    "branch",
   ]);
   res.status(200).send(user);
 });
 
 //TODO: implement public profile link stuff
+router.get("/profile/:id", async (req, res) => {
+  const user = await User.findById(req.params.id).select([
+    "name",
+    "email",
+    "avatar",
+    "isVerified",
+    "sex",
+    "about",
+    "linkedinUrl",
+    "githubUrl",
+    "branch",
+  ]);
+  res.status(200).send(user);
+});
 
 router.post("/add", async (req, res) => {
   //TODO: allow only @vitbhopal.ac.in by adding this domain at end of string before validation

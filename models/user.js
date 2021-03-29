@@ -69,6 +69,28 @@ const userSchema = new mongoose.Schema({
     default: false,
     required: false,
   },
+
+  branch: {
+    type: String,
+  },
+
+  linkedinUrl: {
+    type: String,
+  },
+
+  githubURL: {
+    type: String,
+  },
+
+  sex: {
+    type: String,
+  },
+
+  about: {
+    type: String,
+    maxlength: 500,
+  },
+
   //TODO: implement public profile link stuff
 });
 
