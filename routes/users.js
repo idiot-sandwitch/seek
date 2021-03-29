@@ -94,8 +94,9 @@ router.put("/edit", [auth, uploadAvatar.single("avatar")], async (req, res) => {
   //TODO:delete previous avatar image from the system unless it is default
   //TODO:delete avatar and set it to default
   //TODO:for now user can add an outside link to req.body.avatar and our validator can't catch it, change that
-  if (req.file.db_url) req.body.avatar = req.file.db_url;
-  else req.body.avatar = req.user.avatar;
+
+  // if (req.file.db_url) req.body.avatar = req.file.db_url;
+  // else req.body.avatar = req.user.avatar;
 
   const { error } = validateEditUser(req.body);
   if (error) return res.status(400).send(error.details[0].message);
@@ -105,6 +106,12 @@ router.put("/edit", [auth, uploadAvatar.single("avatar")], async (req, res) => {
     {
       $set: {
         name: req.body.name,
+        about: req.body.about,
+        branch: req.body.branch,
+        email: req.body.email,
+        githubUrl: req.body.githubUrl,
+        linkedinUrl: req.body.linkedinUrl,
+        sex: req.body.sex,
         avatar: req.body.avatar,
       },
     }

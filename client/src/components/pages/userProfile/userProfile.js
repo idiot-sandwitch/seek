@@ -45,7 +45,7 @@ const UserProfile = ({ match }) => {
             </Link>
           </div>
           <div className="userProfileField">
-            <Link>
+            <Link to="editProfile">
               <Button className="seekButton">Edit Profile</Button>
             </Link>
           </div>
@@ -93,7 +93,9 @@ const UserProfile = ({ match }) => {
               />
               {"  "}
               <a
-                href={userInfo.linkedinUrl !== undefined && userInfo.linkedin}
+                href={
+                  userInfo.linkedinUrl !== undefined && userInfo.linkedinUrl
+                }
                 style={{ display: "inline-block" }}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -136,7 +138,6 @@ const UserProfile = ({ match }) => {
             wordWrap: "break-word",
           }}
         >
-          <h1 style={{ margin: "1rem" }}></h1>
           <h3 style={{ margin: "1rem", width: "900px !important" }}>
             {userInfo.name}
           </h3>

@@ -121,6 +121,11 @@ function validateData(data) {
     email: Joi.string().min(7).max(255).email(),
     password: passwordComplexity(complexityOptions),
     avatar: Joi.string(),
+    about: Joi.string().max(500).allow(""),
+    branch: Joi.string().max(100).allow(""),
+    githubUrl: Joi.string().allow(""),
+    linkedinUrl: Joi.string().allow(""),
+    sex: Joi.string().allow(""),
   });
 
   return schema.validate(data);
@@ -139,8 +144,14 @@ function validateUser(user) {
 
 function validateEditUser(userData) {
   const schema = Joi.object({
-    name: Joi.required(),
-    avatar: Joi.required(),
+    name: Joi.string().required(),
+    email: Joi.string().required(),
+    avatar: Joi.string().allow(""),
+    about: Joi.string().allow(""),
+    branch: Joi.string().allow(""),
+    githubUrl: Joi.string().allow(""),
+    linkedinUrl: Joi.string().allow(""),
+    sex: Joi.string().allow(""),
   });
 
   if (schema.validate(userData).error) return schema.validate(userData);

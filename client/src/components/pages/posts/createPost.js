@@ -173,31 +173,31 @@ const CreatePost = () => {
 
   return (
     <Container style={{ marginTop: "2rem" }}>
-      <Container className='seekPostCard'>
+      <Container className="seekPostCard">
         <h1 style={{ fontWeight: "bolder" }}>CREATE A NEW POST</h1>
         <Form
           style={{ marginLeft: "0px", marginRight: "0px" }}
-          className='seekForm'
-          as='form'
+          className="seekForm"
+          as="form"
           onSubmit={handleSubmit(onSubmit)}
         >
           <Form.Group>
             <Form.Label>Title</Form.Label>
             <Form.Control
-              className='seekInput'
-              name='title'
+              className="seekInput"
+              name="title"
               ref={register}
-              type='text'
-              placeholder='Enter the post title'
+              type="text"
+              placeholder="Enter the post title"
             />
           </Form.Group>
           <Form.Group>
             <Form.Control
-              className='seekInput'
-              name='content'
+              className="seekInput"
+              name="content"
               ref={register}
-              as='textarea'
-              placeholder='Describe your post a little'
+              as="textarea"
+              placeholder="Describe your post a little"
             />
           </Form.Group>
           <Form.Row>
@@ -206,10 +206,10 @@ const CreatePost = () => {
               <Typeahead
                 positionFixed
                 allowNew={checkDuplicateSubjects}
-                id='subject'
+                id="subject"
                 options={subjects}
-                name='subject'
-                placeholder='Select a subject'
+                name="subject"
+                placeholder="Select a subject"
                 onBlur={handleSubject}
               />
             </Form.Group>
@@ -218,10 +218,10 @@ const CreatePost = () => {
               <Typeahead
                 positionFixed
                 allowNew={checkDuplicateCourse}
-                id='course'
+                id="course"
                 options={courses}
-                name='course'
-                placeholder='Select a subject'
+                name="course"
+                placeholder="Select a subject"
                 inputProps={{ ref: { register } }}
                 onBlur={handleCourse}
               />
@@ -229,17 +229,17 @@ const CreatePost = () => {
           </Form.Row>
           <Form.Group>
             <Form.Label>
-              <i className='fas fa-link' /> {"  "} URL
+              <i className="fas fa-link" /> {"  "} URL
             </Form.Label>
             <Form.Control
-              className='seekInput'
-              name='url'
+              className="seekInput"
+              name="url"
               ref={register}
-              placeholder='Enter the link to the resourse'
+              placeholder="Enter the link to the resourse"
             />
           </Form.Group>
 
-          <Button className='seekButton' type='submit'>
+          <Button className="seekButton" type="submit">
             CREATE POST
           </Button>
         </Form>
