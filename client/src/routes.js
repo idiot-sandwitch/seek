@@ -10,7 +10,7 @@ import CreatePost from "./components/pages/posts/createPost";
 import ResetPassword from "./components/pages/ResetPassword";
 import ForgotPassPage from "./components/pages/ForgotPassword/ForgotPassPage";
 import SetNewPassPage from "./components/pages/ForgotPassword/SetNewPassPage";
-import UserProfile from "./components/pages/userProfile";
+import UserProfile from "./components/pages/userProfile/userProfile";
 
 const Routes = () => {
   return (
@@ -32,7 +32,7 @@ const Routes = () => {
       <Route exact path="/forgotPassword" component={ForgotPassPage} />
       <Route exact path="/setNewPassword" component={SetNewPassPage} />
       <Route exact path="/createPost" component={CreatePost} />
-      <Route exact path="/" component={UserProfile} />
+      <Route exact path="/:profileId" component={UserProfile} />
     </Switch>
   );
 };
