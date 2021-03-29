@@ -11,18 +11,19 @@ const UserProfile = () => {
   const [userInfo, setUserInfo] = useState(user);
 
   const getUserInfo = async () => {
-    const userRes = axios({
+    const userRes = await axios({
       method: "GET",
-      url: "api/user/me",
+      url: "api/users/me",
       headers: { "x-auth-token": localStorage.getItem(`token`) },
     });
-
     setUserInfo(userRes.data);
-    console.log(userInfo);
   };
 
-  useEffect({getUserInfo()}, []);
-  //show everything //if click edit profile, show edit profile component
+  useEffect(() => {
+    getUserInfo();
+  }, []);
+  //show everything
+  //if click edit profile, show edit profile component
   return (
     <Container style={{ marginTop: "4rem" }}>
       <Container className="profileCard">
