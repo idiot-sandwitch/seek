@@ -4,6 +4,7 @@ const {
   pickCommentData,
   validateComment,
 } = require("../models/comment");
+
 module.exports = async function (req, res) {
   const { error } = validateComment(pickCommentData(req.body));
   if (error) return res.status(400).send(error.details[0].message);
