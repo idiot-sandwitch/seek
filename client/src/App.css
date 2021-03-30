@@ -271,6 +271,28 @@ h6,
           box-shadow: none !important;
 }
 
+.logoutButton {
+  font-family: "Karla", sans-serif !important;
+  background-color: #2c2c2c !important;
+  border: solid #525252 1px !important;
+  width: 100%;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+  -webkit-transition-timing-function: ease-out !important;
+          transition-timing-function: ease-out !important;
+}
+
+.logoutButton:focus {
+  -webkit-box-shadow: 0 0 0 3pt white !important;
+          box-shadow: 0 0 0 3pt white !important;
+}
+
+.logoutButton:hover {
+  background-color: #d40707 !important;
+  -webkit-box-shadow: none !important;
+          box-shadow: none !important;
+}
+
 /*!
  * Bootstrap v4.6.0 (https://getbootstrap.com/)
  * Copyright 2011-2021 The Bootstrap Authors
