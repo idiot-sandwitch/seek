@@ -128,6 +128,9 @@ export const postSlice = createSlice({
       state.status = "idle";
       state.error = null;
     },
+    pushSingleComment: (state, { payload }) => {
+      state.data.comments.push(payload);
+    },
   },
   extraReducers: {
     [loadPost.pending]: (state) => {
@@ -191,5 +194,5 @@ export const postSlice = createSlice({
 });
 
 export { loadPost, upvote, downvote, voteComment, voteSubComment };
-export const { clearState } = postSlice.actions;
+export const { clearState, pushSingleComment } = postSlice.actions;
 export default postSlice.reducer;
