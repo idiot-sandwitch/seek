@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
 
 import { useForm } from "react-hook-form";
 import { Typeahead } from "react-bootstrap-typeahead";
@@ -17,7 +16,6 @@ import { pushSinglePost } from "../../../features/posts/postsSlice";
 const CreatePost = () => {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
-  const postState = useSelector((state) => state.posts);
   const { user } = auth;
 
   const { register, handleSubmit, reset } = useForm();
@@ -57,7 +55,6 @@ const CreatePost = () => {
   };
 
   const isInitialRender = useRef(true); //is true if it is the initial render of components
-  const history = useHistory();
 
   const checkDuplicateCourse = () => true;
   const checkDuplicateSubjects = () => true;

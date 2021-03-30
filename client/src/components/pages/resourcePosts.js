@@ -21,6 +21,7 @@ export const ResourcePosts = () => {
 
   useEffect(() => {
     if (posts) dispatch(clearState());
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {

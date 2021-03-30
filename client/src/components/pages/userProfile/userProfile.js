@@ -39,14 +39,14 @@ const UserProfile = ({ match }) => {
     if (profileId === user._id) {
       return (
         <div>
-          <div className="userProfileField">
-            <Link to="/resetPassword">
-              <Button className="seekButton">Change Password</Button>
+          <div className='userProfileField'>
+            <Link to='/resetPassword'>
+              <Button className='seekButton'>Change Password</Button>
             </Link>
           </div>
-          <div className="userProfileField">
-            <Link to="/editProfile">
-              <Button className="seekButton">Edit Profile</Button>
+          <div className='userProfileField'>
+            <Link to='/editProfile'>
+              <Button className='seekButton'>Edit Profile</Button>
             </Link>
           </div>
         </div>
@@ -58,16 +58,17 @@ const UserProfile = ({ match }) => {
 
   useEffect(() => {
     getUserInfo();
+    // eslint-disable-next-line
   }, []);
 
   //show everything
   //if click edit profile, show edit profile component
   return (
     <Container style={{ marginTop: "4rem" }}>
-      <Media className="profileCard">
+      <Media className='profileCard'>
         <Col>
           <Image
-            className="userAvatar"
+            className='userAvatar'
             src={
               userInfo.avatar !== undefined
                 ? userInfo.avatar
@@ -82,14 +83,14 @@ const UserProfile = ({ match }) => {
                 display: "inline-block",
                 minHeight: "1rem",
               }}
-              className="userProfileField"
+              className='userProfileField'
             >
               <i
                 style={{
                   fontSize: "2rem",
                   marginRight: "1rem",
                 }}
-                className="fab fa-linkedin"
+                className='fab fa-linkedin'
               />
               {"  "}
               <a
@@ -97,8 +98,8 @@ const UserProfile = ({ match }) => {
                   userInfo.linkedinUrl !== undefined && userInfo.linkedinUrl
                 }
                 style={{ display: "inline-block" }}
-                target="_blank"
-                rel="noopener noreferrer"
+                target='_blank'
+                rel='noopener noreferrer'
               >
                 <h4>Linkedin</h4>
               </a>
@@ -110,17 +111,17 @@ const UserProfile = ({ match }) => {
                 display: "inline-block",
                 minHeight: "1rem",
               }}
-              className="userProfileField"
+              className='userProfileField'
             >
               <i
                 style={{ fontSize: "2rem", marginRight: "1rem" }}
-                className="fab fa-github"
+                className='fab fa-github'
               />{" "}
               <a
                 href={userInfo.githubUrl !== undefined && userInfo.githubUrl}
                 style={{ display: "inline-block" }}
-                target="_blank"
-                rel="noopener noreferrer"
+                target='_blank'
+                rel='noopener noreferrer'
               >
                 <h4>Github</h4>
               </a>
@@ -159,36 +160,36 @@ const UserProfile = ({ match }) => {
               height: "100% !important",
             }}
           >
-            <div className="userProfileField">
+            <div className='userProfileField'>
               <h4>Email</h4>
               {userInfo.email}
             </div>
 
-            <div className="userProfileField">
+            <div className='userProfileField'>
               <h4>Sex</h4>
               {userInfo.sex}
             </div>
 
-            <div className="userProfileField">
+            <div className='userProfileField'>
               <h4>Branch</h4>
               {userInfo.branch}
             </div>
 
             <div
-              className="userProfileField"
+              className='userProfileField'
               style={{ display: "inline-block" }}
             >
               {userInfo.isVerified ? (
                 <span>
                   <i
                     style={{ color: "green" }}
-                    className="far fa-check-circle"
+                    className='far fa-check-circle'
                   />{" "}
                   Verified Account
                 </span>
               ) : (
                 <span>
-                  <i style={{ color: "red" }} className="far fa-times-circle" />{" "}
+                  <i style={{ color: "red" }} className='far fa-times-circle' />{" "}
                   Not a verified Account
                 </span>
               )}
