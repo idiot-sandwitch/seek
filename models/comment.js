@@ -10,6 +10,7 @@ const commentSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
+    //send postId as well from front end, middleWare require it
     content: {
       type: String,
       minlength: 1,
