@@ -131,6 +131,15 @@ export const postSlice = createSlice({
     pushSingleComment: (state, { payload }) => {
       state.data.comments.push(payload);
     },
+    pushSingleSubComment: (state, { payload }) => {
+      state.data.comments.find((comment, index) => {
+        if (comment._id === payload.commentId) {
+          state.data.comments[index].subComments.push(payload);
+          return true;
+        }
+        return false;
+      });
+    },
   },
   extraReducers: {
     [loadPost.pending]: (state) => {
@@ -194,5 +203,9 @@ export const postSlice = createSlice({
 });
 
 export { loadPost, upvote, downvote, voteComment, voteSubComment };
-export const { clearState, pushSingleComment } = postSlice.actions;
+export const {
+  clearState,
+  pushSingleComment,
+  pushSingleSubComment,
+} = postSlice.actions;
 export default postSlice.reducer;

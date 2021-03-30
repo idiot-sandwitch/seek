@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import React from "react";
+import { useDispatch } from "react-redux";
+import { pushSingleSubComment } from "../../../features/post/postSlice";
 
 import { useForm } from "react-hook-form";
 import axios from "../../../features/axiosSetup";
@@ -10,15 +11,14 @@ import Button from "react-bootstrap/esm/Button";
 import Row from "react-bootstrap/esm/Row";
 
 const SubCommentBox = ({ commentId }) => {
-  const { register, handleSubmit, reset } = useForm();
-  const { data } = useSelector((state) => state.post);
-
-  const { _id } = data;
+  const { register, handleSubmit } = useForm();
+  const dispatch = useDispatch();
 
   const onPost = async (data) => {
     data["replyToId"] = commentId;
     data["commentId"] = commentId;
-    await axios({
+
+    const res = await axios({
       method: "POST",
       url: "api/comments/comment",
       data: JSON.stringify({
@@ -28,6 +28,14 @@ const SubCommentBox = ({ commentId }) => {
       }),
       headers: { "x-auth-token": localStorage.getItem(`token`) },
     });
+
+    if (res.status === 200) {
+      const newSubComment = await axios({
+        method: "GET",
+        url: `/api/subcomments/find/${res.data.id}?populated`,
+      });
+      dispatch(pushSingleSubComment(newSubComment.data));
+    }
   };
 
   return (
