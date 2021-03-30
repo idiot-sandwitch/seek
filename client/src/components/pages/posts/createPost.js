@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 import { useForm } from "react-hook-form";
@@ -12,8 +12,17 @@ import Button from "react-bootstrap/esm/Button";
 import Col from "react-bootstrap/esm/Col";
 import toast from "react-hot-toast";
 
+import {
+  setPage,
+  setStatus,
+  getnPosts,
+} from "../../../features/posts/postsSlice";
+
 const CreatePost = () => {
+  const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
+  const postState = useSelector((state) => state.posts);
+  const { posts, page, hasMore } = postState;
   const { user } = auth;
 
   const { register, handleSubmit } = useForm();
@@ -155,9 +164,12 @@ const CreatePost = () => {
         });
         if (res.status === 200) {
           toast.success("Resource successfully added!");
-          await setTimeout(() => {
-            history.push("resources");
-          }, 1500);
+          dispatch(setStatus("loading"));
+          dispatch(getnPosts({ page: page, results: 4 }));
+          dispatch(setPage(page + 1));
+          // await setTimeout(() => {
+          //   history.push("resources");
+          // }, 1500);
         }
 
         //useHistory to goto resourcePosts page
@@ -243,15 +255,6 @@ const CreatePost = () => {
             CREATE POST
           </Button>
         </Form>
-
-        {/* title: Joi.string().min(3).max(150).required(),
-    content: Joi.string().min(1).required(),
-    authorId: Joi.objectId().required(),
-    replies: Joi.objectId(),
-    subject: Joi.objectId().required(),
-    course: Joi.objectId(),
-    editorChoice: Joi.boolean(),
-    contentUrl: Joi.string().min(3).max(255), */}
       </Container>
     </Container>
   );

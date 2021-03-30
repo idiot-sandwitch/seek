@@ -78,7 +78,7 @@ router.post("/add", async (req, res) => {
     text: "",
     html: `<p>Hi ${user.name},<br/>enter the following token on the link provided to verify your email address with us:</p>
     <br/><br/>
-    <center><a href = "http//localhost:3000/#/verify/${userReference.token}"><button>Click here to verify your account</button></a></center>
+    <center><a href = "http://localhost:3000/#/verify/${userReference.token}" target="_blank" rel="noopener noreferrer"><button>Click here to verify your account</button></a></center>
     <br/><br/>
     <strong>Your verification token:</strong>
     <br/>

@@ -16,6 +16,7 @@ import EditProfile from "./components/pages/userProfile/editProfile";
 const Routes = () => {
   return (
     <Switch>
+      <Route exact path="/" component={ResourcePosts} />
       <Route exact path="/resources" component={ResourcePosts} />
       <Route exact path="/login" component={Login} />
       <Route
