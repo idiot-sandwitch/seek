@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "../../../features/axiosSetup";
 import { useForm } from "react-hook-form";
+import { useHistory } from "react-router-dom";
 
 import Container from "react-bootstrap/esm/Container";
 import Image from "react-bootstrap/esm/Image";
@@ -11,8 +12,12 @@ import Button from "react-bootstrap/esm/Button";
 import Form from "react-bootstrap/esm/Form";
 
 const EditProfile = () => {
+  const auth = useSelector((state) => state.auth);
+  const { user } = auth;
+
   const [userInfo, setUserInfo] = useState({});
   const { register, handleSubmit } = useForm();
+  const history = useHistory();
 
   const getUserInfo = async () => {
     const userRes = await axios({
@@ -56,6 +61,10 @@ const EditProfile = () => {
         sex: data.sex,
       }),
     });
+
+    await setTimeout(() => {
+      history.push(`profile/${user._id}`);
+    }, 1500);
   };
 
   useEffect(() => {

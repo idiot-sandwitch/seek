@@ -40,12 +40,12 @@ const UserProfile = ({ match }) => {
       return (
         <div>
           <div className="userProfileField">
-            <Link to="resetPassword">
+            <Link to="/resetPassword">
               <Button className="seekButton">Change Password</Button>
             </Link>
           </div>
           <div className="userProfileField">
-            <Link to="editProfile">
+            <Link to="/editProfile">
               <Button className="seekButton">Edit Profile</Button>
             </Link>
           </div>
