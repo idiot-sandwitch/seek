@@ -27,6 +27,10 @@ const CommentBox = () => {
     });
   };
 
+  const onDiscard = () => {
+    console.log("discard");
+  };
+
   return (
     <Container style={{ marginTop: "2rem", width: "100%" }}>
       <Form as="form" onSubmit={handleSubmit(onPost)}>
@@ -53,7 +57,11 @@ const CommentBox = () => {
           <Button type="submit" style={{ width: "30%" }} className="seekButton">
             Submit
           </Button>
-          <Button style={{ width: "30%" }} className="logoutButton">
+          <Button
+            type="reset"
+            style={{ width: "30%" }}
+            className="logoutButton"
+          >
             Discard
           </Button>
         </Row>
