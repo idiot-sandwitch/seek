@@ -79,6 +79,13 @@ const postsSlice = createSlice({
   name: "posts",
   initialState,
   reducers: {
+    clearState: (state) => {
+      state.posts = [];
+      state.page = 0;
+      state.hasMore = true;
+      state.status = "idle";
+      state.error = null;
+    },
     setPosts: (state, { payload }) => {
       state.posts.push(payload);
       state.posts = "succeeded";
@@ -89,6 +96,9 @@ const postsSlice = createSlice({
     },
     setStatus: (state, { payload }) => {
       state.status = payload;
+    },
+    pushSinglePost: (state, { payload }) => {
+      state.posts.push(payload);
     },
   },
   extraReducers: {
@@ -126,6 +136,12 @@ const postsSlice = createSlice({
 
 export { getnPosts, upvote, downvote };
 
-export const { setPosts, setPage, setStatus } = postsSlice.actions;
+export const {
+  clearState,
+  setPosts,
+  setPage,
+  setStatus,
+  pushSinglePost,
+} = postsSlice.actions;
 
 export default postsSlice.reducer;
