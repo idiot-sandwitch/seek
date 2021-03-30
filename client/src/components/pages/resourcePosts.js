@@ -4,7 +4,12 @@ import Button from "react-bootstrap/esm/Button";
 import Row from "react-bootstrap/esm/Row";
 import { PostItem } from "../layout/post_item";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { setPage, setStatus, getnPosts } from "../../features/posts/postsSlice";
+import {
+  setPage,
+  setStatus,
+  getnPosts,
+  clearState,
+} from "../../features/posts/postsSlice";
 import { useSelector, useDispatch } from "react-redux";
 import CreatePost from "./posts/createPost";
 
@@ -13,6 +18,10 @@ export const ResourcePosts = () => {
   const postState = useSelector((state) => state.posts);
   const { posts, page, hasMore } = postState;
   const [formIsVisible, setFormVisibility] = useState(false);
+
+  useEffect(() => {
+    if (posts) dispatch(clearState());
+  }, []);
 
   useEffect(() => {
     dispatch(setStatus("loading"));
