@@ -15,19 +15,17 @@ import CreatePost from "./posts/createPost";
 
 export const ResourcePosts = () => {
   const dispatch = useDispatch();
-  const postState = useSelector((state) => state.posts);
-  const { posts, page, hasMore } = postState;
+  const { posts, page, hasMore } = useSelector((state) => state.posts);
   const [formIsVisible, setFormVisibility] = useState(false);
 
   useEffect(() => {
-    if (posts) dispatch(clearState());
-    // eslint-disable-next-line
-  }, []);
-
-  useEffect(() => {
     dispatch(setStatus("loading"));
+    console.log("Before fetching posts: ", page);
     dispatch(getnPosts({ page, results: 4 }));
     dispatch(setPage(page + 1));
+    return function () {
+      dispatch(clearState());
+    };
     // eslint-disable-next-line
   }, []);
 
@@ -62,7 +60,7 @@ export const ResourcePosts = () => {
             }}
             onClick={() => setFormVisibility(!formIsVisible)}
           >
-            <i className="fas fa-plus"></i> Create Post
+            <i className='fas fa-plus'></i> Create Post
           </Button>
         </Row>
         {formIsVisible && <CreatePost />}
