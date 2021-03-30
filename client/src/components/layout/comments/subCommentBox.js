@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 
 import { useForm } from "react-hook-form";
@@ -9,28 +9,30 @@ import Form from "react-bootstrap/esm/Form";
 import Button from "react-bootstrap/esm/Button";
 import Row from "react-bootstrap/esm/Row";
 
-const CommentBox = () => {
+const SubCommentBox = ({ commentId }) => {
   const { register, handleSubmit, reset } = useForm();
   const { data } = useSelector((state) => state.post);
 
   const { _id } = data;
 
   const onPost = async (data) => {
-    data["postId"] = _id;
-    console.log(data);
-
+    data["replyToId"] = commentId;
+    data["commentId"] = commentId;
     await axios({
       method: "POST",
-      url: "api/resourceposts/comment",
-      data: JSON.stringify({ postId: data.postId, content: data.content }),
+      url: "api/comments/comment",
+      data: JSON.stringify({
+        replyToId: data.replyToId,
+        content: data.content,
+        commentId: data.commentId,
+      }),
       headers: { "x-auth-token": localStorage.getItem(`token`) },
     });
   };
 
   return (
-    <Container style={{ marginTop: "2rem", width: "100%" }}>
+    <Container style={{ width: "100%" }}>
       <Form as="form" onSubmit={handleSubmit(onPost)}>
-        <h3>Add Comment</h3>
         <Form.Control
           style={{
             height: "10rem",
@@ -40,7 +42,7 @@ const CommentBox = () => {
           className="seekInput"
           name="content"
           ref={register}
-          placeholder="Add a comment"
+          placeholder="Add a subcomment"
           as="textarea"
         ></Form.Control>
         <Row
@@ -66,4 +68,4 @@ const CommentBox = () => {
   );
 };
 
-export default CommentBox;
+export default SubCommentBox;
