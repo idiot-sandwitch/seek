@@ -38,7 +38,6 @@ const EditProfile = () => {
     userProperties.forEach((element) => {
       if (data[element] === "") {
         data[element] = userInfo[element];
-        console.log("Updated:", element, "to", userInfo[element]);
       }
     });
 
@@ -57,7 +56,6 @@ const EditProfile = () => {
         sex: data.sex,
       }),
     });
-    console.log(resCourse);
   };
 
   useEffect(() => {

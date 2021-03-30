@@ -78,7 +78,7 @@ const userSchema = new mongoose.Schema({
     type: String,
   },
 
-  githubURL: {
+  githubUrl: {
     type: String,
   },
 
