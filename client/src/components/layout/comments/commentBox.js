@@ -1,5 +1,6 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { pushSingleComment } from "../../../features/post/postSlice";
 
 import { useForm } from "react-hook-form";
 import axios from "../../../features/axiosSetup";
@@ -12,19 +13,27 @@ import Row from "react-bootstrap/esm/Row";
 const CommentBox = () => {
   const { register, handleSubmit, reset } = useForm();
   const { data } = useSelector((state) => state.post);
-
+  const dispatch = useDispatch();
   const { _id } = data;
 
   const onPost = async (data) => {
     data["postId"] = _id;
     console.log(data);
 
-    await axios({
+    const res = await axios({
       method: "POST",
       url: "api/resourceposts/comment",
       data: JSON.stringify({ postId: data.postId, content: data.content }),
       headers: { "x-auth-token": localStorage.getItem(`token`) },
     });
+
+    if (res.status === 200) {
+      const newComment = await axios({
+        method: "GET",
+        url: `/api/comments/find/${res.data.id}?populated`,
+      });
+      dispatch(pushSingleComment(newComment.data));
+    }
   };
 
   return (
