@@ -82,17 +82,20 @@ export const PostItem = ({
             {/* Should redirect to a list of posts sorted by the clicked subject */}
             <span>{subject.name}</span>{" "}
           </Link>
+          <br></br>
           <Link className="postLinkText" to={`/post/${_id}`}>
             <h1
               style={{
                 marginBottom: "-0.7rem",
                 marginTop: "-0.6rem",
                 padding: "0px",
+                display: "inline-block",
               }}
             >
               {title}
             </h1>
           </Link>
+          <br></br>
           <Link className="postLinkText" to={`/profile/${authorId._id}`}>
             {/* Should redirect to user profile page instead when that's ready.*/}
             <div
@@ -100,11 +103,13 @@ export const PostItem = ({
                 fontWeight: "lighter",
                 marginTop: "0.5  rem",
                 fontSize: "1.2rem",
+                display: "inline-block",
               }}
             >
               @{authorId.name}
             </div>
           </Link>
+          <br></br>
           <p style={{ marginTop: "1rem", margin: "0px", fontSize: "1.5rem" }}>
             {content}
           </p>

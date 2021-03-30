@@ -135,13 +135,13 @@ export const IndividualPost = ({ match }) => {
           >
             <span style={{ marginRight: "1.5em", fontWeight: "bold" }}>
               <Button
-                className="iconButton"
+                className="iconButton upVoteButton"
                 onClick={() => dispatch(upvote(_id))}
               >
                 <i className="fas fa-arrow-up" />
               </Button>
               {votes}
-              <Button className="iconButton">
+              <Button className="iconButton downVoteButton">
                 <i
                   className="fas fa-arrow-down"
                   onClick={() => dispatch(downvote(_id))}
