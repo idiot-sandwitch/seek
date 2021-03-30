@@ -34,7 +34,14 @@ export const ResourcePosts = () => {
 
   return (
     <Container style={{ marginTop: "4rem" }}>
-      <Container style={{ width: "100%", padding: "1rem" }}>
+      <Container
+        style={{
+          width: "100%",
+          paddingTop: "1rem",
+          paddingLeft: "0rem",
+          paddingRight: "0rem",
+        }}
+      >
         <Row>
           <Button
             block
@@ -45,7 +52,7 @@ export const ResourcePosts = () => {
             }}
             onClick={() => setFormVisibility(!formIsVisible)}
           >
-            <i className='fas fa-plus'></i> Create Post
+            <i className="fas fa-plus"></i> Create Post
           </Button>
         </Row>
         {formIsVisible && <CreatePost />}

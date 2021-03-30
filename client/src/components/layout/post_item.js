@@ -34,14 +34,14 @@ export const PostItem = ({
   const showEditorBadge = (isChoice) => {
     if (isChoice) {
       return (
-        <Button className='badgeButton'>
+        <Button className="badgeButton">
           <Badge
             style={{
               borderColor: "gold",
               color: "gold",
             }}
           >
-            <i style={{ marginRight: "10px" }} className='fas fa-star'></i>
+            <i style={{ marginRight: "10px" }} className="fas fa-star"></i>
             Editor's Choice
           </Badge>
         </Button>
@@ -60,7 +60,11 @@ export const PostItem = ({
         }}
       >
         <Media>
-          <Link to={`/post/${_id}`}>
+          <Link
+            className="postLinkText"
+            to={`/post/${_id}`}
+            style={{ margin: "auto" }}
+          >
             <span
               style={{
                 marginBottom: "auto",
@@ -69,16 +73,16 @@ export const PostItem = ({
                 padding: "1em",
               }}
             >
-              <i className='fas fa-file-alt'></i>
+              <i className="fas fa-file-alt"></i>
             </span>
           </Link>
         </Media>
         <Media.Body style={{ padding: "1em" }}>
-          <Link to={`/post/${_id}`}>
+          <Link className="postLinkText" to={`/post/${_id}`}>
             {/* Should redirect to a list of posts sorted by the clicked subject */}
             <span>{subject.name}</span>{" "}
           </Link>
-          <Link to={`/post/${_id}`}>
+          <Link className="postLinkText" to={`/post/${_id}`}>
             <h1
               style={{
                 marginBottom: "-0.7rem",
@@ -89,16 +93,26 @@ export const PostItem = ({
               {title}
             </h1>
           </Link>
-          <Link to={`/post/${_id}`}>
+          <Link className="postLinkText" to={`/profile/${authorId._id}`}>
             {/* Should redirect to user profile page instead when that's ready.*/}
-            <span style={{ fontWeight: "lighter" }}>@{authorId.name}</span>
+            <div
+              style={{
+                fontWeight: "lighter",
+                marginTop: "0.5  rem",
+                fontSize: "1.2rem",
+              }}
+            >
+              @{authorId.name}
+            </div>
           </Link>
           <p style={{ marginTop: "1rem", margin: "0px", fontSize: "1.5rem" }}>
             {content}
           </p>
           <span>
-            <i className='fas fa-link' style={{ marginRight: "10px" }} />
-            <a href={contentUrl}>URL</a>
+            <i className="fas fa-link" style={{ marginRight: "10px" }} />
+            <a href={contentUrl} target="_blank" rel="noopener noreferrer">
+              URL
+            </a>
           </span>
         </Media.Body>
       </Row>
@@ -112,25 +126,28 @@ export const PostItem = ({
         }}
       >
         <span style={{ marginRight: "1.5em", fontWeight: "bold" }}>
-          <Button className='iconButton' onClick={handleUpvote}>
-            <i className='fas fa-arrow-up' />
+          <Button className="iconButton upVoteButton" onClick={handleUpvote}>
+            <i className="fas fa-arrow-up " />
           </Button>
           {votes}
-          <Button className='iconButton' onClick={handleDownvote}>
-            <i className='fas fa-arrow-down' />
+          <Button
+            className="iconButton downVoteButton"
+            onClick={handleDownvote}
+          >
+            <i className="fas fa-arrow-down" />
           </Button>
         </span>
-        <Link to={`/post/${_id}`}>
-          <span style={{ marginRight: "1.5em", fontWeight: "bold" }}>
-            <Button className='iconButton'>
-              <i className='fas fa-comment-dots' />
+        <span style={{ marginRight: "1.5em", fontWeight: "bold" }}>
+          <Link to={`/post/${_id}`}>
+            <Button className="iconButton">
+              <i className="fas fa-comment-dots" />
             </Button>
-            {comments ? comments.length : 0}
-          </span>
-        </Link>
+          </Link>
+          {comments ? comments.length : 0}
+        </span>
         <span>
           <Button
-            className='iconButton'
+            className="iconButton"
             onClick={() => {
               navigator.clipboard.writeText(
                 `${process.env.REACT_APP_FRONTEND_URL}/#/post/${_id}`
@@ -138,14 +155,14 @@ export const PostItem = ({
               toast.success("copied to clipboard");
             }}
           >
-            <i className='fas fa-share'></i>
+            <i className="fas fa-share"></i>
           </Button>
         </span>
 
-        <span className='ml-auto mr-3'>
+        <span className="ml-auto mr-3">
           {showEditorBadge(editorChoice)}
-          <Button className='badgeButton'>
-            <Badge>SUBCODE</Badge>
+          <Button className="badgeButton">
+            <Badge>{course.code}</Badge>
           </Button>
         </span>
       </Row>

@@ -242,6 +242,35 @@ h6,
   border: transparent !important;
 }
 
+.postLinkText {
+  color: white;
+}
+
+.postLinkText:hover {
+  text-decoration: none;
+  color: white;
+}
+
+.upVoteButton:hover {
+  color: orange !important;
+}
+
+.upVoteButton:focus {
+  color: red;
+  -webkit-box-shadow: none !important;
+          box-shadow: none !important;
+}
+
+.downVoteButton:hover {
+  color: cornflowerblue !important;
+}
+
+.downVoteButton:focus {
+  color: #0e0e6d;
+  -webkit-box-shadow: none !important;
+          box-shadow: none !important;
+}
+
 /*!
  * Bootstrap v4.6.0 (https://getbootstrap.com/)
  * Copyright 2011-2021 The Bootstrap Authors
