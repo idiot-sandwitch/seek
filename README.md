@@ -73,14 +73,19 @@ __OR__
 
 You can download the repository directly and extract in a local folder
 
-**2.** Open a terminal inside your local cloned repository and execute the following command:
+**2.** Open a terminal inside your local cloned repository and execute the following commands:
 
 ```bash
-npm run devInstall
-
-#on linux
-
-npm i && npm i --prefix=client 
+npm i
+```
+```bash
+cd client
+```
+```bash
+npm i
+```
+```bash
+cd ..
 ```
 
 **3.** Inside the root directory make the following changes:
