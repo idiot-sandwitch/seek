@@ -1,5 +1,5 @@
 
- <center><h1> Seek</h1><h3> Students community platform <h3></center>
+<h1 align="center"> Seek</h1><h3 align="center"> Students community platform <h3>
 
 *Seek* is a platform meant to build and nurture a community for college students where they can share and rate educational resources. Seek consists of following features: 
 - Signup using a valid email
