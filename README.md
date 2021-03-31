@@ -45,7 +45,7 @@ You can download the repository directly and extract in a local folder
 ```bash
 npm run devInstall
 
-//on linux
+#on linux
 
 npm i && npm i --prefix=client 
 ```
@@ -54,10 +54,10 @@ npm i && npm i --prefix=client
 - Make a file `.env` in the root directory and paste the following lines: 
 ```
 JWT_PRIVATE_KEY='skfslakdhfskdjfsd'
-//If you have the environment variable PORT defined on your machine, change 5000 to the value of PORT in the line below.
-// For a remotely hosted MongoDB server, enter the base url of the remote server.
+# If you have the environment variable PORT defined on your machine, change 5000 to the value of PORT in the line below.
+# For a remotely hosted MongoDB server, enter the base url of the remote server.
 BASE_URL='http://localhost:5000/'
-// If you are using a remotely hosted mongodb Server, update the line below to that server's connection string instead.
+# If you are using a remotely hosted mongodb Server, update the line below to that server's connection string instead.
 MONGODB_CONNECTION_STRING = "mongodb://localhost"
 MAX_AVATAR_SIZE_MB=25
 JWT_HEADER='x-auth-token'
@@ -66,8 +66,8 @@ SENDGRID_API_KEY='YOUR SENDGRID API KEY GOES HERE'
 - Make another `.env` file, this one inside `project_root`/client/ and paste the following lines:
 ```
 REACT_APP_FRONTEND_URL='http://localhost:3000'
-//If you have the environment variable PORT defined on your machine, change 5000 to the value of PORT in the line below.
-// For a remotely hosted server, enter the base url of the remote server.
+# If you have the environment variable PORT defined on your machine, change 5000 to the value of PORT in the line below.
+# For a remotely hosted server, enter the base url of the remote server.
 REACT_APP_BACKEND_URL='http://localhost:5000'
 ```
 ___
