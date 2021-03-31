@@ -24,7 +24,7 @@ const VerifyUserForm = ({ match }) => {
     try {
       const res = await axios({
         method: "POST",
-        url: "http://localhost:5000/api/verify",
+        url: "/api/verify",
         headers: {
           "Content-Type": "application/json",
           accepts: "application/json",
@@ -61,24 +61,24 @@ const VerifyUserForm = ({ match }) => {
       <Row>
         <Alert variant={status}>{message}</Alert>
       </Row>
-      <Form className="seekForm" as="form" onSubmit={handleSubmit(onSubmit)}>
-        <Form.Group as={Row} controlId="formHorizontalName">
+      <Form className='seekForm' as='form' onSubmit={handleSubmit(onSubmit)}>
+        <Form.Group as={Row} controlId='formHorizontalName'>
           <Form.Label column sm={2}>
             Verification token
           </Form.Label>
           <Col sm={10}>
             <Form.Control
-              className="seekInput"
-              name="token"
-              type="text"
-              placeholder="Enter the token sent to registered email"
+              className='seekInput'
+              name='token'
+              type='text'
+              placeholder='Enter the token sent to registered email'
               ref={register}
             />
           </Col>
         </Form.Group>
         <Form.Group as={Row}>
           <Col sm={{ span: 10, offset: 2 }}>
-            <Button className="seekButton" type="submit">
+            <Button className='seekButton' type='submit'>
               Create Account
             </Button>
           </Col>
