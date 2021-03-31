@@ -1,6 +1,30 @@
 
 <h1 align="center"> Seek</h1><h3 align="center"> Students community platform <h3>
 
+<!-- TABLE OF CONTENTS -->
+<details open="open">
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#about-the-project"> About the project </a>
+      <ul>
+        <li><a href="#built-with">Built With</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#installation">Installation</a>
+      <ul>
+        <li><a href="#requirements">Requirements</a></li>
+        <li><a href="#installing">Installing</a></li>
+      </ul>
+    </li>
+    <li><a href="#usage">Usage</a></li>
+    <li><a href="#contributing">Contributing</a></li>
+    <li><a href="#license">License</a></li>
+  </ol>
+</details>
+
+## About the project
 *Seek* is a platform meant to build and nurture a community for college students where they can share and rate educational resources. Seek consists of following features: 
 - Signup using a valid email
 - Customize Profile
@@ -15,22 +39,14 @@ Following Features are intended to be built in the future:
 - A forums page where users can create discussion forums
 - Teachers page where teachers can get feedback from students
 
-<!-- TABLE OF CONTENTS -->
-<details open="open">
-  <summary>Table of Contents</summary>
-  <ol>
-    <li>
-      <a href="#installation">Installation</a>
-      <ul>
-        <li><a href="#requirements">Requirements</a></li>
-        <li><a href="#installing">Installing</a></li>
-      </ul>
-    </li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
-  </ol>
-</details>
+### Built With
+
+* [MongoDB](https://www.mongodb.com/)
+* [NodeJS](https://nodejs.org/en/)
+* [Express](https://expressjs.com/)
+* [React](https://reactjs.org/)
+* [Redux](https://redux.js.org/)
+* [Bootstrap](https://getbootstrap.com)
 
 ## Installation
 
