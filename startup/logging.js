@@ -42,7 +42,7 @@ module.exports = function (winston) {
   );
   winston.add(
     new winston.transports.MongoDB({
-      db: "mongodb://localhost/DSC-errors",
+      db: `${process.env.MONGODB_CONNECTION_STRING}/Seek-errors`,
       options: { useUnifiedTopology: true },
       level: "error",
       silent: silent,

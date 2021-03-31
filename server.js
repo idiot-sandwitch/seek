@@ -3,11 +3,12 @@ const express = require("express");
 const app = express();
 
 //Setup logging and environment variables
-const winston = require("winston");
-require("./startup/logging")(winston);
 const config = require("./startup/config");
 config.checkEnvVars();
 require("./startup/db")();
+const winston = require("winston");
+require("./startup/logging")(winston);
+
 config.createAnonymousUser();
 
 //Include the startup routes.
