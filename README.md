@@ -1,5 +1,22 @@
 
 <h1 align="center"> Seek</h1><h3 align="center"> Students community platform <h3>
+  
+ <!-- TABLE OF CONTENTS -->
+<details open="open">
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#installation">Installation</a>
+      <ul>
+        <li><a href="#requirements">Requirements</a></li>
+        <li><a href="#installing">Installing</a></li>
+      </ul>
+    </li>
+    <li><a href="#usage">Usage</a></li>
+    <li><a href="#contributing">Contributing</a></li>
+    <li><a href="#license">License</a></li>
+  </ol>
+</details>
 
 *Seek* is a platform meant to build and nurture a community for college students where they can share and rate educational resources. Seek consists of following features: 
 - Signup using a valid email
