@@ -42,7 +42,29 @@ router.post("/comment", [auth, anonymous], async (req, res) => {
 });
 
 router.get("/find/:id", async (req, res) => {
-  const comment = await Comment.findById(req.params.id);
+  const populateCommentArr = [
+    {
+      path: "subComments",
+      populate: [
+        {
+          path: "authorId",
+          select: "name avatar",
+        },
+        {
+          path: "replyToId",
+          populate: {
+            path: "authorId",
+            select: "name",
+          },
+          select: "authorId",
+        },
+      ],
+    },
+    { path: "authorId", select: "name avatar" },
+  ];
+  const comment = await Comment.findById(req.params.id).populate(
+    req.query.populated !== undefined ? populateCommentArr : ""
+  );
   if (!comment) return res.status(404).send("Comment not found!");
   return res.status(200).send(comment);
 });

@@ -5,6 +5,7 @@ import Badge from "react-bootstrap/esm/Badge";
 import Media from "react-bootstrap/esm/Media";
 import Button from "react-bootstrap/esm/Button";
 import { Comments } from "../layout/comments/comments";
+import CommentBox from "../layout/comments/commentBox";
 
 import { clearState, loadPost } from "../../features/post/postSlice";
 import { useHistory } from "react-router-dom";
@@ -175,6 +176,7 @@ export const IndividualPost = ({ match }) => {
               </Button>
             </span>
           </Row>
+          <CommentBox />
           <Row>
             <Comments
               comments={comments}
