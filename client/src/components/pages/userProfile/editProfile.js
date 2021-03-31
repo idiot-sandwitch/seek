@@ -42,7 +42,7 @@ const EditProfile = () => {
 
     userProperties.forEach((element) => {
       if (data[element] === "") {
-        data[element] = userInfo[element];
+        data[element] = userInfo[element] !== null ? userInfo[element] : "";
       }
     });
 

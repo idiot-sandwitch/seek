@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "react-bootstrap/esm/Button";
 import Container from "react-bootstrap/esm/Container";
 import Row from "react-bootstrap/esm/Row";
@@ -9,6 +9,7 @@ export const CommentItem = ({
   voteHandler,
   subVoteHandler,
 }) => {
+  const [showBox, setshowBox] = useState(false);
   return (
     <Container>
       <Row id="pappuId" className="seekComment">
@@ -30,7 +31,12 @@ export const CommentItem = ({
             </Button>
             <span />
             <span style={{ marginRight: "1.5em", fontWeight: "bold" }}></span>
-            <Button className="iconButton">
+            <Button
+              className="iconButton"
+              onClick={() => {
+                setshowBox(!showBox);
+              }}
+            >
               <i className="fas fa-comment-dots" />
             </Button>
             {subComments.length}
@@ -38,7 +44,12 @@ export const CommentItem = ({
         </Container>
       </Row>
       <Row className="seekSubCommentBox">
-        <SubComments subComments={subComments} voteHandler={subVoteHandler} />
+        <SubComments
+          subComments={subComments}
+          commentId={_id}
+          voteHandler={subVoteHandler}
+          showBox={showBox}
+        />
       </Row>
     </Container>
   );

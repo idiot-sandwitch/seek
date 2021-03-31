@@ -20,7 +20,6 @@ export const ResourcePosts = () => {
 
   useEffect(() => {
     dispatch(setStatus("loading"));
-    console.log("Before fetching posts: ", page);
     dispatch(getnPosts({ page, results: 4 }));
     dispatch(setPage(page + 1));
     return function () {

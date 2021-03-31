@@ -41,7 +41,23 @@ router.post("/comment", [auth, anonymous], async (req, res) => {
 });
 
 router.get("/find/:id", async (req, res) => {
-  const subComment = await SubComment.findById(req.params.id);
+  const populateSubCommentArr = [
+    {
+      path: "authorId",
+      select: "name avatar",
+    },
+    {
+      path: "replyToId",
+      populate: {
+        path: "authorId",
+        select: "name",
+      },
+      select: "authorId",
+    },
+  ];
+  const subComment = await SubComment.findById(req.params.id).populate(
+    req.query.populated !== undefined ? populateSubCommentArr : ""
+  );
   if (!subComment) return res.status(404).send("SubComment not found!");
   return res.status(200).send(subComment);
 });

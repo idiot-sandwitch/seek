@@ -8,7 +8,7 @@ const {
 module.exports = async function (req, res) {
   const { error } = validateComment(pickCommentData(req.body));
   if (error) return res.status(400).send(error.details[0].message);
-
+  
   const post = await mongoose.connection.db
     .collection(req.body.contentType)
     .findOne({ _id: new mongoose.Types.ObjectId(req.body.postId) });
