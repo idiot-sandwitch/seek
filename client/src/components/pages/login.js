@@ -64,7 +64,7 @@ export const Login = () => {
       // className="backgroundContainer"
       <div>
         <video
-          playsinline
+          playsInline
           autoPlay
           muted
           loop

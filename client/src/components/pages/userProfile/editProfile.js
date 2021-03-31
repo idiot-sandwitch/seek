@@ -75,14 +75,14 @@ const EditProfile = () => {
   //if click edit profile, show edit profile component
   return (
     <Container style={{ marginTop: "4rem" }}>
-      <Form onSubmit={handleSubmit(onSubmit)} as="form">
-        <Media className="profileCard">
+      <Form onSubmit={handleSubmit(onSubmit)} as='form'>
+        <Media className='profileCard'>
           <Col>
-            <Image className="userAvatar" src={userInfo.avatar} roundedCircle />
+            <Image className='userAvatar' src={userInfo.avatar} roundedCircle />
             <div style={{ paddingLeft: "1.5rem" }}>
               <Form.Group
                 style={{ textAlign: "left", display: "inline-block" }}
-                className="userProfileField"
+                className='userProfileField'
               >
                 <Form.Label>
                   <i
@@ -90,71 +90,71 @@ const EditProfile = () => {
                       fontSize: "2rem",
                       marginRight: "1rem",
                     }}
-                    className="fab fa-linkedin"
+                    className='fab fa-linkedin'
                   />
                   {"  "}
                   <a
                     href={userInfo.linkedinUrl !== `` && userInfo.linkedinUrl}
                     style={{ display: "inline-block" }}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    target='_blank'
+                    rel='noopener noreferrer'
                   >
                     <h4>Linkedin</h4>
                   </a>
                 </Form.Label>
 
                 <Button
-                  className="deleteButton"
+                  className='deleteButton'
                   onClick={() => {
                     setUserInfo({ ...userInfo, linkedinUrl: "" });
                   }}
                 >
-                  <i class="fas fa-times"></i>
+                  <i className='fas fa-times'></i>
                 </Button>
 
                 <Form.Control
-                  className="seekInput"
-                  name="linkedinUrl"
+                  className='seekInput'
+                  name='linkedinUrl'
                   ref={register}
-                  type="text"
-                  placeholder="Update linkedin URL"
+                  type='text'
+                  placeholder='Update linkedin URL'
                 />
               </Form.Group>
 
               <Form.Group
                 style={{ textAlign: "left", display: "block" }}
-                className="userProfileField"
+                className='userProfileField'
               >
                 <Form.Label>
                   <i
                     style={{ fontSize: "2rem", marginRight: "1rem" }}
-                    className="fab fa-github"
+                    className='fab fa-github'
                   />{" "}
                   <a
                     href={userInfo.githubUrl !== `` && userInfo.githubUrl}
                     style={{ display: "inline-block" }}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    target='_blank'
+                    rel='noopener noreferrer'
                   >
                     <h4>Github</h4>
                   </a>
                 </Form.Label>
 
                 <Button
-                  className="deleteButton"
+                  className='deleteButton'
                   onClick={() => {
                     setUserInfo({ ...userInfo, githubUrl: "" });
                   }}
                 >
-                  <i class="fas fa-times"></i>
+                  <i className='fas fa-times'></i>
                 </Button>
 
                 <Form.Control
-                  className="seekInput"
-                  name="githubUrl"
+                  className='seekInput'
+                  name='githubUrl'
                   ref={register}
-                  type="text"
-                  placeholder="Update github URL"
+                  type='text'
+                  placeholder='Update github URL'
                 />
               </Form.Group>
             </div>
@@ -178,20 +178,20 @@ const EditProfile = () => {
               </Form.Label>
 
               <Button
-                className="deleteButton"
+                className='deleteButton'
                 onClick={() => {
                   setUserInfo({ ...userInfo, name: "" });
                 }}
               >
-                <i class="fas fa-times"></i>
+                <i className='fas fa-times'></i>
               </Button>
 
               <Form.Control
-                className="seekInput"
-                name="name"
+                className='seekInput'
+                name='name'
                 ref={register}
-                type="text"
-                placeholder="Update your Name"
+                type='text'
+                placeholder='Update your Name'
               />
             </Form.Group>
             <Form.Group>
@@ -202,12 +202,12 @@ const EditProfile = () => {
               </Form.Label>
 
               <Button
-                className="deleteButton"
+                className='deleteButton'
                 onClick={() => {
                   setUserInfo({ ...userInfo, about: "" });
                 }}
               >
-                <i class="fas fa-times"></i>
+                <i className='fas fa-times'></i>
               </Button>
 
               <Form.Control
@@ -215,12 +215,12 @@ const EditProfile = () => {
                   height: "15rem",
                   resize: "none",
                 }}
-                maxLength="500"
-                className="seekInput"
-                as="textarea"
-                name="about"
+                maxLength='500'
+                className='seekInput'
+                as='textarea'
+                name='about'
                 ref={register}
-                placeholder="Update About field"
+                placeholder='Update About field'
               />
             </Form.Group>
 
@@ -231,87 +231,87 @@ const EditProfile = () => {
                 height: "100% !important",
               }}
             >
-              <Form.Group className="userProfileField">
+              <Form.Group className='userProfileField'>
                 <Form.Label>
                   <h4>Email</h4>
                   {userInfo.email}
                 </Form.Label>
 
                 <Button
-                  className="deleteButton"
+                  className='deleteButton'
                   onClick={() => {
                     setUserInfo({ ...userInfo, email: "" });
                   }}
                 >
-                  <i class="fas fa-times"></i>
+                  <i className='fas fa-times'></i>
                 </Button>
 
                 <Form.Control
-                  className="seekInput"
-                  name="email"
+                  className='seekInput'
+                  name='email'
                   ref={register}
-                  type="text"
-                  placeholder="Update your email"
+                  type='text'
+                  placeholder='Update your email'
                 />
               </Form.Group>
 
-              <Form.Group className="userProfileField">
+              <Form.Group className='userProfileField'>
                 <Form.Label>
                   <h4>Sex</h4>
                   {userInfo.sex}
                 </Form.Label>
 
                 <Button
-                  className="deleteButton"
+                  className='deleteButton'
                   onClick={() => {
                     setUserInfo({ ...userInfo, sex: "" });
                   }}
                 >
-                  <i class="fas fa-times"></i>
+                  <i className='fas fa-times'></i>
                 </Button>
 
                 <Form.Control
-                  className="seekInput"
-                  name="sex"
+                  className='seekInput'
+                  name='sex'
                   ref={register}
-                  type="text"
-                  placeholder="Update your sex"
+                  type='text'
+                  placeholder='Update your sex'
                 />
               </Form.Group>
 
-              <Form.Group className="userProfileField">
+              <Form.Group className='userProfileField'>
                 <Form.Label>
                   <h4>Branch</h4>
                   {userInfo.branch}
                 </Form.Label>
 
                 <Button
-                  className="deleteButton"
+                  className='deleteButton'
                   onClick={() => {
                     setUserInfo({ ...userInfo, branch: "" });
                   }}
                 >
-                  <i class="fas fa-times"></i>
+                  <i className='fas fa-times'></i>
                 </Button>
 
                 <Form.Control
-                  className="seekInput"
-                  name="branch"
+                  className='seekInput'
+                  name='branch'
                   ref={register}
-                  type="text"
-                  placeholder="Update your branch"
+                  type='text'
+                  placeholder='Update your branch'
                 />
               </Form.Group>
 
               <div
-                className="userProfileField"
+                className='userProfileField'
                 style={{ display: "inline-block" }}
               >
                 {userInfo.isVerified ? (
                   <span>
                     <i
                       style={{ color: "green" }}
-                      className="far fa-check-circle"
+                      className='far fa-check-circle'
                     />{" "}
                     Verified Account
                   </span>
@@ -319,15 +319,15 @@ const EditProfile = () => {
                   <span>
                     <i
                       style={{ color: "red" }}
-                      className="far fa-times-circle"
+                      className='far fa-times-circle'
                     />{" "}
                     Not a verified Account
                   </span>
                 )}
               </div>
 
-              <div className="userProfileField">
-                <Button className="seekButton" type="submit">
+              <div className='userProfileField'>
+                <Button className='seekButton' type='submit'>
                   Update Profile
                 </Button>
               </div>

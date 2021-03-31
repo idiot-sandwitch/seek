@@ -11,14 +11,13 @@ import Button from "react-bootstrap/esm/Button";
 import Row from "react-bootstrap/esm/Row";
 
 const CommentBox = () => {
-  const { register, handleSubmit, reset } = useForm();
+  const { register, handleSubmit } = useForm();
   const { data } = useSelector((state) => state.post);
   const dispatch = useDispatch();
   const { _id } = data;
 
   const onPost = async (data) => {
     data["postId"] = _id;
-    console.log(data);
 
     const res = await axios({
       method: "POST",
@@ -38,19 +37,19 @@ const CommentBox = () => {
 
   return (
     <Container style={{ marginTop: "2rem", width: "100%" }}>
-      <Form as="form" onSubmit={handleSubmit(onPost)}>
+      <Form as='form' onSubmit={handleSubmit(onPost)}>
         <h3>Add Comment</h3>
         <Form.Control
           style={{
             height: "10rem",
             resize: "none",
           }}
-          maxLength="500"
-          className="seekInput"
-          name="content"
+          maxLength='500'
+          className='seekInput'
+          name='content'
           ref={register}
-          placeholder="Add a comment"
-          as="textarea"
+          placeholder='Add a comment'
+          as='textarea'
         ></Form.Control>
         <Row
           style={{
@@ -59,13 +58,13 @@ const CommentBox = () => {
             paddingRight: "1rem",
           }}
         >
-          <Button type="submit" style={{ width: "30%" }} className="seekButton">
+          <Button type='submit' style={{ width: "30%" }} className='seekButton'>
             Submit
           </Button>
           <Button
-            type="reset"
+            type='reset'
             style={{ width: "30%" }}
-            className="logoutButton"
+            className='logoutButton'
           >
             Discard
           </Button>
