@@ -52,7 +52,7 @@ npm i && npm i --prefix=client
 
 **3.** Inside the root directory make the following changes:
 - Make a file `.env` in the root directory and paste the following lines: 
-```
+```bash
 JWT_PRIVATE_KEY='skfslakdhfskdjfsd'
 # If you have the environment variable PORT defined on your machine, change 5000 to the value of PORT in the line below.
 # For a remotely hosted MongoDB server, enter the base url of the remote server.
@@ -64,7 +64,7 @@ JWT_HEADER='x-auth-token'
 SENDGRID_API_KEY='YOUR SENDGRID API KEY GOES HERE'
 ```
 - Make another `.env` file, this one inside `project_root`/client/ and paste the following lines:
-```
+```bash
 REACT_APP_FRONTEND_URL='http://localhost:3000'
 # If you have the environment variable PORT defined on your machine, change 5000 to the value of PORT in the line below.
 # For a remotely hosted server, enter the base url of the remote server.
