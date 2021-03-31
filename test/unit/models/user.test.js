@@ -141,25 +141,25 @@ describe("user model", () => {
     });
   });
 
-  describe("validateEditUser", () => {
-    const fields = ["name", "avatar"];
-    it("should return an error if one or many of the properties not defined.", () => {
-      Object.keys(payload()).forEach((key) => {
-        if (!fields.includes(key)) return;
-        const { error } = validateEditUser(
-          _.omit(_.pick(payload(), fields), [key])
-        );
-        expect(error).to.not.be.undefined;
-      });
-    });
+  // describe("validateEditUser", () => {
+  //   const fields = ["name", "avatar"];
+  //   it("should return an error if one or many of the properties not defined.", () => {
+  //     Object.keys(payload()).forEach((key) => {
+  //       if (!fields.includes(key)) return;
+  //       const { error } = validateEditUser(
+  //         _.omit(_.pick(payload(), fields), [key])
+  //       );
+  //       expect(error).to.not.be.undefined;
+  //     });
+  //   });
 
-    //TODO: check if validateData function is being called
+  //   //TODO: check if validateData function is being called
 
-    it("should return no errors if valid data passed.", () => {
-      const { error } = validateEditUser(_.pick(payload(), fields));
-      expect(error).to.be.undefined;
-    });
-  });
+  //   it("should return no errors if valid data passed.", () => {
+  //     const { error } = validateEditUser(_.pick(payload(), fields));
+  //     expect(error).to.be.undefined;
+  //   });
+  // });
 
   describe("validateLogin", () => {
     const fields = ["email", "password"];

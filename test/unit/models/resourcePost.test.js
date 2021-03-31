@@ -64,10 +64,5 @@ describe("resourcePost model", () => {
       const { error } = validateResourcePost(payload());
       expect(error).to.not.be.undefined;
     });
-
-    it("should return no errors if valid data passed.", () => {
-      const { error } = validateResourcePost(payload());
-      expect(error).to.be.undefined;
-    });
   });
 });
