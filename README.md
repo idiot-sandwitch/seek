@@ -1,5 +1,7 @@
-
-<h1 align="center"> Seek</h1><h3 align="center"> Students community platform <h3>
+  
+![Seek Banner](/public/seekBanner.png) 
+  
+  <h3 align="center">Students community platform </h3>
 
 
 <!-- TABLE OF CONTENTS -->
